@@ -1214,6 +1214,11 @@ section {
         flex-wrap: wrap;
     }
 
+    /* Ensure terminal text stays left-aligned on mobile */
+    .hero .terminal {
+        text-align: left !important;
+    }
+
     .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -1269,7 +1274,7 @@ section {
     .experience-sidebar {
         position: static;
         margin-top: 0;
-        order: -1;
+        order: 1;
         transform: none !important;
     }
 
@@ -1527,6 +1532,7 @@ section {
     font-size: 12px;
     margin-top: 1.5rem;
     line-height: 1.6;
+    text-align: left;
 }
 
 .terminal-line {
