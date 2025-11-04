@@ -57,16 +57,13 @@
                 <h1 class="hero-title">
                     <span class="code-symbol">&lt;</span>Hi, I'm <span class="highlight">Payam Dehkordy</span><span class="code-symbol">/&gt;</span>
                 </h1>
-                <h2 class="hero-subtitle">Senior Software QA Automation Engineer & Full Stack Developer</h2>
+                <h2 class="hero-subtitle">Senior QA & Full-Stack Developer</h2>
                 <p class="hero-description">
-                    Electronic Engineer, Senior Software QA Automation Engineer & Full Stack Developer with <span id="experience-years">8+</span> years of experience 
-                    in test automation, manual testing, full stack development, and software quality assurance. Specialized in .NET automation, 
-                    mobile app testing, web development, and UI/UX design with expertise at Synopsys, EPAM, and freelance projects.
+                    I help startups & tech teams launch faster with automated QA and scalable web solutions.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#portfolio" class="btn btn-primary">View My Work</a>
-                    <a href="assets/documents/Payam%20Dehkordy%20CV.pdf" class="btn btn-gold" style="background:#C29734;color:#23272f;border:1px solid #C29734;" download target="_blank" rel="noopener">Download CV</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    <a href="#" class="btn btn-gold" id="book-call-btn" style="background:#C29734;color:#23272f;border:1px solid #C29734;">Book a Call</a>
+                    <a href="#portfolio" class="btn btn-secondary">View My Work</a>
                 </div>
                 <div class="terminal">
                     <!-- Terminal content will be animated via JavaScript -->
@@ -520,6 +517,18 @@
         </div>
     </footer>
 
+    <!-- Custom Calendly Modal -->
+    <div id="calendly-modal" class="calendly-modal">
+        <div class="calendly-modal-overlay" onclick="closeCalendlyModal()"></div>
+        <div class="calendly-modal-content">
+            <button class="calendly-modal-close" onclick="closeCalendlyModal()">&times;</button>
+            <div class="calendly-inline-widget-container" style="min-width:320px;height:630px;"></div>
+        </div>
+    </div>
+
+    <!-- Calendly Inline Widget -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <script src="script.js"></script>
 </body>
 </html>

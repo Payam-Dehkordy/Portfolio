@@ -34,9 +34,15 @@ document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', 
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // Skip links that are just '#' or have onclick handlers (like Calendly popup)
+    const href = anchor.getAttribute('href');
+    if (href === '#' || anchor.hasAttribute('onclick')) {
+        return;
+    }
+    
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.querySelector(href);
         if (target) {
             target.scrollIntoView({
                 behavior: 'smooth',
@@ -1115,4 +1121,87 @@ if (form) {
   });
 }
 
+// Custom Calendly Modal Functions
+function openCalendlyModal() {
+  const modal = document.getElementById('calendly-modal');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    
+    // Wait for Calendly to load, then initialize widget only once
+    function initCalendly() {
+      if (typeof Calendly !== 'undefined') {
+        const container = document.querySelector('.calendly-inline-widget-container');
+        if (container && !container.hasAttribute('data-initialized')) {
+          // Clear any existing content first
+          container.innerHTML = '';
+          
+          // Create the widget div with data-url attribute
+          const widget = document.createElement('div');
+          widget.className = 'calendly-inline-widget';
+          widget.setAttribute('data-url', 'https://calendly.com/payam-dehkordy/15min');
+          widget.style.minWidth = '320px';
+          widget.style.height = '630px';
+          container.appendChild(widget);
+          
+          // Initialize the widget
+          try {
+            Calendly.initInlineWidget({
+              url: 'https://calendly.com/payam-dehkordy/15min',
+              parentElement: widget
+            });
+          } catch (e) {
+            console.warn('Calendly initialization error:', e);
+            // Fallback: let the data-url attribute handle it
+          }
+          
+          container.setAttribute('data-initialized', 'true');
+        }
+      } else {
+        // Retry if Calendly not loaded yet
+        setTimeout(initCalendly, 100);
+      }
+    }
+    
+    initCalendly();
+  }
+}
+
+function closeCalendlyModal() {
+  const modal = document.getElementById('calendly-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
+    
+    // Clear the widget content when closing to prevent double loading
+    const container = document.querySelector('.calendly-inline-widget-container');
+    if (container) {
+      container.removeAttribute('data-initialized');
+      container.innerHTML = '';
+    }
+  }
+}
+
+// Calendly Modal Button Handler
+document.addEventListener('DOMContentLoaded', () => {
+  const bookCallBtn = document.getElementById('book-call-btn');
+  
+  if (bookCallBtn) {
+    bookCallBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openCalendlyModal();
+    });
+  }
+  
+  // Close modal on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeCalendlyModal();
+    }
+  });
+});
+
+// Make functions globally accessible
+window.openCalendlyModal = openCalendlyModal;
+window.closeCalendlyModal = closeCalendlyModal;
 
