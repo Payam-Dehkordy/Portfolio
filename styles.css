@@ -1094,6 +1094,13 @@ section {
     border-color: #c29734;
 }
 
+.social-link-text {
+    width: auto;
+    padding: 0 12px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
 .contact-form {
     background: #161b22;
     padding: 2.25rem;
