@@ -1,0 +1,235 @@
+/* QA Retainer Service Page Styles */
+
+/* Offer Page Specific Styles */
+.offer-hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6e6e6;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 0 40px;
+}
+
+.offer-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(88, 166, 255, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.offer-hero-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.offer-hero h1 {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    color: #f0f6fc;
+}
+
+.offer-hero h2 {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    color: #8b949e;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.offer-hero .hero-buttons {
+    justify-content: center;
+}
+
+.transformation-section {
+    padding: 60px 0;
+    background: #0d1117;
+}
+
+.transformation-section .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.transformation-section h2 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: #f0f6fc;
+}
+
+.transformation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.transformation-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.transformation-card:hover {
+    border-color: #c29734;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.transformation-card h3 {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: #c29734;
+}
+
+.transformation-before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.transformation-before,
+.transformation-after {
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.transformation-before {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.transformation-after {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.transformation-before h4,
+.transformation-after h4 {
+    font-size: 0.7rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.transformation-before h4 {
+    color: #f87171;
+}
+
+.transformation-after h4 {
+    color: #34d399;
+}
+
+.transformation-before p,
+.transformation-after p {
+    font-size: 8px;
+    line-height: 1.6;
+    color: #8b949e;
+}
+
+.transformation-data {
+    font-size: 8px;
+    color: #c29734;
+    font-weight: 400;
+    padding-top: 12px;
+    border-top: 1px solid #21262d;
+}
+
+.trust-section {
+    padding: 60px 0;
+    background: #161b22;
+    text-align: center;
+}
+
+.trust-section .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.trust-section p {
+    font-size: 0.9rem;
+    color: #8b949e;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+}
+
+.cta-section {
+    padding: 60px 0;
+    background: #0d1117;
+    text-align: center;
+}
+
+.cta-section .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.cta-section h2 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: #f0f6fc;
+}
+
+.cta-section p {
+    font-size: 9px;
+    color: #8b949e;
+    margin-bottom: 2rem;
+}
+
+.btn-gold {
+    background: #C29734 !important;
+    color: #23272f !important;
+    border: 1px solid #C29734 !important;
+}
+
+.btn-gold:hover {
+    background: #d4a842 !important;
+    border-color: #d4a842 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(194, 151, 52, 0.3);
+}
+
+@media (max-width: 768px) {
+    .offer-hero h1 {
+        font-size: 1.4rem;
+    }
+    
+    .offer-hero h2 {
+        font-size: 0.8rem;
+    }
+    
+    .transformation-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .transformation-before-after {
+        grid-template-columns: 1fr;
+    }
+}
+

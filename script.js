@@ -32,6 +32,24 @@ document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', 
     navMenu.classList.remove('active');
 }));
 
+// Handle hash navigation on page load (for cross-page links)
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash) {
+        const hash = window.location.hash;
+        const target = document.querySelector(hash);
+        if (target) {
+            // Small delay to ensure page is fully rendered
+            setTimeout(() => {
+                const NAV_SCROLL_OFFSET = 52;
+                window.scrollTo({
+                    top: target.getBoundingClientRect().top + window.pageYOffset - NAV_SCROLL_OFFSET,
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
+    }
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     // Skip links that are just '#' or have onclick handlers (like Calendly popup)
@@ -56,17 +74,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const NAV_SCROLL_OFFSET = 52;
 document.querySelectorAll('.nav-link').forEach(link => {
   const href = link.getAttribute('href');
-  if (href && href.startsWith('#')) {
-    link.addEventListener('click', function(e) {
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        window.scrollTo({
-          top: target.getBoundingClientRect().top + window.pageYOffset - NAV_SCROLL_OFFSET,
-          behavior: 'smooth'
-        });
-      }
-    });
+  if (href) {
+    // Handle both same-page (#section) and cross-page (page.html#section) links
+    if (href.startsWith('#')) {
+      // Same-page anchor link
+      link.addEventListener('click', function(e) {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({
+            top: target.getBoundingClientRect().top + window.pageYOffset - NAV_SCROLL_OFFSET,
+            behavior: 'smooth'
+          });
+        }
+      });
+    } else if (href.includes('#')) {
+      // Cross-page link with hash (e.g., index.html#about)
+      // Let the browser handle navigation, hash scrolling will be handled on page load
+      // No preventDefault needed - allow normal navigation
+    }
   }
 });
 
@@ -755,10 +781,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => {
                         terminal.style.opacity = '1';
                         terminal.style.transform = 'translateY(0)';
-                        // Start typing after terminal fully fades in
+                        // Start typing after terminal fully fades in (doubled speed: 1000ms -> 500ms)
                         setTimeout(() => {
                             animateTerminal(terminal);
-                        }, 1000);
+                        }, 500);
                     }, 50);
                 }
             }, 3000);
@@ -775,13 +801,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function animateTerminal(terminal) {
     const lines = [
         { type: 'command', text: '$ whoami', delay: 0 },
-        { type: 'output', text: 'payam.dehkordy', delay: 1200 },
-        { type: 'command', text: '$ whereis location', delay: 1000 },
-        { type: 'output', text: 'Yerevan, Armenia', delay: 1200 },
-        { type: 'command', text: '$ which company', delay: 1000 },
-        { type: 'output', text: 'Synopsys', delay: 1200 },
-        { type: 'command', text: '$ skills --list', delay: 1000 },
-        { type: 'output', text: 'QA Automation | Full Stack Dev | Electronic Engineering', delay: 1200 }
+        { type: 'output', text: 'payam.dehkordy', delay: 600 },
+        { type: 'command', text: '$ whereis location', delay: 500 },
+        { type: 'output', text: 'Yerevan, Armenia', delay: 600 },
+        { type: 'command', text: '$ which company', delay: 500 },
+        { type: 'output', text: 'Synopsys', delay: 600 },
+        { type: 'command', text: '$ skills --list', delay: 500 },
+        { type: 'output', text: 'QA Automation | Full Stack Dev | Electronic Engineering', delay: 600 }
     ];
     
     terminal.innerHTML = '<span class="terminal-cursor">█</span>';
@@ -834,8 +860,8 @@ function animateTerminal(terminal) {
                 if (oldCursor) oldCursor.remove();
                 lineElement.insertAdjacentHTML('afterend', '<span class="terminal-cursor">█</span>');
                 
-                // Continue typing command
-                setTimeout(typeLine, 150);
+                // Continue typing command (doubled speed: 150ms -> 75ms)
+                setTimeout(typeLine, 75);
             } else {
                 // Show output instantly
                 lineElement.textContent = line.text;
@@ -851,7 +877,7 @@ function animateTerminal(terminal) {
                     currentCharIndex = 0;
                     currentLineIndex++;
                     setTimeout(typeLine, line.delay);
-                }, 100);
+                }, 50);
             }
         } else if (currentCharIndex >= line.text.length) {
             // Line complete, move to next
@@ -863,8 +889,8 @@ function animateTerminal(terminal) {
         }
     }
     
-    // Start typing after a brief delay
-    setTimeout(typeLine, 800);
+    // Start typing after a brief delay (doubled speed: 800ms -> 400ms)
+    setTimeout(typeLine, 400);
 }
 
 // Parallax effect for both columns with different speeds
