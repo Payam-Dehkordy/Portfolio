@@ -157,6 +157,279 @@
     border-top: 1px solid #21262d;
 }
 
+.video-section {
+    padding: 60px 0;
+    background: #161b22;
+}
+
+.video-section .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.video-section .section-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #f0f6fc;
+}
+
+.video-description {
+    font-size: 0.9rem;
+    color: #8b949e;
+    text-align: center;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    background: #0d1117;
+}
+
+.case-study-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #21262d;
+    cursor: pointer;
+}
+
+/* Completely hide all overlay elements */
+.case-study-video::-webkit-media-controls-overlay-enclosure {
+    display: none !important;
+}
+
+.case-study-video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Hide the entire overlay enclosure */
+.case-study-video::-webkit-media-controls-enclosure {
+    background-color: transparent !important;
+    border-radius: 0;
+    display: none !important;
+}
+
+/* When playing, video has no controls attribute, so no overlay possible */
+.case-study-video.playing {
+    /* No controls = no overlay */
+}
+
+/* Only show controls when paused */
+.case-study-video.paused::-webkit-media-controls-panel {
+    opacity: 1;
+    display: flex;
+    background-color: rgba(13, 17, 23, 0.85);
+    border-radius: 0;
+}
+
+.case-study-video::-webkit-media-controls-play-button,
+.case-study-video::-webkit-media-controls-timeline,
+.case-study-video::-webkit-media-controls-current-time-display,
+.case-study-video::-webkit-media-controls-time-remaining-display {
+    color: #f0f6fc;
+}
+
+/* Hide fullscreen button overlay */
+.case-study-video::-webkit-media-controls-fullscreen-button {
+    display: none !important;
+}
+
+/* Firefox video controls styling */
+.case-study-video::-moz-media-controls {
+    background-color: rgba(13, 17, 23, 0.85);
+}
+
+/* Custom play icon overlay */
+.video-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.video-play-overlay.playing {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.video-play-overlay.paused {
+    opacity: 1;
+    visibility: visible;
+}
+
+.play-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(194, 151, 52, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #23272f;
+    font-size: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.play-icon:hover {
+    transform: scale(1.1);
+    background: rgba(194, 151, 52, 1);
+}
+
+.play-icon i {
+    margin-left: 4px; /* Slight offset to center the play icon visually */
+}
+
+/* Video end overlay with replay and get started buttons */
+.video-end-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.video-end-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../assets/video/last_frame.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    transition: background-image 0.3s ease;
+}
+
+/* Only change background when hovering over the Get Started button area */
+.video-end-overlay.button-hover::before {
+    background-image: url('../assets/video/last_frame_hover.jpg');
+}
+
+.video-end-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.video-end-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    padding-bottom: 15%;
+}
+
+/* Position the Get Started button where it appears in the video frame */
+.btn-get-started {
+    /* Invisible but clickable - positioned where button appears in video frame */
+    min-width: 180px;
+    min-height: 50px;
+    margin-top: 10px;
+}
+
+.replay-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid #c29734;
+    color: #c29734;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.replay-btn:hover {
+    background: rgba(194, 151, 52, 0.2);
+    transform: scale(1.1);
+    border-color: #d4a842;
+    color: #d4a842;
+}
+
+.replay-btn span {
+    display: none;
+}
+
+.btn-get-started {
+    background: transparent;
+    color: transparent;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    position: relative;
+    /* Make it invisible but clickable - the video frame shows the actual button */
+    opacity: 0;
+    pointer-events: auto;
+}
+
+.btn-get-started:hover {
+    opacity: 0;
+    /* Keep transparent on hover - video frame handles the visual */
+}
+
+/* Additional rules to prevent overlay */
+.case-study-video.playing {
+    pointer-events: auto;
+}
+
+.case-study-video.playing::-webkit-media-controls {
+    display: none !important;
+}
+
 .trust-section {
     padding: 60px 0;
     background: #161b22;
@@ -230,6 +503,39 @@
     
     .transformation-before-after {
         grid-template-columns: 1fr;
+    }
+    
+    .video-section {
+        padding: 40px 0;
+    }
+    
+    .video-section .section-title {
+        font-size: 1.2rem;
+    }
+    
+    .video-description {
+        font-size: 0.85rem;
+    }
+    
+    .play-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .replay-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .btn-get-started {
+        padding: 10px 24px;
+        font-size: 0.9rem;
+    }
+    
+    .video-end-content {
+        gap: 16px;
     }
 }
 

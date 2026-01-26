@@ -193,6 +193,40 @@
         </div>
     </section>
 
+    <!-- Case Study Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <h2 class="section-title">See It In Action: Real Results</h2>
+            <p class="video-description">Watch how we transformed QA operations at a tier-1 EDA organization—reducing unstable tests by 95% and achieving 97% coverage on new suites.</p>
+            <div class="video-container">
+                <video 
+                    controls 
+                    class="case-study-video"
+                    preload="metadata"
+                    aria-label="QA Case Study Teaser Video">
+                    <source src="../assets/video/qa-case-study-teaser-40s.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-play-overlay paused">
+                    <div class="play-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-end-overlay">
+                    <div class="video-end-content">
+                        <button class="replay-btn" aria-label="Replay video">
+                            <i class="fas fa-redo"></i>
+                            <span>Replay</span>
+                        </button>
+                        <a href="#" class="btn-get-started" onclick="openCalendlyModal();return false;" aria-label="Get Started">
+                            Get Started
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Trust Section -->
     <section class="trust-section">
         <div class="container">
@@ -252,6 +286,136 @@
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
     <script src="../script.js"></script>
+    <script>
+        // Video overlay control - completely remove controls when playing
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.case-study-video');
+            const playOverlay = document.querySelector('.video-play-overlay');
+            const endOverlay = document.querySelector('.video-end-overlay');
+            const replayBtn = document.querySelector('.replay-btn');
+            
+            if (video) {
+                // Initial state - ensure controls are present so user can click to play
+                if (video.paused) {
+                    video.classList.add('paused');
+                    if (!video.hasAttribute('controls')) {
+                        video.setAttribute('controls', 'controls');
+                    }
+                    if (playOverlay) {
+                        playOverlay.classList.remove('playing');
+                        playOverlay.classList.add('paused');
+                    }
+                    if (endOverlay) {
+                        endOverlay.classList.remove('visible');
+                    }
+                }
+                
+                // Click handler for play icon overlay
+                if (playOverlay) {
+                    const playIcon = playOverlay.querySelector('.play-icon');
+                    if (playIcon) {
+                        playIcon.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if (video.paused) {
+                                video.play();
+                            }
+                        });
+                    }
+                }
+                
+                // Click handler for replay button
+                if (replayBtn) {
+                    replayBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        video.currentTime = 0;
+                        video.play();
+                    });
+                }
+                
+                // Hover handler for Get Started button to change background image
+                const getStartedBtn = document.querySelector('.btn-get-started');
+                if (getStartedBtn && endOverlay) {
+                    getStartedBtn.addEventListener('mouseenter', function() {
+                        endOverlay.classList.add('button-hover');
+                    });
+                    getStartedBtn.addEventListener('mouseleave', function() {
+                        endOverlay.classList.remove('button-hover');
+                    });
+                }
+                
+                // Click handler ONLY when controls are removed (when playing)
+                video.addEventListener('click', function(e) {
+                    // Only handle clicks when controls are NOT present and video is not ended
+                    if (!video.hasAttribute('controls') && !video.ended) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        if (video.paused) {
+                            video.play();
+                        } else {
+                            video.pause();
+                        }
+                    }
+                    // When controls are present, let native controls handle it
+                });
+                
+                // Remove controls attribute when playing to prevent overlay
+                video.addEventListener('play', function() {
+                    video.classList.remove('paused');
+                    video.classList.add('playing');
+                    if (playOverlay) {
+                        playOverlay.classList.remove('paused');
+                        playOverlay.classList.add('playing');
+                    }
+                    if (endOverlay) {
+                        endOverlay.classList.remove('visible');
+                    }
+                    // Small delay to ensure play starts, then remove controls
+                    setTimeout(function() {
+                        if (video.hasAttribute('controls')) {
+                            video.removeAttribute('controls');
+                        }
+                    }, 200);
+                });
+                
+                // Add controls back when paused (but not when ended)
+                video.addEventListener('pause', function() {
+                    if (!video.ended) {
+                        video.classList.remove('playing');
+                        video.classList.add('paused');
+                        if (playOverlay) {
+                            playOverlay.classList.remove('playing');
+                            playOverlay.classList.add('paused');
+                        }
+                        if (endOverlay) {
+                            endOverlay.classList.remove('visible');
+                        }
+                        if (!video.hasAttribute('controls')) {
+                            video.setAttribute('controls', 'controls');
+                        }
+                    }
+                });
+                
+                // Handle when video ends - show replay and get started buttons
+                video.addEventListener('ended', function() {
+                    video.classList.remove('playing');
+                    video.classList.add('paused');
+                    if (playOverlay) {
+                        playOverlay.classList.remove('paused');
+                        playOverlay.classList.add('playing'); // Hide play overlay
+                    }
+                    if (endOverlay) {
+                        endOverlay.classList.add('visible'); // Show end overlay
+                    }
+                    if (!video.hasAttribute('controls')) {
+                        video.setAttribute('controls', 'controls');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 

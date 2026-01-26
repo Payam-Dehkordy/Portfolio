@@ -78,16 +78,16 @@ document.querySelectorAll('.nav-link').forEach(link => {
     // Handle both same-page (#section) and cross-page (page.html#section) links
     if (href.startsWith('#')) {
       // Same-page anchor link
-      link.addEventListener('click', function(e) {
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          window.scrollTo({
-            top: target.getBoundingClientRect().top + window.pageYOffset - NAV_SCROLL_OFFSET,
-            behavior: 'smooth'
-          });
-        }
-      });
+    link.addEventListener('click', function(e) {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({
+          top: target.getBoundingClientRect().top + window.pageYOffset - NAV_SCROLL_OFFSET,
+          behavior: 'smooth'
+        });
+      }
+    });
     } else if (href.includes('#')) {
       // Cross-page link with hash (e.g., index.html#about)
       // Let the browser handle navigation, hash scrolling will be handled on page load
