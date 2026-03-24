@@ -55,6 +55,62 @@
     justify-content: center;
 }
 
+/* Assessment CTA Section */
+.assessment-cta-section {
+    padding: 40px 0;
+    background: #161b22;
+    border-top: 1px solid #21262d;
+    border-bottom: 1px solid #21262d;
+}
+
+.assessment-cta-card {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.assessment-cta-content {
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+}
+
+.assessment-cta-content h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #f0f6fc;
+    margin-bottom: 12px;
+}
+
+.assessment-cta-content p {
+    font-size: 8px;
+    color: #8b949e;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.btn-assessment {
+    display: inline-block;
+    padding: 5px 12px;
+    background: #c29734;
+    color: #23272f;
+    border: 1px solid #c29734;
+    border-radius: 6px;
+    font-size: 8px;
+    font-weight: 400;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    transition: all 0.3s ease;
+}
+
+.btn-assessment:hover {
+    background: #d4a842;
+    border-color: #d4a842;
+    transform: translateY(-1px);
+}
+
 .transformation-section {
     padding: 60px 0;
     background: #0d1117;
