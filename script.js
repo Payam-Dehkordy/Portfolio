@@ -213,6 +213,35 @@ const portfolioDetails = {
             }
         ]
     },
+    'ai-agent-integration': {
+        title: 'AI Chat & Agent Integration System',
+        subtitle: 'Staff QA / Full-Stack Engineering – AI Enablement for Delivery Teams',
+        platforms: 'Tech Stack: LLM APIs, JavaScript, Python, prompt orchestration, workflow automation',
+        technologies: 'Project: Embedded AI Chat, Task-Focused Agents, and Skill-File Driven Workflows',
+        responsibilities: [
+            'Integrated AI chat capabilities directly into internal product and engineering workflows to reduce context-switching and improve team velocity.',
+            'Designed and implemented specialized AI agents for focused tasks such as QA analysis, test scenario generation, and delivery support.',
+            'Created reusable skill-file architecture to standardize prompts, constraints, and output patterns across teams and use cases.',
+            'Built guardrails for response quality, role boundaries, and task-specific behavior to improve reliability in production workflows.',
+            'Aligned AI assistant behavior with existing CI/CD and QA processes so teams could adopt AI tooling without disrupting delivery.',
+            'Worked cross-functionally with engineering stakeholders to prioritize high-impact agent use cases and rollout plans.'
+        ],
+        examples: [
+            {
+                title: 'AI Chat in Engineering Systems:',
+                description: 'Implemented in-context AI chat experiences that help developers and QA engineers retrieve relevant guidance and execute common tasks from within existing tools.'
+            },
+            {
+                title: 'Task-Specific Agent Development:',
+                description: 'Built modular AI agents tailored to practical workflows (quality checks, troubleshooting support, and execution guidance), improving throughput and reducing repetitive manual effort.'
+            },
+            {
+                title: 'Skill-File Framework:',
+                description: 'Developed maintainable skill files and conventions that capture team standards and domain knowledge, enabling consistent, repeatable AI-assisted execution across projects.'
+            }
+        ],
+        image: 'assets/images/Automation-AI.webp'
+    },
     'maggy-beauty': {
         title: 'Maggy Beauty – E-Commerce Platform',
         subtitle: 'QA Engineer – Maggy Beauty (Startup) - E-commerce Platform (Web & Mobile)',
