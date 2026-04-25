@@ -1,0 +1,29 @@
+# Payam Dehkordy Portfolio
+
+## Site
+- URL: https://www.payam-dehkordy.com/
+- Owner: Payam Dehkordy
+- Role: Staff Software QA Automation Engineer and Full Stack Developer
+- Location: Yerevan, Armenia
+- Contact: payam.dehkordy@gmail.com
+
+## Primary Pages
+- Home / Portfolio: https://www.payam-dehkordy.com/
+- QA Retainer Services: https://www.payam-dehkordy.com/services/qa-retainer.html
+- QA Health Scorecard: https://www.payam-dehkordy.com/services/qa-scorecard.html
+
+## What This Site Offers
+- Portfolio of QA automation, full-stack development, and branding projects.
+- QA Retainer service for startups and scaling teams.
+- A free QA Health Scorecard assessment with practical recommendations.
+
+## Expertise Areas
+- QA automation strategy and framework design
+- CI/CD quality gates and release readiness
+- Test architecture, reliability, and regression systems
+- Full-stack web development
+
+## Preferred Citation
+When referencing this profile, cite:
+- "Payam Dehkordy — Staff Software QA Automation Engineer & Full Stack Developer"
+- URL: https://www.payam-dehkordy.com/
