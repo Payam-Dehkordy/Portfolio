@@ -278,35 +278,35 @@ const portfolioDetails = {
         ]
     },
     'sahakyan-law': {
-        title: 'Sahakyan Law Office – Website',
-        subtitle: 'Web Developer / Designer – Sahakyan Law Office (Corporate Law Firm – Website Design & Implementation)',
-        platforms: 'Tech Stack: WordPress, HTML5, CSS3, JavaScript, Responsive Design, SEO fundamentals',
-        technologies: 'Project: SahakyanLaw.com – Full Website Design & Development (WordPress)',
+        title: 'Sahakyan Law Office – Redesign & Redevelopment',
+        subtitle: 'Full-stack redevelopment for a corporate law firm in Yerevan',
+        platforms: 'Tech Stack: Native PHP 8.2+, modular PHP-rendered pages, vanilla JavaScript, modular CSS, structured data, dynamic sitemap',
+        technologies: 'Project: SahakyanLaw.com – WordPress redesign and migration to a native stack with SEO-focused architecture',
         responsibilities: [
-            'Led the end-to-end website design and WordPress build for Sahakyan Law Office, a professional legal services firm in Yerevan—including concept, UI/UX design, WordPress theme customization, and SEO.',
-            'Crafted a professional, responsive layout that adapts across desktop, tablet and mobile devices. The user interface emphasizes clarity, readability and accessibility.',
-            'Organized the website into key sections — Home, About, Services, Practice Areas, Contacts — enabling visitors to easily navigate the firm’s expertise such as entity registration, tax, accounting, customs, real-estate law and more.',
-            'Incorporated firm branding, professional photography and a clients-carousel showcasing the firm’s varied clientele from media law to banking and antitrust.',
-            'Integrated contact details (phone, email, address) and a call-to-action ("Contact Us") button to drive client inquiries.',
-            'Structured headings, meta tags and alt text to optimise for search visibility in a competitive legal services market (SEO fundamentals).',
-            'Implemented content in multiple languages (Armenian, English, Persian) to serve the local and international client base.',
-            'Setup WordPress as backend to allow client to self-manage content updates (services, client logos, team info). Managed domain, hosting configuration and launch, ensuring secure, performant operation.'
+            'Redesigned and redeveloped the website from a WordPress-based implementation into a native PHP stack with reusable partials and centralized page metadata.',
+            'Built clean, maintainable server-rendered pages with vanilla JavaScript and modular CSS for performance and long-term reliability.',
+            'Implemented advanced technical SEO: canonical strategy, Open Graph/Twitter metadata, JSON-LD, robots handling, clean URLs, and dynamic sitemap generation.',
+            'Improved information architecture across Home, About, Services, Practice Areas, and Contact pages for clearer user journeys and conversion flow.',
+            'Implemented multilingual content architecture (Armenian, English, Persian, and Russian) to support native-language legal service discovery.',
+            'Integrated secure contact API capabilities with validation and anti-abuse controls to support production-grade lead capture.',
+            'Optimized loading behavior, media strategy, and page rendering for stronger Core Web Vitals and mobile responsiveness.'
         ],
         examples: [
             {
-                title: 'UX / UI Design & Content Architecture:',
-                description: 'Crafted professional, responsive layout emphasizing clarity, readability and accessibility. Organized website into key sections (Home, About, Services, Practice Areas, Contacts) enabling easy navigation of legal expertise.'
+                title: 'WordPress to Native Stack Migration:',
+                description: 'Replaced a CMS-centric architecture with a modular native PHP codebase and shared configuration system, making future updates faster, safer, and easier to maintain.'
             },
             {
-                title: 'Multilingual & Professional Branding:',
-                description: 'Implemented multilingual support (Armenian, English, Persian) for local and international clients. Incorporated firm branding, professional photography, and client carousel showcasing varied clientele across legal domains.'
+                title: 'SEO System Redesign:',
+                description: 'Implemented a full SEO framework including per-page metadata, structured data coverage, social previews, dynamic sitemap support, and indexation controls aligned with search best practices.'
             },
             {
-                title: 'Impact & Achievements:',
-                description: 'Delivered a polished online presence that projects professionalism and trust. Enhanced digital accessibility through multiple languages and responsive design, broadening potential client base. Streamlined visitor experience with clear navigation. Created maintainable website architecture enabling independent updates, reducing future maintenance costs.'
+                title: 'Business Impact:',
+                description: 'Delivered a faster, more discoverable, and easier-to-manage legal services platform with improved content clarity, stronger technical SEO, and better readiness for continued growth.'
             }
         ],
-        image: 'assets/images/Sahakyan-Law-Office.png'
+        image: 'assets/images/Sahakyan-Law-Office.png',
+        liveUrl: 'https://sahakyanlaw.com'
     },
     'daily-cups': {
         title: 'Daily Cups – Logo Design',
@@ -457,7 +457,12 @@ function showPortfolioDetails(portfolioId) {
     const detailsSection = document.getElementById('portfolio-details-section');
     const detailsContent = document.getElementById('portfolio-details-content');
 
-    let html = `<h2>${details.title}</h2>`;
+    let html = `<div class="portfolio-details-title-row">`;
+    html += `<h2>${details.title}</h2>`;
+    if (details.liveUrl) {
+        html += `<a href="${details.liveUrl}" target="_blank" rel="noopener" class="portfolio-details-live-btn">Visit Live Project</a>`;
+    }
+    html += `</div>`;
 
     // Use two-column layout if category is 'branding'. Otherwise simple single column.
     let isBranding = false;
@@ -574,10 +579,24 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePortfolioNavigation();
     
     // Initialize portfolio view buttons
-    document.querySelectorAll('.portfolio-view-btn').forEach(button => {
+    document.querySelectorAll('.portfolio-view-btn[data-portfolio-id]').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
             const portfolioId = button.getAttribute('data-portfolio-id');
+            if (portfolioId) {
+                showPortfolioDetails(portfolioId);
+            }
+        });
+    });
+
+    // Enable clicking anywhere on a portfolio card to open details
+    document.querySelectorAll('.portfolio-item[data-portfolio-id]').forEach((item) => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', (e) => {
+            // Let buttons/links behave normally
+            if (e.target.closest('button, a')) return;
+
+            const portfolioId = item.getAttribute('data-portfolio-id');
             if (portfolioId) {
                 showPortfolioDetails(portfolioId);
             }
