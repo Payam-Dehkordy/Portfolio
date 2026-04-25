@@ -1,20 +1,25 @@
 // Calculate years of experience dynamically
 // This automatically calculates experience from 2017 to current year
 function calculateExperience() {
-    const startYear = 2017; // Starting year of professional experience
     const currentYear = new Date().getFullYear();
-    const years = currentYear - startYear;
-    
-    // Update both instances
-    const experienceElement1 = document.getElementById('experience-years');
-    const experienceElement2 = document.getElementById('experience-years-about');
-    
-    if (experienceElement1) {
-        experienceElement1.textContent = `${years}+`;
-    }
-    if (experienceElement2) {
-        experienceElement2.textContent = `${years}+`;
-    }
+
+    // Update every element that declares a start year
+    document.querySelectorAll('[data-start-year]').forEach((element) => {
+        const startYear = parseInt(element.getAttribute('data-start-year'), 10);
+        if (Number.isNaN(startYear)) return;
+        const years = Math.max(0, currentYear - startYear);
+        element.textContent = `${years}+`;
+    });
+
+    // Backward compatibility for any old IDs that may still exist
+    const legacyIds = ['experience-years', 'experience-years-about'];
+    legacyIds.forEach((id) => {
+        const element = document.getElementById(id);
+        if (!element) return;
+        const startYear = parseInt(element.getAttribute('data-start-year') || '2017', 10);
+        const years = Math.max(0, currentYear - startYear);
+        element.textContent = `${years}+`;
+    });
 }
 
 // Mobile Navigation Toggle
