@@ -46,14 +46,14 @@ Location: Yerevan, Armenia
 
   Staff Software QA Automation Engineer
   Period: 2026 - Present
-  - Own QA strategy and technical quality direction at Synopsys, a global leader in EDA software, within a 3+ year company tenure.
-  - Drive scalable test architecture, framework modernization, and release quality standards for mission-critical EDA delivery cycles.
+  - Own QA strategy and technical quality direction at Synopsys, a global leader in EDA software.
+  - Drive scalable test architecture, framework modernization, and release quality standards for mission-critical EDA releases.
   - Implement AI chat and AI agent workflows to accelerate day-to-day engineering operations and execution speed.
-  - Mentor engineers and improve QA culture, quality visibility, and execution consistency across cross-functional teams.
+  - Mentor engineers and improve QA culture, quality visibility, and execution consistency.
 
   Senior Software QA Automation Engineer
   Period: 2023 - 2026
-  - Built automation frameworks and regression systems across 2023-2026 release cycles for EDA workflows.
+  - Built automation frameworks and regression systems across multiple 2023-2026 EDA release cycles.
   - Validated Linux-based toolchains and improved test reliability across multiple execution environments.
   - Used Perforce, Jira, and 4 scripting languages (Bash/TCL/Perl/Python) for quality automation.
 
@@ -94,6 +94,6 @@ EDUCATION & TRAINING
 - Applied AI Courses - Synopsys Internal Training (multiple courses)
 
 LANGUAGES
-- Persian: Native
-- English: A1
-- Armenian: B1
+- Persian (Native)
+- English (A1 Basic)
+- Armenian (B1 Intermediate)

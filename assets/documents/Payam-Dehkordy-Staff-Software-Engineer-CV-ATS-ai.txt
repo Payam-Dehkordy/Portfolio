@@ -1,0 +1,99 @@
+PAYAM DEHKORDY
+Staff Software Engineer (QA Automation, Full-Stack Development, EDA, AI Automation)
+
+CONTACT
+- Location: Yerevan, Armenia
+- Work Model: Remote Worldwide (US/Canada time overlap preferred)
+- Email: payam.dehkordy@gmail.com
+- Phone: +374 55252581
+- LinkedIn: https://www.linkedin.com/in/payam-dehkordy
+- GitHub: https://github.com/Payam-Dehkordy
+- Portfolio: https://www.payam-dehkordy.com
+
+TARGET ROLES
+- Staff Software Engineer
+- Staff QA Automation Engineer
+- Senior/Staff SDET
+- QA Automation Lead (EDA / Semiconductor Software)
+- Full-Stack Engineer (Quality-Driven Delivery)
+
+PROFESSIONAL SUMMARY
+Staff-level QA Automation and Full-Stack Engineer with 9+ years of experience in EDA software quality, test architecture, and engineering delivery.
+Domain focus: Synopsys, mission-critical EDA workflows, Linux-based toolchains, regression quality, release readiness.
+Specialization: AI chat integration, AI agent development, LLM workflow automation, skill-file engineering.
+
+CORE SKILLS
+
+1) QA AUTOMATION & QUALITY ENGINEERING
+- Test Strategy, Test Planning, Risk-Based Testing
+- Test Automation, API Automation, UI Automation, End-to-End Regression
+- CI/CD Quality Gates, Release Readiness, Defect Lifecycle
+- TDD, BDD, Test Framework Design
+- Performance Testing, Reliability Testing, Compatibility Testing
+- Cross-Platform Validation (EDA Workflows)
+
+2) EDA / DOMAIN EXPERIENCE
+- EDA Quality Validation, Regression Infrastructure
+- Linux Toolchain Validation
+- Release Confidence and Quality Stability
+- Semiconductor Software QA Operations
+
+3) DEVELOPMENT & ARCHITECTURE
+- Full-Stack Development, REST APIs, SQL, Server-Side Rendering
+- Native Stack Migration, Modular PHP Architecture, Responsive UI
+- Technical SEO, Structured Data (JSON-LD), Canonical/Sitemap/Robots
+- SDLC/STLC Collaboration, Quality Governance, Technical Leadership
+
+4) AI & DELIVERY TOOLING
+- AI Chat Integration, AI Agent Development, Agentic Workflows
+- Prompt Engineering, Skill File Engineering, LLM Workflow Automation
+- Engineering Acceleration, Workflow Automation
+
+5) LANGUAGES, FRAMEWORKS, TOOLS
+- Languages: Python, JavaScript, PHP, C#, Java, Bash, Perl, TCL, SQL
+- Frameworks: .NET, Selenium, NUnit, SpecFlow, Flask, Flutter
+- Platforms/Tools: Linux Shell, GitHub Actions, Jenkins, GitHub, GitLab, Postman, Jira, Perforce
+
+PROFESSIONAL EXPERIENCE
+
+Synopsys | 2023 - Present | Yerevan, Armenia
+
+Staff Software QA Automation Engineer | 2026 - Present
+- Own QA strategy and technical quality direction in EDA software delivery.
+- Drive test architecture modernization and scalable quality frameworks.
+- Implement AI chat and AI agent workflows for engineering execution speed.
+- Mentor engineers; improve QA culture, quality visibility, execution consistency.
+
+Senior Software QA Automation Engineer | 2023 - 2026
+- Built EDA automation frameworks and regression systems across release cycles.
+- Validated Linux-based toolchains across multiple execution environments.
+- Used Perforce, Jira, and Bash/TCL/Perl/Python for quality automation.
+
+EPAM | 2022 - 2023 | Yerevan, Armenia
+Manual & .NET Automation QA Engineer
+- Delivered .NET automation with Selenium, NUnit, SpecFlow.
+- Performed API/UI testing and integrated GitHub Actions/Jenkins pipelines.
+- Applied TDD/BDD in agile release cycles.
+
+Freelancer | 2017 - 2022 | Yerevan, Armenia
+Software QA Engineer & Mobile App Tester
+- Executed white-box and black-box testing for web/mobile products.
+- Delivered UI/UX testing and design collaboration (Figma, Adobe XD).
+- Worked with Flutter, Android tooling, APIs, and e-commerce delivery.
+
+KEY PROJECTS
+- Synopsys - EDA QA Automation: Cross-platform regression and validation frameworks for mission-critical EDA flows.
+- Synopsys - Layout Portal & OASIS Portal: Internal automation and validation platforms for faster defect analysis and reusable QA infrastructure.
+- Sahakyan Law Office Redesign & Redevelopment: WordPress-to-native migration, modular PHP architecture, technical SEO improvements.
+- AI Chat & Agent Integration System: Task-focused AI agents and reusable skill-file workflows for engineering acceleration.
+
+EDUCATION & TRAINING
+- Bachelor of Electronic Engineering - Shahrekord University (2007 - 2014)
+- Software Testing Automation - EPAM Training Center (2022)
+- Introduction to Java - Armenian Code Academy (2022)
+- Applied AI Courses - Synopsys Internal Training (multiple courses)
+
+LANGUAGES
+- Persian (Native)
+- English (A1 Basic)
+- Armenian (B1 Intermediate)
