@@ -533,6 +533,11 @@ section {
     border: 1px solid #21262d;
 }
 
+/* Add spacing when multiple role blocks are stacked in one timeline item */
+.experience-content-sidebar + .experience-header-sidebar {
+    margin-top: 0.8rem;
+}
+
 .experience-content-sidebar ul {
     list-style: none;
     padding: 0;
