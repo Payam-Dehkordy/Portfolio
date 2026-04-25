@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payam Dehkordy - CV</title>
+  <style>
+    :root {
+      /* Portfolio brand colors */
+      --brand-bg: #0d1117;
+      --brand-surface: #161b22;
+      --brand-border: #21262d;
+      --brand-border-soft: #30363d;
+      --brand-text: #e6e6e6;
+      --brand-muted: #8b949e;
+      --brand-accent: #c29734;
+      --brand-accent-secondary: #335a6d;
+
+      /* Print-friendly CV mapping */
+      --paper-bg: #eef1f4;
+      --paper-surface: #f8f9fb;
+      --paper-section: #eef2f6;
+      --ink: #1b1f24;
+      --ink-strong: #101418;
+      --ink-soft: #2f3b47;
+      --ink-muted: #526171;
+      --line: #c7d3dc;
+      --line-strong: #9cb2c1;
+      --role-line: #d6dde6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "JetBrains Mono", "Segoe UI", Arial, sans-serif;
+      line-height: 1.45;
+      color: var(--ink);
+      background: var(--paper-bg);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px 10px 14px;
+      background: var(--paper-surface);
+      color: var(--ink);
+    }
+    h1, h2, h3 {
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+    h1 { font-size: 28px; font-weight: 700; color: var(--ink-strong); margin: 0; }
+    h2 {
+      font-size: 15px;
+      margin-top: 18px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--line-strong);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--brand-accent);
+    }
+    h3 { font-size: 14px; font-weight: 700; color: var(--brand-accent-secondary); }
+    p { margin: 0 0 8px; font-size: 12px; color: var(--ink-soft); }
+    ul { margin: 6px 0 10px 18px; padding: 0; }
+    li { margin: 0 0 4px; font-size: 12px; color: var(--ink-soft); }
+    .subtitle {
+      color: var(--brand-accent-secondary);
+      font-size: 13px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      border-radius: 0;
+    }
+    .brand-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand-logo-mark {
+      height: 34px;
+      width: 34px;
+      object-fit: contain;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      padding: 4px;
+      background: var(--paper-surface);
+    }
+    .contact {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px 14px;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .contact .full-row { grid-column: 1 / -1; }
+    .contact strong { color: var(--brand-accent-secondary); }
+    .section-separator {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--brand-accent-secondary) 0%, var(--brand-accent) 50%, var(--brand-accent-secondary) 100%);
+      margin: 10px 0 2px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .meta {
+      color: var(--brand-accent-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+    }
+    .skills-grid h3 {
+      font-size: 12px;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.25px;
+    }
+    .skills-grid ul { margin-top: 3px; }
+    .project-list li { margin-bottom: 6px; }
+    .small { font-size: 11px; color: var(--ink-muted); }
+    .role-entry {
+      margin-left: 12px;
+      padding-left: 10px;
+      border-left: 2px solid var(--brand-accent-secondary);
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, rgba(51, 90, 109, 0.07) 0%, rgba(194, 151, 52, 0.05) 40%, rgba(194, 151, 52, 0) 75%);
+      border-radius: 0 4px 4px 0;
+    }
+    .role-entry > p { margin-bottom: 6px; }
+    .role-entry > ul { margin-top: 0; }
+    section {
+      background: var(--paper-section);
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: 12px 12px 6px;
+      margin-top: 12px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+    @page {
+      size: A4;
+      margin: 4mm 5mm 5mm 5mm;
+    }
+    @media print {
+      .page { padding: 8px 4px 6px; }
+      h2 { margin-top: 10px; }
+      section { margin-top: 8px; }
+      .brand-header { margin-bottom: 8px; }
+      .section-separator { margin: 6px 0 2px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="avoid-break">
+      <div class="brand-header">
+        <div class="brand-logos">
+          <img src="../Logo/logo.png" alt="Payam Dehkordy icon logo" class="brand-logo-mark">
+          <h1>Payam Dehkordy</h1>
+        </div>
+      </div>
+      <p class="subtitle">Staff Software Engineer (QA Automation & Full-Stack Development)</p>
+      <div class="contact">
+        <div class="full-row"><strong>Location:</strong> Yerevan, Armenia | Open to remote opportunities worldwide (US/Canada overlap preferred)</div>
+        <div><strong>LinkedIn:</strong> linkedin.com/in/payam-dehkordy</div>
+        <div><strong>GitHub:</strong> github.com/Payam-Dehkordy</div>
+        <div><strong>Portfolio:</strong> www.payam-dehkordy.com</div>
+        <div><strong>Email:</strong> payam.dehkordy@gmail.com</div>
+        <div><strong>Phone:</strong> +374 55252581</div>
+      </div>
+    </header>
+    <div class="section-separator"></div>
+
+    <section>
+      <h2>Professional Summary</h2>
+      <p>
+        Staff-level QA Automation and Full-Stack Engineer with 9+ years of experience delivering reliable software for
+        startups and enterprise teams. Expertise in test automation strategy, CI/CD quality gates, and scalable web
+        delivery across cross-functional environments, including mission-critical EDA quality and validation workflows
+        at Synopsys. Professional experience in AI chat integration, task-focused AI agent development, and reusable
+        skill-file workflows that reduce manual effort, accelerate delivery, and improve engineering quality.
+      </p>
+    </section>
+
+    <section>
+      <h2>Core Skills</h2>
+      <div class="skills-grid">
+        <div>
+          <h3>QA & Quality Engineering</h3>
+          <ul>
+            <li>Test Strategy, Test Planning, Risk-Based Testing</li>
+            <li>Test Automation, API/UI Automation, End-to-End Regression</li>
+            <li>CI/CD Pipeline Quality Gates, Release Readiness, Defect Lifecycle</li>
+            <li>TDD, BDD, Test Framework Design, Performance/Reliability Testing</li>
+            <li>Cross-Platform Validation, Compatibility Testing (EDA Workflows)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Development & Architecture</h3>
+          <ul>
+            <li>Full-Stack Development, REST APIs, SQL, Server-Side Rendering</li>
+            <li>Native Stack Migration, Modular PHP Architecture, Responsive UI</li>
+            <li>Technical SEO, Structured Data (JSON-LD), Canonical/Sitemap/Robots</li>
+            <li>SDLC/STLC Collaboration, Quality Governance, Technical Leadership</li>
+          </ul>
+        </div>
+        <div>
+          <h3>AI & Delivery Tooling</h3>
+          <ul>
+            <li>AI Chat Integration, AI Agent Development, Agentic Workflows</li>
+            <li>Skill File Engineering, Prompt Engineering, LLM Workflow Automation</li>
+            <li>GitHub Actions, Jenkins, GitHub, GitLab, Postman, Jira</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Languages & Frameworks</h3>
+          <ul>
+            <li>Python, JavaScript, PHP, C#, Java, Bash, Perl, TCL, SQL</li>
+            <li>.NET, Selenium, NUnit, SpecFlow, Flask, Flutter, Linux Shell</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Professional Experience</h2>
+
+      <article class="avoid-break">
+        <div class="row">
+          <h3>Synopsys</h3>
+          <div class="meta">2023 - Present | Yerevan, Armenia</div>
+        </div>
+        <div class="role-entry">
+          <p><strong>Staff Software QA Automation Engineer</strong> | 2026 - Present</p>
+          <ul>
+            <li>Own QA strategy and technical quality direction at Synopsys, a global leader in EDA software, within a 3+ year company tenure.</li>
+            <li>Drive scalable test architecture, framework modernization, and release quality standards for mission-critical EDA delivery cycles.</li>
+            <li>Implement AI chat and AI agent workflows to accelerate day-to-day engineering operations and execution speed.</li>
+            <li>Mentor engineers and improve QA culture, quality visibility, and execution consistency across cross-functional teams.</li>
+          </ul>
+        </div>
+        <div class="role-entry">
+          <p><strong>Senior Software QA Automation Engineer</strong> | 2023 - 2026</p>
+          <ul>
+            <li>Built automation frameworks and regression systems across 2023-2026 release cycles for EDA workflows.</li>
+            <li>Validated Linux-based toolchains and improved test reliability across multiple execution environments.</li>
+            <li>Used Perforce, Jira, and 4 scripting languages (Bash/TCL/Perl/Python) for quality automation.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="avoid-break">
+        <div class="row">
+          <h3>EPAM</h3>
+          <div class="meta">2022 - 2023 | Yerevan, Armenia</div>
+        </div>
+        <div class="role-entry">
+          <p><strong>Manual & .NET Automation QA Engineer</strong> | 2022 - 2023</p>
+          <ul>
+            <li>Delivered .NET automation using 3 core frameworks: Selenium, NUnit, and SpecFlow.</li>
+            <li>Performed API/UI testing and integrated quality pipelines with 2 CI platforms: GitHub Actions and Jenkins.</li>
+            <li>Applied TDD/BDD practices in agile teams for stable release cycles.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="avoid-break">
+        <div class="row">
+          <h3>Freelancer</h3>
+          <div class="meta">2017 - 2022 | Yerevan, Armenia</div>
+        </div>
+        <div class="role-entry">
+          <p><strong>Software QA Engineer & Mobile App Tester</strong> | 2017 - 2022</p>
+          <ul>
+            <li>Executed white-box/black-box testing for mobile and web products across a 5-year freelance period (2017-2022).</li>
+            <li>Delivered UI/UX testing and design support using 2 design tools: Figma and Adobe XD.</li>
+            <li>Worked with Flutter, Android tooling, APIs, and e-commerce delivery needs.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Key Projects</h2>
+      <ul class="project-list">
+        <li><strong>Synopsys - EDA QA Automation:</strong> Built cross-platform regression and validation frameworks for mission-critical EDA flows, improving release confidence and quality stability at enterprise scale.</li>
+        <li><strong>Synopsys - Layout Portal & OASIS Portal:</strong> Developed internal automation and validation platforms that improved quality visibility, defect analysis speed, and reusable QA infrastructure.</li>
+        <li><strong>Sahakyan Law Office Redesign & Redevelopment:</strong> Led WordPress-to-native migration with modular PHP architecture, stronger technical SEO, and improved performance/maintainability.</li>
+        <li><strong>AI Chat & Agent Integration System:</strong> Implemented task-focused AI agents and skill-file workflows to reduce manual effort and accelerate engineering delivery.</li>
+      </ul>
+      <p class="small"><strong>Portfolio:</strong> https://www.payam-dehkordy.com</p>
+    </section>
+
+    <section class="avoid-break">
+      <h2>Education & Training</h2>
+      <ul>
+        <li><strong>Bachelor of Electronic Engineering</strong> - Shahrekord University (2007 - 2014)</li>
+        <li><strong>Software Testing Automation</strong> - EPAM Training Center (2022)</li>
+        <li><strong>Introduction to Java</strong> - Armenian Code Academy (2022)</li>
+        <li><strong>Applied AI Courses</strong> - Synopsys Internal Training (multiple courses)</li>
+      </ul>
+    </section>
+
+    <section class="avoid-break">
+      <h2>Languages</h2>
+      <p>Persian (Native), English (A1), Armenian (B1)</p>
+      <p class="small">References and detailed project case studies are available on request.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,99 @@
+PAYAM DEHKORDY
+Staff Software Engineer (QA Automation & Full-Stack Development)
+
+CONTACT
+- Location: Yerevan, Armenia | Open to remote opportunities worldwide (US/Canada overlap preferred)
+- Email: payam.dehkordy@gmail.com
+- Phone: +374 55252581
+- LinkedIn: https://www.linkedin.com/in/payam-dehkordy
+- GitHub: https://github.com/Payam-Dehkordy
+- Portfolio: https://www.payam-dehkordy.com
+
+PROFESSIONAL SUMMARY
+Staff-level QA Automation and Full-Stack Engineer with 9+ years of experience delivering reliable software for startups and enterprise teams.
+Expertise in test automation strategy, CI/CD quality gates, and scalable web delivery across cross-functional environments, including mission-critical EDA quality and validation workflows at Synopsys.
+Professional experience in AI chat integration, task-focused AI agent development, and reusable skill-file workflows that reduce manual effort, accelerate delivery, and improve engineering quality.
+
+CORE SKILLS
+
+1) QA & Quality Engineering
+- Test Strategy, Test Planning, Risk-Based Testing
+- Test Automation, API/UI Automation, End-to-End Regression
+- CI/CD Pipeline Quality Gates, Release Readiness, Defect Lifecycle
+- TDD, BDD, Test Framework Design, Performance/Reliability Testing
+- Cross-Platform Validation, Compatibility Testing (EDA Workflows)
+
+2) Development & Architecture
+- Full-Stack Development, REST APIs, SQL, Server-Side Rendering
+- Native Stack Migration, Modular PHP Architecture, Responsive UI
+- Technical SEO, Structured Data (JSON-LD), Canonical/Sitemap/Robots
+- SDLC/STLC Collaboration, Quality Governance, Technical Leadership
+
+3) AI & Delivery Tooling
+- AI Chat Integration, AI Agent Development, Agentic Workflows
+- Skill File Engineering, Prompt Engineering, LLM Workflow Automation
+- GitHub Actions, Jenkins, GitHub, GitLab, Postman, Jira
+
+4) Languages & Frameworks
+- Python, JavaScript, PHP, C#, Java, Bash, Perl, TCL, SQL
+- .NET, Selenium, NUnit, SpecFlow, Flask, Flutter, Linux Shell
+
+PROFESSIONAL EXPERIENCE
+
+Synopsys
+Company Tenure: 2023 - Present
+Location: Yerevan, Armenia
+
+  Staff Software QA Automation Engineer
+  Period: 2026 - Present
+  - Own QA strategy and technical quality direction at Synopsys, a global leader in EDA software, within a 3+ year company tenure.
+  - Drive scalable test architecture, framework modernization, and release quality standards for mission-critical EDA delivery cycles.
+  - Implement AI chat and AI agent workflows to accelerate day-to-day engineering operations and execution speed.
+  - Mentor engineers and improve QA culture, quality visibility, and execution consistency across cross-functional teams.
+
+  Senior Software QA Automation Engineer
+  Period: 2023 - 2026
+  - Built automation frameworks and regression systems across 2023-2026 release cycles for EDA workflows.
+  - Validated Linux-based toolchains and improved test reliability across multiple execution environments.
+  - Used Perforce, Jira, and 4 scripting languages (Bash/TCL/Perl/Python) for quality automation.
+
+EPAM
+Company Tenure: 2022 - 2023
+Location: Yerevan, Armenia
+
+  Manual & .NET Automation QA Engineer
+  Period: 2022 - 2023
+  - Delivered .NET automation using 3 core frameworks: Selenium, NUnit, and SpecFlow.
+  - Performed API/UI testing and integrated quality pipelines with 2 CI platforms: GitHub Actions and Jenkins.
+  - Applied TDD/BDD practices in agile teams for stable release cycles.
+
+Freelancer
+Company Tenure: 2017 - 2022
+Location: Yerevan, Armenia
+
+  Software QA Engineer & Mobile App Tester
+  Period: 2017 - 2022
+  - Executed white-box/black-box testing for mobile and web products across a 5-year freelance period (2017-2022).
+  - Delivered UI/UX testing and design support using 2 design tools: Figma and Adobe XD.
+  - Worked with Flutter, Android tooling, APIs, and e-commerce delivery needs.
+
+KEY PROJECTS
+- Synopsys - EDA QA Automation:
+  Built cross-platform regression and validation frameworks for mission-critical EDA flows, improving release confidence and quality stability at enterprise scale.
+- Synopsys - Layout Portal & OASIS Portal:
+  Developed internal automation and validation platforms that improved quality visibility, defect analysis speed, and reusable QA infrastructure.
+- Sahakyan Law Office Redesign & Redevelopment:
+  Led WordPress-to-native migration with modular PHP architecture, stronger technical SEO, and improved performance/maintainability.
+- AI Chat & Agent Integration System:
+  Implemented task-focused AI agents and skill-file workflows to reduce manual effort and accelerate engineering delivery.
+
+EDUCATION & TRAINING
+- Bachelor of Electronic Engineering - Shahrekord University (2007 - 2014)
+- Software Testing Automation - EPAM Training Center (2022)
+- Introduction to Java - Armenian Code Academy (2022)
+- Applied AI Courses - Synopsys Internal Training (multiple courses)
+
+LANGUAGES
+- Persian: Native
+- English: A1
+- Armenian: B1
