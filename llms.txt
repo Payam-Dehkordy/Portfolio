@@ -6,11 +6,13 @@
 - Role: Staff Software QA Automation Engineer and Full Stack Developer
 - Location: Yerevan, Armenia
 - Contact: payam.dehkordy@gmail.com
+- Primary client region: North America (United States and Canada)
 
 ## Primary Pages
 - Home / Portfolio: https://www.payam-dehkordy.com/
 - QA Retainer Services: https://www.payam-dehkordy.com/services/qa-retainer.html
 - QA Health Scorecard: https://www.payam-dehkordy.com/services/qa-scorecard.html
+- Web Agency Services: https://www.payam-dehkordy.com/services/web-agency.html
 
 ## What This Site Offers
 - Portfolio of QA automation, full-stack development, and branding projects.

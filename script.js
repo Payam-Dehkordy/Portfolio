@@ -126,6 +126,18 @@ filterButtons.forEach(button => {
     });
 });
 
+// Apply portfolio filter from URL query, e.g. ?portfolioFilter=fullstack#portfolio
+function applyPortfolioFilterFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const filterFromUrl = params.get('portfolioFilter');
+    if (!filterFromUrl) return;
+
+    const targetButton = document.querySelector(`.filter-btn[data-filter="${filterFromUrl}"]`);
+    if (targetButton) {
+        targetButton.click();
+    }
+}
+
 // Portfolio Details Data
 const portfolioDetails = {
     'eda-automation-qa': {
@@ -577,6 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize portfolio navigation
     initializePortfolioNavigation();
+    applyPortfolioFilterFromUrl();
     
     // Initialize portfolio view buttons
     document.querySelectorAll('.portfolio-view-btn[data-portfolio-id]').forEach(button => {
