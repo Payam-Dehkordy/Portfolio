@@ -18,6 +18,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from google.auth.transport.requests import Request as GoogleAuthRequest
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from mail_html import contact_bodies, scorecard_bodies
 from pydantic import BaseModel, EmailStr, Field, TypeAdapter, ValidationError
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -104,19 +105,24 @@ def _send_via_gmail_api(msg: EmailMessage) -> None:
     service.users().messages().send(userId="me", body={"raw": raw}).execute()
 
 
-def _send_email(*, subject: str, body: str, reply_to: str) -> None:
+def _send_rich_email(*, subject: str, plain: str, html_body: str, reply_to: str) -> None:
     msg = EmailMessage()
     msg["Subject"] = subject
     msg["From"] = MAIL_FROM
     msg["To"] = MAIL_FROM
     msg["Reply-To"] = reply_to
-    msg.set_content(body)
+    msg.set_content(plain)
+    msg.add_alternative(html_body, subtype="html")
     _send_via_gmail_api(msg)
 
 
-def _send_email_checked(*, subject: str, body: str, reply_to: str) -> None:
+def _send_email_checked(
+    *, subject: str, plain: str, html_body: str, reply_to: str
+) -> None:
     try:
-        _send_email(subject=subject, body=body, reply_to=reply_to)
+        _send_rich_email(
+            subject=subject, plain=plain, html_body=html_body, reply_to=reply_to
+        )
     except Exception:
         logger.exception("Mail delivery failed (Gmail API)")
         raise HTTPException(
@@ -152,22 +158,31 @@ async def send_mail(request: Request) -> dict[str, str]:
     if isinstance(payload, ContactIn):
         if (payload.website or "").strip():
             raise HTTPException(status_code=400, detail="bad request")
-        body = (
-            f"Contact form on portfolio website\n\n"
-            f"From name: {payload.name}\n"
-            f"From email: {payload.email}\n\n"
-            f"{payload.message}"
+        plain, html_body = contact_bodies(
+            name=payload.name.strip(),
+            email=str(payload.email),
+            subject_user=payload.subject.strip(),
+            message=payload.message.strip(),
         )
-        subj = f"[Portfolio] {payload.subject}"
-        _send_email_checked(subject=subj, body=body, reply_to=str(payload.email))
+        subj = f"[Portfolio] {payload.subject.strip()}"
+        _send_email_checked(
+            subject=subj,
+            plain=plain,
+            html_body=html_body,
+            reply_to=str(payload.email),
+        )
         return {"ok": "sent"}
 
-    body = (
-        f"QA Health Scorecard — detailed report request\n\n"
-        f"Visitor email: {payload.email}\n"
-        f"Score: {payload.score}/50\n"
-        f"Average: {payload.average}\n"
+    plain, html_body = scorecard_bodies(
+        visitor_email=str(payload.email),
+        score=payload.score,
+        average=payload.average.strip(),
     )
     subj = "[Portfolio] QA Health Scorecard — detailed report request"
-    _send_email_checked(subject=subj, body=body, reply_to=str(payload.email))
+    _send_email_checked(
+        subject=subj,
+        plain=plain,
+        html_body=html_body,
+        reply_to=str(payload.email),
+    )
     return {"ok": "sent"}
