@@ -127,7 +127,11 @@ jobs:
           sudo -n /usr/bin/chown -R "$REMOTE_USER" /opt/portfolio-mail 2>/dev/null || sudo -n /bin/chown -R "$REMOTE_USER" /opt/portfolio-mail 2>/dev/null || die_sudo
           ENSURE_MAILDIR
 
+          # Exclude venv: it only exists on the server (--delete would try to remove it; running
+          # portfolio-mail holds files open → "cannot delete non-empty directory").
           rsync -az --delete \
+            --exclude "venv/" \
+            --exclude ".venv/" \
             --exclude "__pycache__/" \
             --exclude "*.pyc" \
             -e "$RSYNC_RSH" \
