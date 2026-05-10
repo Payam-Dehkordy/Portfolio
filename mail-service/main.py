@@ -1,22 +1,23 @@
 """
-Portfolio outbound mail via Gmail SMTP (App Password).
-All messages send with From: MAIL_FROM_EMAIL (real mailbox identity).
+Portfolio outbound mail via Gmail API (HTTPS only).
+
+Sends as MAIL_FROM_EMAIL using OAuth — same identity as your Gmail inbox.
 Listen: 127.0.0.1:8791 — nginx proxies https://www.payam-dehkordy.com/api/
 """
 
 from __future__ import annotations
 
-import errno
+import base64
 import logging
 import os
-import smtplib
-import socket
-import ssl
 from email.message import EmailMessage
 from typing import Annotated, Literal, Union
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from google.auth.transport.requests import Request as GoogleAuthRequest
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
 from pydantic import BaseModel, EmailStr, Field, TypeAdapter, ValidationError
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -32,65 +33,10 @@ ALLOWED_ORIGINS = [
 ]
 
 MAIL_FROM = os.environ.get("MAIL_FROM_EMAIL", "").strip()
-MAIL_USER = os.environ.get("MAIL_SMTP_USER", MAIL_FROM).strip()
-MAIL_PASS = os.environ.get("MAIL_SMTP_APP_PASSWORD", "").strip()
-SMTP_HOST = os.environ.get("MAIL_SMTP_HOST", "smtp.gmail.com").strip()
-SMTP_PORT = int(os.environ.get("MAIL_SMTP_PORT", "587"))
-SMTP_SSL_PORT = int(os.environ.get("MAIL_SMTP_SSL_PORT", "465"))
-SMTP_TIMEOUT = float(os.environ.get("MAIL_SMTP_TIMEOUT", "45"))
-# starttls | ssl | auto — auto tries STARTTLS on SMTP_PORT then implicit TLS on SMTP_SSL_PORT if connect times out.
-SMTP_CONNECTION = os.environ.get("MAIL_SMTP_CONNECTION", "auto").strip().lower()
-# VPS often has no IPv6 egress; getaddrinfo returns AAAA first → connect() → Errno 101 ENETUNREACH.
-_FORCE_IPV4 = os.environ.get("MAIL_SMTP_FORCE_IPV4", "1").strip().lower() in (
-    "1",
-    "true",
-    "yes",
-)
-
-
-class SMTPIPv4(smtplib.SMTP):
-    """Like SMTP, but open TCP via IPv4 only when MAIL_SMTP_FORCE_IPV4 is set (default on)."""
-
-    def _get_socket(self, host: str, port: int, timeout: float | None):
-        if not _FORCE_IPV4:
-            return super()._get_socket(host, port, timeout)
-        last_exc: OSError | None = None
-        for res in socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM):
-            af, socktype, proto, _canon, sa = res
-            sock = socket.socket(af, socktype, proto)
-            sock.settimeout(timeout)
-            try:
-                sock.connect(sa)
-                return sock
-            except OSError as e:
-                last_exc = e
-                sock.close()
-        if last_exc is not None:
-            raise last_exc
-        raise OSError(f"no IPv4 addresses found for {host!r}")
-
-
-class SMTPIPv4_SSL(smtplib.SMTP_SSL):
-    """SMTP_SSL with IPv4-only TCP when MAIL_SMTP_FORCE_IPV4 is set."""
-
-    def _get_socket(self, host: str, port: int, timeout: float | None):
-        if not _FORCE_IPV4:
-            return super()._get_socket(host, port, timeout)
-        last_exc: OSError | None = None
-        for res in socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM):
-            af, socktype, proto, _canon, sa = res
-            sock = socket.socket(af, socktype, proto)
-            sock.settimeout(timeout)
-            try:
-                sock.connect(sa)
-                return self.context.wrap_socket(sock, server_hostname=self._host)
-            except OSError as e:
-                last_exc = e
-                sock.close()
-        if last_exc is not None:
-            raise last_exc
-        raise OSError(f"no IPv4 addresses found for {host!r}")
-
+GMAIL_CLIENT_ID = os.environ.get("GMAIL_CLIENT_ID", "").strip()
+GMAIL_CLIENT_SECRET = os.environ.get("GMAIL_CLIENT_SECRET", "").strip()
+GMAIL_REFRESH_TOKEN = os.environ.get("GMAIL_REFRESH_TOKEN", "").strip()
+GMAIL_SEND_SCOPE = "https://www.googleapis.com/auth/gmail.send"
 
 logger = logging.getLogger(__name__)
 
@@ -124,17 +70,38 @@ class ScorecardIn(BaseModel):
     average: str = Field(..., max_length=10)
 
 
-# Discriminated union validated explicitly — avoids FastAPI/slowapi mis-reading the JSON body (422).
 MailPayload = Annotated[Union[ContactIn, ScorecardIn], Field(discriminator="kind")]
 _MAIL_PAYLOAD_ADAPTER = TypeAdapter(MailPayload)
 
 
 def _require_mail_env() -> None:
-    if not MAIL_FROM or not MAIL_USER or not MAIL_PASS:
+    if not MAIL_FROM:
         raise HTTPException(
             status_code=503,
-            detail="Mail not configured on server (MAIL_FROM_EMAIL / MAIL_SMTP_*).",
+            detail="MAIL_FROM_EMAIL is not set.",
         )
+    if not (GMAIL_CLIENT_ID and GMAIL_CLIENT_SECRET and GMAIL_REFRESH_TOKEN):
+        raise HTTPException(
+            status_code=503,
+            detail="Gmail API not configured (GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN).",
+        )
+
+
+def _send_via_gmail_api(msg: EmailMessage) -> None:
+    creds = Credentials(
+        token=None,
+        refresh_token=GMAIL_REFRESH_TOKEN,
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=GMAIL_CLIENT_ID,
+        client_secret=GMAIL_CLIENT_SECRET,
+        scopes=[GMAIL_SEND_SCOPE],
+    )
+    if not creds.valid:
+        creds.refresh(GoogleAuthRequest())
+
+    raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
+    service = build("gmail", "v1", credentials=creds, cache_discovery=False)
+    service.users().messages().send(userId="me", body={"raw": raw}).execute()
 
 
 def _send_email(*, subject: str, body: str, reply_to: str) -> None:
@@ -144,70 +111,14 @@ def _send_email(*, subject: str, body: str, reply_to: str) -> None:
     msg["To"] = MAIL_FROM
     msg["Reply-To"] = reply_to
     msg.set_content(body)
-
-    ctx = ssl.create_default_context()
-
-    def send_starttls() -> None:
-        with SMTPIPv4(SMTP_HOST, SMTP_PORT, timeout=SMTP_TIMEOUT) as smtp:
-            smtp.starttls(context=ctx)
-            smtp.login(MAIL_USER, MAIL_PASS)
-            smtp.send_message(msg)
-
-    def send_ssl() -> None:
-        with SMTPIPv4_SSL(
-            SMTP_HOST,
-            SMTP_SSL_PORT,
-            timeout=SMTP_TIMEOUT,
-            context=ctx,
-        ) as smtp:
-            smtp.login(MAIL_USER, MAIL_PASS)
-            smtp.send_message(msg)
-
-    mode = SMTP_CONNECTION
-    if mode == "ssl":
-        send_ssl()
-        return
-    if mode == "starttls":
-        send_starttls()
-        return
-
-    # auto: STARTTLS first; on TCP timeout try implicit TLS (465) — some networks block 587 only.
-    try:
-        send_starttls()
-    except TimeoutError:
-        logger.warning(
-            "SMTP STARTTLS timed out (host=%s port=%s); retrying implicit TLS on port %s",
-            SMTP_HOST,
-            SMTP_PORT,
-            SMTP_SSL_PORT,
-        )
-        send_ssl()
-    except OSError as e:
-        if e.errno not in (errno.ETIMEDOUT, errno.ECONNRESET):
-            raise
-        logger.warning(
-            "SMTP STARTTLS connect error %s (host=%s port=%s); retrying implicit TLS on port %s",
-            e,
-            SMTP_HOST,
-            SMTP_PORT,
-            SMTP_SSL_PORT,
-        )
-        send_ssl()
+    _send_via_gmail_api(msg)
 
 
 def _send_email_checked(*, subject: str, body: str, reply_to: str) -> None:
-    """Send via SMTP; log server-side and raise HTTP 502 on failure (never leak SMTP text to client)."""
     try:
         _send_email(subject=subject, body=body, reply_to=reply_to)
     except Exception:
-        logger.exception(
-            "SMTP send failed (host=%s ports=%s/%s connection=%s user=%s)",
-            SMTP_HOST,
-            SMTP_PORT,
-            SMTP_SSL_PORT,
-            SMTP_CONNECTION,
-            MAIL_USER,
-        )
+        logger.exception("Mail delivery failed (Gmail API)")
         raise HTTPException(
             status_code=502,
             detail="Mail delivery failed. Please try again later or email directly.",
@@ -229,12 +140,12 @@ async def send_mail(request: Request) -> dict[str, str]:
     _require_mail_env()
 
     try:
-        raw = await request.json()
+        raw_json = await request.json()
     except Exception:
         raise HTTPException(status_code=400, detail="invalid json")
 
     try:
-        payload = _MAIL_PAYLOAD_ADAPTER.validate_python(raw)
+        payload = _MAIL_PAYLOAD_ADAPTER.validate_python(raw_json)
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=e.errors())
 

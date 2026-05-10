@@ -1,5 +1,5 @@
 [Unit]
-Description=Portfolio site mail API (Gmail SMTP, localhost only)
+Description=Portfolio site mail API (Gmail API, localhost only)
 After=network.target
 
 [Service]
