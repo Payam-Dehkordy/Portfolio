@@ -1,0 +1,144 @@
+# Secrets (repo → Settings → Secrets and variables → Actions):
+#   SSH_HOST, SSH_USER, SSH_PRIVATE_KEY_B64
+#   SSH_TARGET_DIR  MUST be /var/www/portfolio (document root only).
+# Optional: SSH_PORT (default 22)
+#
+# Deploy user needs passwordless sudo — install deploy/sudoers-portfolio-deploy.example
+# on the droplet (paths: command -v cp ln nginx systemctl).
+
+name: Deploy Portfolio (static)
+
+on:
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+concurrency:
+  group: portfolio-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure SSH key (secret)
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_PRIVATE_KEY_B64: ${{ secrets.SSH_PRIVATE_KEY_B64 }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          KEYFILE="$HOME/.ssh/id_ed25519"
+          if printf '%s' "$SSH_PRIVATE_KEY_B64" | grep -qE 'BEGIN (OPENSSH|RSA|EC) PRIVATE KEY|BEGIN PRIVATE KEY'; then
+            printf '%s' "$SSH_PRIVATE_KEY_B64" > "$KEYFILE"
+          else
+            printf '%s' "$SSH_PRIVATE_KEY_B64" | tr -d '\r\n\t ' | base64 -d > "$KEYFILE" || {
+              echo "::error::Could not decode SSH_PRIVATE_KEY_B64"
+              exit 1
+            }
+          fi
+          chmod 600 "$KEYFILE"
+          if ! [ -s "$KEYFILE" ]; then
+            echo "::error::SSH key file is empty"
+            exit 1
+          fi
+          sed -i 's/\r$//' "$KEYFILE"
+          python3 -c "p='$KEYFILE'; d=open(p,'rb').read(); open(p,'wb').write(d[3:] if d.startswith(b'\xef\xbb\xbf') else d)"
+
+          PORT="${SSH_PORT:-22}"
+          ssh-keyscan -p "$PORT" "$SSH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Test SSH login
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          PORT="${SSH_PORT:-22}"
+          ssh -p "$PORT" -o BatchMode=yes -o IdentitiesOnly=yes \
+            -i ~/.ssh/id_ed25519 \
+            "$SSH_USER@$SSH_HOST" "echo ok"
+
+      - name: Rsync static tree + install nginx vhost
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_TARGET_DIR: ${{ secrets.SSH_TARGET_DIR }}
+        run: |
+          if [ -z "$SSH_TARGET_DIR" ]; then
+            echo "::error::Set SSH_TARGET_DIR to /var/www/portfolio"
+            exit 1
+          fi
+          if [ "$SSH_TARGET_DIR" != "/var/www/portfolio" ]; then
+            echo "::error::SSH_TARGET_DIR must be exactly /var/www/portfolio (avoid overwriting another site)"
+            exit 1
+          fi
+
+          PORT="${SSH_PORT:-22}"
+          REMOTE="$SSH_USER@$SSH_HOST:$SSH_TARGET_DIR"
+          RSYNC_RSH="ssh -p $PORT -o IdentitiesOnly=yes -i $HOME/.ssh/id_ed25519"
+          SSH_BASE=(ssh -p "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" "$SSH_USER@$SSH_HOST")
+
+          "${SSH_BASE[@]}" "mkdir -p '$SSH_TARGET_DIR'"
+
+          rsync -az --delete \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            --exclude ".cursor/" \
+            --exclude "deploy/" \
+            --exclude "docs/" \
+            --exclude "CNAME" \
+            --exclude "README.md" \
+            -e "$RSYNC_RSH" \
+            ./ \
+            "$REMOTE/"
+
+          "${SSH_BASE[@]}" "chmod -R a+rX '$SSH_TARGET_DIR'"
+
+          scp -P "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" \
+            deploy/nginx-portfolio.conf \
+            "$SSH_USER@$SSH_HOST:/tmp/portfolio-nginx.conf"
+
+          "${SSH_BASE[@]}" bash -s <<'REMOTE_INSTALL'
+          set -euo pipefail
+          TMP=/tmp/portfolio-nginx.conf
+          sudo -n /usr/bin/cp "$TMP" /etc/nginx/sites-available/portfolio.conf \
+            || sudo -n /bin/cp "$TMP" /etc/nginx/sites-available/portfolio.conf
+          sudo -n /usr/bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf \
+            || sudo -n /bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf
+          sudo -n /usr/sbin/nginx -t
+          sudo -n /usr/bin/systemctl reload nginx \
+            || sudo -n /bin/systemctl reload nginx
+          REMOTE_INSTALL
+
+      - name: Remote diagnostics (HTTPS → job log)
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_TARGET_DIR: ${{ secrets.SSH_TARGET_DIR }}
+        run: |
+          PORT="${SSH_PORT:-22}"
+          ssh -p "$PORT" -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519 \
+            "$SSH_USER@$SSH_HOST" bash -s <<'REMOTE_SCRIPT'
+          set +e
+          echo "::group::HTTPS checks on loopback (Host: www.payam-dehkordy.com)"
+          code=$(curl -sS -o /dev/null -w "%{http_code}" -k --resolve www.payam-dehkordy.com:443:127.0.0.1 "https://www.payam-dehkordy.com/" 2>/dev/null || echo "fail")
+          echo "GET https://www.payam-dehkordy.com/ → HTTP ${code}"
+          code_services=$(curl -sS -o /dev/null -w "%{http_code}" -k --resolve www.payam-dehkordy.com:443:127.0.0.1 "https://www.payam-dehkordy.com/services/qa-retainer.html" 2>/dev/null || echo "fail")
+          echo "GET /services/qa-retainer.html → HTTP ${code_services}"
+          echo "::endgroup::"
+          echo "::group::document root"
+          ls -la /var/www/portfolio 2>/dev/null | head -20 || echo "missing /var/www/portfolio"
+          test -f /var/www/portfolio/index.html && wc -c /var/www/portfolio/index.html || echo "no index.html"
+          echo "::endgroup::"
+          REMOTE_SCRIPT

@@ -93,9 +93,17 @@ README.md          # (this file)
 
 ## 🌐 Deploying
 
-**Production (recommended):** DigitalOcean droplet — **`deploy/nginx-portfolio.conf`** + **`/var/www/portfolio`**. Step-by-step checklist lives in the private [**Droplet** repo](https://github.com/Payam-Dehkordy/Droplet) → [**docs/PORTFOLIO_HOSTING.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/PORTFOLIO_HOSTING.md). Local stub: [**docs/DROPLET_MIGRATION_ROADMAP.md**](docs/DROPLET_MIGRATION_ROADMAP.md).
+**Production:** DigitalOcean droplet — web root **`/var/www/portfolio`**, canonical nginx **`deploy/nginx-portfolio.conf`**. Full checklist (bootstrap TLS, DNS, GitHub Pages): [**Droplet → PORTFOLIO_HOSTING.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/PORTFOLIO_HOSTING.md). Pointer only in-repo: [**docs/DROPLET_MIGRATION_ROADMAP.md**](docs/DROPLET_MIGRATION_ROADMAP.md).
 
-**Legacy:** GitHub Pages (disable after cutover so DNS and canonical URLs stay single-origin).
+### GitHub Actions (automated deploy)
+
+On push to **`main`** / **`master`**, or **workflow_dispatch**, **`.github/workflows/deploy.yml`** rsyncs the static tree (excludes **`deploy/`**, **`docs/`**, **`.github/`**, **`CNAME`**, **`README.md`**) and uploads **`deploy/nginx-portfolio.conf`** to **`/tmp/portfolio-nginx.conf`**, then installs it with passwordless sudo.
+
+**Repository secrets:** `SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY_B64`, **`SSH_TARGET_DIR`** = **`/var/www/portfolio`** (required exact match). Optional `SSH_PORT` (default **22**).
+
+**One-time on the droplet:** install **`deploy/sudoers-portfolio-deploy.example`** for your deploy user; first TLS bootstrap uses **`deploy/nginx-portfolio-bootstrap-http80.conf`** (see Droplet doc §3).
+
+**Legacy:** GitHub Pages — disable after DNS points at the droplet; then remove **`CNAME`** from this repo if desired.
 
 ---
 
