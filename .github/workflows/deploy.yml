@@ -4,7 +4,7 @@
 # Optional: SSH_PORT (default 22)
 #
 # Deploy user needs passwordless sudo — install deploy/sudoers-portfolio-deploy.example
-# on the droplet (paths: command -v cp ln nginx systemctl).
+# on the droplet (mkdir/chown under /var/www/portfolio + nginx; paths: command -v mkdir chown chmod cp ln nginx systemctl).
 
 name: Deploy Portfolio (static)
 
@@ -87,7 +87,14 @@ jobs:
           RSYNC_RSH="ssh -p $PORT -o IdentitiesOnly=yes -i $HOME/.ssh/id_ed25519"
           SSH_BASE=(ssh -p "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" "$SSH_USER@$SSH_HOST")
 
-          "${SSH_BASE[@]}" "mkdir -p '$SSH_TARGET_DIR'"
+          # /var/www/* is root-owned; deploy cannot mkdir without sudo (see sudoers-portfolio-deploy.example).
+          "${SSH_BASE[@]}" bash -s <<'ENSURE_WEBROOT'
+          set -euo pipefail
+          sudo -n /usr/bin/mkdir -p /var/www/portfolio || sudo -n /bin/mkdir -p /var/www/portfolio
+          sudo -n /usr/bin/chown -R deploy /var/www/portfolio || sudo -n /bin/chown -R deploy /var/www/portfolio
+          sudo -n /usr/bin/chgrp -R www-data /var/www/portfolio || sudo -n /bin/chgrp -R www-data /var/www/portfolio
+          sudo -n /usr/bin/chmod -R g+rX /var/www/portfolio || sudo -n /bin/chmod -R g+rX /var/www/portfolio
+          ENSURE_WEBROOT
 
           rsync -az --delete \
             --exclude ".git/" \

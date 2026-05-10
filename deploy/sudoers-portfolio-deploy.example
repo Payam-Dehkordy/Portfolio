@@ -11,6 +11,16 @@
 # Portfolio web root is /var/www/portfolio. The nginx config is staged to /tmp by CI
 # (rsync does not place deploy/ under the document root — see https://github.com/Payam-Dehkordy/Droplet )
 
+# First-run / CI: create doc root (deploy cannot mkdir under /var/www without root)
+deploy ALL=(ALL) NOPASSWD: /usr/bin/mkdir -p /var/www/portfolio
+deploy ALL=(ALL) NOPASSWD: /bin/mkdir -p /var/www/portfolio
+deploy ALL=(ALL) NOPASSWD: /usr/bin/chown -R deploy /var/www/portfolio
+deploy ALL=(ALL) NOPASSWD: /bin/chown -R deploy /var/www/portfolio
+deploy ALL=(ALL) NOPASSWD: /usr/bin/chgrp -R www-data /var/www/portfolio
+deploy ALL=(ALL) NOPASSWD: /bin/chgrp -R www-data /var/www/portfolio
+deploy ALL=(ALL) NOPASSWD: /usr/bin/chmod -R g+rX /var/www/portfolio
+deploy ALL=(ALL) NOPASSWD: /bin/chmod -R g+rX /var/www/portfolio
+
 deploy ALL=(ALL) NOPASSWD: /usr/bin/cp /tmp/portfolio-nginx.conf /etc/nginx/sites-available/portfolio.conf
 deploy ALL=(ALL) NOPASSWD: /bin/cp /tmp/portfolio-nginx.conf /etc/nginx/sites-available/portfolio.conf
 deploy ALL=(ALL) NOPASSWD: /usr/bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf
