@@ -1204,15 +1204,19 @@ section {
     margin-bottom: 0.45rem;
 }
 
-/* Same card shell as .contact-form (background, border, radius, padding) */
+/* Card matches .contact-form — only wraps referral fields, not CV download links */
 .referral-form {
-    margin: 0;
+    margin: 1.25rem 0 0;
     text-align: center;
     background: #161b22;
     padding: 2.5rem 2.25rem;
     border-radius: 8px;
     border: 1px solid #21262d;
     box-sizing: border-box;
+}
+
+.referral-form-actions {
+    margin-bottom: 0;
 }
 
 /* Email field shares CV row — constrained width so the row doesn’t stretch full-width */
