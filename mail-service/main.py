@@ -6,6 +6,7 @@ Listen: 127.0.0.1:8791 — nginx proxies https://www.payam-dehkordy.com/api/
 
 from __future__ import annotations
 
+import logging
 import os
 import smtplib
 import ssl
@@ -33,6 +34,8 @@ MAIL_USER = os.environ.get("MAIL_SMTP_USER", MAIL_FROM).strip()
 MAIL_PASS = os.environ.get("MAIL_SMTP_APP_PASSWORD", "").strip()
 SMTP_HOST = os.environ.get("MAIL_SMTP_HOST", "smtp.gmail.com").strip()
 SMTP_PORT = int(os.environ.get("MAIL_SMTP_PORT", "587"))
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="portfolio-mail", docs_url=None, redoc_url=None, openapi_url=None)
 limiter = Limiter(key_func=get_remote_address)
@@ -92,6 +95,23 @@ def _send_email(*, subject: str, body: str, reply_to: str) -> None:
         smtp.send_message(msg)
 
 
+def _send_email_checked(*, subject: str, body: str, reply_to: str) -> None:
+    """Send via SMTP; log server-side and raise HTTP 502 on failure (never leak SMTP text to client)."""
+    try:
+        _send_email(subject=subject, body=body, reply_to=reply_to)
+    except Exception:
+        logger.exception(
+            "SMTP send failed (host=%s port=%s user=%s)",
+            SMTP_HOST,
+            SMTP_PORT,
+            MAIL_USER,
+        )
+        raise HTTPException(
+            status_code=502,
+            detail="Mail delivery failed. Please try again later or email directly.",
+        ) from None
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
@@ -126,7 +146,7 @@ async def send_mail(request: Request) -> dict[str, str]:
             f"{payload.message}"
         )
         subj = f"[Portfolio] {payload.subject}"
-        _send_email(subject=subj, body=body, reply_to=str(payload.email))
+        _send_email_checked(subject=subj, body=body, reply_to=str(payload.email))
         return {"ok": "sent"}
 
     body = (
@@ -136,5 +156,5 @@ async def send_mail(request: Request) -> dict[str, str]:
         f"Average: {payload.average}\n"
     )
     subj = "[Portfolio] QA Health Scorecard — detailed report request"
-    _send_email(subject=subj, body=body, reply_to=str(payload.email))
+    _send_email_checked(subject=subj, body=body, reply_to=str(payload.email))
     return {"ok": "sent"}
