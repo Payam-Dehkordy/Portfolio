@@ -201,9 +201,7 @@ async def send_mail(request: Request) -> dict[str, str]:
     if isinstance(payload, ReferralIn):
         if (payload.website or "").strip():
             raise HTTPException(status_code=400, detail="bad request")
-        plain, html_body = referral_outbound_bodies(
-            recipient_email=str(payload.recipient_email),
-        )
+        plain, html_body = referral_outbound_bodies()
         subj = "Introduction — Payam Dehkordy (Staff QA Automation · Full-Stack)"
         _send_email_checked(
             subject=subj,

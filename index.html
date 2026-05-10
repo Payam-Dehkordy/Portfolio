@@ -657,10 +657,10 @@
                         <label for="referral-website">Website</label>
                         <input type="text" id="referral-website" name="website" tabindex="-1" autocomplete="off">
                     </div>
-                    <div class="form-group">
-                        <input type="email" id="referral-recipient" name="recipient_email" placeholder="Colleague’s email" required autocomplete="email" inputmode="email" aria-label="Colleague email address">
+                    <div class="contact-cv-section-row referral-form-row">
+                        <input type="email" id="referral-recipient" name="recipient_email" class="referral-email-input" placeholder="Colleague’s email" required autocomplete="email" inputmode="email" aria-label="Colleague email address">
+                        <button type="submit" class="btn btn-primary referral-submit-btn" id="referral-submit-btn">Refer me</button>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="referral-submit-btn">Refer me</button>
                     <p id="referral-form-status" class="referral-form-status" role="status"></p>
                 </form>
             </div>
@@ -797,7 +797,7 @@
     <!-- Calendly Inline Widget -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <script src="script.js?v=referral-api-1"></script>
+    <script src="script.js?v=referral-ui-row-1"></script>
 </body>
 </html>
 

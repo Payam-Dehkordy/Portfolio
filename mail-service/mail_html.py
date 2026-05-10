@@ -19,6 +19,18 @@ _FONT = "'JetBrains Mono', Consolas, 'Liberation Mono', Courier, monospace"
 _SITE = "https://www.payam-dehkordy.com"
 _CV_PDF = f"{_SITE}/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf"
 _CV_ATS = f"{_SITE}/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf"
+# Same asset as the site header — absolute URL for email clients
+_HEADER_LOGO_URL = f"{_SITE}/assets/Logo/logo-full.svg"
+
+
+def _html_document_title(*, eyebrow: str, title: str, html_document_title: str | None) -> str:
+    if html_document_title is not None and html_document_title.strip():
+        return html_document_title.strip()
+    if title.strip():
+        return title.strip()
+    if eyebrow.strip():
+        return eyebrow.strip()
+    return "payam-dehkordy.com"
 
 
 def _wrapper(
@@ -27,26 +39,38 @@ def _wrapper(
     title: str,
     inner_rows_html: str,
     footer_note: str | None = None,
+    header_logo_url: str | None = None,
+    html_document_title: str | None = None,
 ) -> str:
+    doc_title = html.escape(_html_document_title(eyebrow=eyebrow, title=title, html_document_title=html_document_title))
+    if header_logo_url:
+        logo_src = html.escape(header_logo_url, quote=True)
+        header_block = f"""          <tr>
+            <td style="padding:22px 26px;border-bottom:1px solid {_BORDER};background-color:#0d1117;">
+              <img src="{logo_src}" alt="Payam Dehkordy" width="220" style="display:block;max-width:220px;width:100%;height:auto;border:0;outline:none;text-decoration:none;" />
+            </td>
+          </tr>"""
+    else:
+        header_block = f"""          <tr>
+            <td style="padding:22px 26px;border-bottom:1px solid {_BORDER};background-color:#0d1117;">
+              <div style="font-family:{_FONT};font-size:13px;font-weight:600;letter-spacing:0.04em;color:{_ACCENT};text-transform:lowercase;">payam-dehkordy.com</div>
+              <div style="font-family:{_FONT};font-size:11px;color:{_MUTED};margin-top:6px;">{html.escape(eyebrow)}</div>
+              <div style="font-family:{_FONT};font-size:15px;color:{_TEXT};margin-top:12px;font-weight:500;">{html.escape(title)}</div>
+            </td>
+          </tr>"""
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{html.escape(title)}</title>
+  <title>{doc_title}</title>
 </head>
 <body style="margin:0;padding:0;background-color:{_BG};">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:{_BG};">
     <tr>
       <td align="center" style="padding:28px 16px;">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;border:1px solid {_BORDER};border-radius:10px;overflow:hidden;background-color:{_CARD};">
-          <tr>
-            <td style="padding:22px 26px;border-bottom:1px solid {_BORDER};background-color:#0d1117;">
-              <div style="font-family:{_FONT};font-size:13px;font-weight:600;letter-spacing:0.04em;color:{_ACCENT};text-transform:lowercase;">payam-dehkordy.com</div>
-              <div style="font-family:{_FONT};font-size:11px;color:{_MUTED};margin-top:6px;">{html.escape(eyebrow)}</div>
-              <div style="font-family:{_FONT};font-size:15px;color:{_TEXT};margin-top:12px;font-weight:500;">{html.escape(title)}</div>
-            </td>
-          </tr>
+{header_block}
           {inner_rows_html}
           <tr>
             <td style="padding:16px 26px 22px;border-top:1px solid {_BORDER};">
@@ -179,7 +203,14 @@ def _referral_links_rows_html() -> str:
     return inner
 
 
-def referral_outbound_bodies(*, recipient_email: str) -> tuple[str, str]:
+_REFERRAL_FOOTER_NOTE = (
+    "Reply to reach Payam directly. "
+    "This message was sent via payam-dehkordy.com because someone used the \"Refer me\" option "
+    "on Payam's portfolio to introduce him to you."
+)
+
+
+def referral_outbound_bodies() -> tuple[str, str]:
     """Email sent To colleague — first-person intro from Payam (multipart)."""
     plain = (
         "Hi,\n\n"
@@ -199,11 +230,13 @@ def referral_outbound_bodies(*, recipient_email: str) -> tuple[str, str]:
         "ATS CV (PDF)\n"
         f"  {_CV_ATS}\n\n"
         "Best regards,\n"
-        "Payam Dehkordy\n"
+        "Payam Dehkordy\n\n"
+        "---\n"
+        f"{_REFERRAL_FOOTER_NOTE}\n"
     )
     intro_html = f"""
           <tr>
-            <td style="padding:18px 26px;border-top:1px solid {_BORDER};">
+            <td style="padding:18px 26px;">
               <p style="font-family:{_FONT};font-size:14px;color:{_TEXT};line-height:1.65;margin:0 0 14px;">Hi,</p>
               <p style="font-family:{_FONT};font-size:13px;color:{_TEXT};line-height:1.65;margin:0 0 14px;">
                 I'm <strong style="color:{_ACCENT};font-weight:600;">Payam Dehkordy</strong> — Staff Software QA Automation Engineer
@@ -219,12 +252,11 @@ def referral_outbound_bodies(*, recipient_email: str) -> tuple[str, str]:
 """
     inner = intro_html + _referral_links_rows_html()
     html_out = _wrapper(
-        eyebrow="Introduction · Refer me",
-        title="A note from Payam Dehkordy",
+        eyebrow="",
+        title="",
         inner_rows_html=inner,
-        footer_note=(
-            "Reply to this email to reach Payam directly · Sent via payam-dehkordy.com (Refer me). "
-            f"Delivered to {recipient_email}."
-        ),
+        footer_note=_REFERRAL_FOOTER_NOTE,
+        header_logo_url=_HEADER_LOGO_URL,
+        html_document_title="Introduction — Payam Dehkordy",
     )
     return plain, html_out
