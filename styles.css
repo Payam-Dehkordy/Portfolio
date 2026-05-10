@@ -1224,11 +1224,6 @@ button.referral-draft-btn.social-link.social-link-text {
     line-height: 1.25;
 }
 
-button.referral-draft-btn.social-link.social-link-text i {
-    margin-right: 0.35rem;
-    font-size: 0.95em;
-}
-
 .contact-form {
     background: #161b22;
     padding: 2.5rem 2.25rem;
