@@ -101,7 +101,7 @@ On push to **`main`** / **`master`**, or **workflow_dispatch**, **`.github/workf
 
 **Repository secrets:** `SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY_B64`, **`SSH_TARGET_DIR`** = **`/var/www/portfolio`** (required exact match). Optional `SSH_PORT` (default **22**).
 
-**One-time on the droplet:** install **`deploy/sudoers-portfolio-deploy.example`** for your deploy user; first TLS bootstrap uses **`deploy/nginx-portfolio-bootstrap-http80.conf`** (see Droplet doc §3).
+**One-time on the droplet:** install **`deploy/sudoers-portfolio-deploy.example`** for your deploy user; TLS bootstrap uses **`deploy/nginx-portfolio-bootstrap-http80.conf`** (see Droplet doc §3). Until **`/etc/letsencrypt/live/www.payam-dehkordy.com/fullchain.pem`** exists, the workflow **rsyncs only** and prints a **warning** (so nginx is not broken by missing cert paths). After Certbot and disabling the bootstrap **`sites-enabled`** symlink (Droplet §4), re-run the workflow to install the canonical vhost.
 
 **Legacy:** GitHub Pages — disable after DNS points at the droplet; then remove **`CNAME`** from this repo if desired.
 

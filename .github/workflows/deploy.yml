@@ -110,6 +110,11 @@ jobs:
           "${SSH_BASE[@]}" bash -s <<'REMOTE_INSTALL'
           set -euo pipefail
           TMP=/tmp/portfolio-nginx.conf
+          CERT=/etc/letsencrypt/live/www.payam-dehkordy.com/fullchain.pem
+          if [ ! -f "$CERT" ]; then
+            echo "::warning::TLS cert not found at $CERT — rsync done; finish Droplet doc §3 (Certbot), then re-run this workflow."
+            exit 0
+          fi
           sudo -n /usr/bin/cp "$TMP" /etc/nginx/sites-available/portfolio.conf \
             || sudo -n /bin/cp "$TMP" /etc/nginx/sites-available/portfolio.conf
           sudo -n /usr/bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf \
