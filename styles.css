@@ -1195,11 +1195,19 @@ section {
     letter-spacing: 0.02em;
 }
 
+.contact-cv-section-fyi {
+    margin: 0.65rem auto 0.35rem;
+    max-width: 32rem;
+    font-size: 9px;
+    line-height: 1.5;
+    color: #8b949e;
+}
+
 /* One row: download chips (left) + referral card (right); wraps on narrow viewports */
 .contact-cv-section-bar {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     gap: 1rem 1.5rem;
 }
@@ -1211,6 +1219,7 @@ section {
     justify-content: center;
     gap: 0.65rem;
     flex: 0 1 auto;
+    align-self: center;
 }
 
 .contact-cv-section-row {
@@ -1222,32 +1231,42 @@ section {
     margin-bottom: 0.45rem;
 }
 
-/* Card matches .contact-form — only wraps referral fields */
+/* Shell: status moved outside .contact-cv-section-bar so bar aligns panel with download chips */
 .referral-form {
     margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
     text-align: center;
-    background: #161b22;
-    padding: 1.15rem 1.75rem;
-    border-radius: 8px;
-    border: 1px solid #21262d;
-    box-sizing: border-box;
     flex: 0 1 auto;
     max-width: 100%;
+    align-self: center;
 }
 
-.referral-form-actions {
+/* Compact shell — control sizes match .contact-form inputs / .btn */
+.referral-form-panel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 6px 12px;
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    max-width: min(100%, 26rem);
+}
+
+.referral-form .referral-form-actions {
     margin-bottom: 0;
+    flex-wrap: nowrap;
+    width: 100%;
+    min-width: 0;
 }
 
-/* Email field shares CV row — constrained width so the row doesn’t stretch full-width */
+/* Same metrics as .form-group input */
 .referral-email-input {
-    flex: 0 1 20rem;
-    max-width: 20rem;
-    min-width: min(100%, 14rem);
-    width: auto;
     box-sizing: border-box;
     padding: 5px 10px;
-    height: 36px;
     border: 1px solid #30363d;
     border-radius: 6px;
     font-size: 13px;
@@ -1255,6 +1274,13 @@ section {
     background: #0d1117;
     color: #e6e6e6;
     transition: border-color 0.3s ease;
+}
+
+.referral-form .referral-email-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 18rem;
+    width: auto;
 }
 
 .referral-email-input:focus {
@@ -1266,22 +1292,22 @@ section {
     color: #6e7681;
 }
 
+/* Uses .btn / .btn-primary — only layout tweaks */
 .referral-submit-btn {
     flex: 0 0 auto;
     white-space: nowrap;
-    height: 36px;
-    line-height: 1;
-    padding-left: 14px;
-    padding-right: 14px;
-    font-size: 12px;
 }
 
 .referral-form-status {
-    margin: 0.55rem 0 0;
+    margin: 0.5rem 0 0;
     font-size: 9px;
     line-height: 1.45;
     min-height: 1.25em;
     text-align: center;
+}
+
+.contact-cv-section > .referral-form-status {
+    width: 100%;
 }
 
 /* Honeypot — hidden from visual layout; bots often fill it */

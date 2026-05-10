@@ -45,7 +45,7 @@
     <link rel="alternate" type="text/plain" href="https://www.payam-dehkordy.com/llms.txt" title="LLMs Context">
     
     <link rel="icon" type="image/svg+xml" href="assets/Logo/Logo.svg">
-    <link rel="stylesheet" href="styles.css?v=contact-cv-bar-1">
+    <link rel="stylesheet" href="styles.css?v=cv-fyi-below-bar-1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
@@ -645,7 +645,7 @@
                 </form>
             </div>
             <div class="contact-cv-section">
-                <p class="contact-cv-section-title">CV downloads</p>
+                <p class="contact-cv-section-title">CV downloads &amp; refer</p>
                 <div class="contact-cv-section-bar">
                     <div class="contact-cv-download-group">
                         <a href="assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf" class="social-link social-link-text" download target="_blank" rel="noopener">Download CV</a>
@@ -656,13 +656,16 @@
                             <label for="referral-website">Website</label>
                             <input type="text" id="referral-website" name="website" tabindex="-1" autocomplete="off">
                         </div>
-                        <div class="contact-cv-section-row referral-form-actions">
-                            <input type="email" id="referral-recipient" name="recipient_email" class="referral-email-input" placeholder="Colleague’s email" required autocomplete="email" inputmode="email" aria-label="Colleague email address">
-                            <button type="submit" class="btn btn-primary referral-submit-btn" id="referral-submit-btn">Refer me</button>
+                        <div class="referral-form-panel">
+                            <div class="contact-cv-section-row referral-form-actions">
+                                <input type="email" id="referral-recipient" name="recipient_email" class="referral-email-input" placeholder="Colleague’s email" required autocomplete="email" inputmode="email" aria-label="Colleague email address">
+                                <button type="submit" class="btn btn-primary referral-submit-btn" id="referral-submit-btn">Refer me</button>
+                            </div>
                         </div>
-                        <p id="referral-form-status" class="referral-form-status" role="status"></p>
                     </form>
                 </div>
+                <p class="contact-cv-section-fyi">Download PDF CVs, or refer me — sends a brief portfolio introduction to your colleague’s inbox.</p>
+                <p id="referral-form-status" class="referral-form-status" role="status"></p>
             </div>
         </div>
     </section>
