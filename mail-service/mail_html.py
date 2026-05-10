@@ -6,8 +6,6 @@ HTML + plain-text bodies for outbound mail — visual language matches the portf
 from __future__ import annotations
 
 import html
-from typing import Sequence
-
 
 # Mirrors styles.css (site identity)
 _BG = "#0d1117"
@@ -18,8 +16,18 @@ _MUTED = "#8b949e"
 _ACCENT = "#c29734"
 _FONT = "'JetBrains Mono', Consolas, 'Liberation Mono', Courier, monospace"
 
+_SITE = "https://www.payam-dehkordy.com"
+_CV_PDF = f"{_SITE}/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf"
+_CV_ATS = f"{_SITE}/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf"
 
-def _wrapper(*, eyebrow: str, title: str, inner_rows_html: str) -> str:
+
+def _wrapper(
+    *,
+    eyebrow: str,
+    title: str,
+    inner_rows_html: str,
+    footer_note: str | None = None,
+) -> str:
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +51,7 @@ def _wrapper(*, eyebrow: str, title: str, inner_rows_html: str) -> str:
           <tr>
             <td style="padding:16px 26px 22px;border-top:1px solid {_BORDER};">
               <p style="font-family:{_FONT};font-size:10px;line-height:1.5;color:{_MUTED};margin:0;">
-                Sent from the portfolio contact pipeline · Reply-To is set to the visitor so you can answer in one click.
+                {html.escape(footer_note or "Sent from the portfolio contact pipeline · Reply-To is set to the visitor so you can answer in one click.")}
               </p>
             </td>
           </tr>
@@ -136,5 +144,87 @@ def scorecard_bodies(
         eyebrow="QA Health Scorecard",
         title="Detailed report requested",
         inner_rows_html=inner,
+    )
+    return plain, html_out
+
+
+def _referral_links_rows_html() -> str:
+    rows = [
+        ("Portfolio", f'<a href="{_SITE}/" style="color:{_ACCENT};text-decoration:none;">{_SITE}/</a>'),
+        (
+            "Email",
+            f'<a href="mailto:payam.dehkordy@gmail.com" style="color:{_ACCENT};text-decoration:none;">payam.dehkordy@gmail.com</a>',
+        ),
+        ("Phone", "+374 55252581"),
+        (
+            "LinkedIn",
+            '<a href="https://www.linkedin.com/in/payam-dehkordy" style="color:'
+            f'{_ACCENT};text-decoration:none;">linkedin.com/in/payam-dehkordy</a>',
+        ),
+        (
+            "GitHub",
+            '<a href="https://github.com/Payam-Dehkordy" style="color:'
+            f'{_ACCENT};text-decoration:none;">github.com/Payam-Dehkordy</a>',
+        ),
+    ]
+    inner = "".join(_field_row(label, val) for label, val in rows)
+    inner += _field_row(
+        "CV (PDF)",
+        f'<a href="{_CV_PDF}" style="color:{_ACCENT};text-decoration:none;">Download CV</a>',
+    )
+    inner += _field_row(
+        "ATS CV (PDF)",
+        f'<a href="{_CV_ATS}" style="color:{_ACCENT};text-decoration:none;">Download ATS CV</a>',
+    )
+    return inner
+
+
+def referral_outbound_bodies(*, recipient_email: str) -> tuple[str, str]:
+    """Email sent To colleague — first-person intro from Payam (multipart)."""
+    plain = (
+        "Hi,\n\n"
+        "I'm Payam Dehkordy — Staff Software QA Automation Engineer & Full Stack Developer "
+        "(Yerevan). I help teams ship reliable software through test automation, quality "
+        "engineering, and full-stack delivery.\n\n"
+        "If you're exploring QA leadership, automation architecture, or web delivery for "
+        "North American–aligned teams, I'd be glad to connect.\n\n"
+        "CONTACT & LINKS\n"
+        f"  Portfolio   {_SITE}/\n"
+        "  Email       payam.dehkordy@gmail.com\n"
+        "  Phone       +374 55252581\n"
+        "  LinkedIn    https://www.linkedin.com/in/payam-dehkordy\n"
+        "  GitHub      https://github.com/Payam-Dehkordy\n\n"
+        "CV (PDF)\n"
+        f"  {_CV_PDF}\n\n"
+        "ATS CV (PDF)\n"
+        f"  {_CV_ATS}\n\n"
+        "Best regards,\n"
+        "Payam Dehkordy\n"
+    )
+    intro_html = f"""
+          <tr>
+            <td style="padding:18px 26px;border-top:1px solid {_BORDER};">
+              <p style="font-family:{_FONT};font-size:14px;color:{_TEXT};line-height:1.65;margin:0 0 14px;">Hi,</p>
+              <p style="font-family:{_FONT};font-size:13px;color:{_TEXT};line-height:1.65;margin:0 0 14px;">
+                I'm <strong style="color:{_ACCENT};font-weight:600;">Payam Dehkordy</strong> — Staff Software QA Automation Engineer
+                &amp; Full Stack Developer (Yerevan). I help teams ship reliable software through test automation,
+                quality engineering, and full-stack delivery.
+              </p>
+              <p style="font-family:{_FONT};font-size:13px;color:{_TEXT};line-height:1.65;margin:0;">
+                If you're exploring QA leadership, automation architecture, or web delivery for North American–aligned teams,
+                I'd be glad to connect.
+              </p>
+            </td>
+          </tr>
+"""
+    inner = intro_html + _referral_links_rows_html()
+    html_out = _wrapper(
+        eyebrow="Introduction · Refer me",
+        title="A note from Payam Dehkordy",
+        inner_rows_html=inner,
+        footer_note=(
+            "Reply to this email to reach Payam directly · Sent via payam-dehkordy.com (Refer me). "
+            f"Delivered to {recipient_email}."
+        ),
     )
     return plain, html_out

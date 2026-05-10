@@ -649,19 +649,20 @@
                 <div class="contact-cv-section-row">
                     <a href="assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf" class="social-link social-link-text" download target="_blank" rel="noopener">Download CV</a>
                     <a href="assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf" class="social-link social-link-text" download target="_blank" rel="noopener">Download ATS CV</a>
-                    <button type="button" class="social-link social-link-text referral-draft-btn">Refer me to others</button>
                 </div>
-                <p class="contact-cv-webmail-label">Web mail — open a draft in your browser</p>
-                <div class="contact-cv-section-row contact-cv-webmail-row">
-                    <button type="button" class="social-link social-link-text referral-webmail-btn" data-webmail="gmail">Gmail</button>
-                    <button type="button" class="social-link social-link-text referral-webmail-btn" data-webmail="outlook">Outlook.com</button>
-                    <button type="button" class="social-link social-link-text referral-webmail-btn" data-webmail="yahoo">Yahoo Mail</button>
-                </div>
-                <p class="contact-cv-webmail-label">Styled HTML — paste into Gmail or Outlook</p>
-                <div class="contact-cv-section-row contact-cv-rich-row">
-                    <button type="button" class="social-link social-link-text referral-copy-rich-btn">Copy formatted referral</button>
-                </div>
-                <p class="contact-cv-section-hint"><strong>Refer me to others</strong> / webmail buttons fill plain text only (URL limits). For the same content with <strong>portfolio-style layout</strong> (like our Sahakyan HTML mails), use <strong>Copy formatted referral</strong>, then paste (<kbd>Ctrl</kbd>+<kbd>V</kbd>) into the compose window. <strong>Refer me to others</strong>: desktop mail app — on Windows choose <strong>Mail</strong> or Outlook, not Chrome.</p>
+                <p class="contact-cv-section-title referral-block-title">Refer me</p>
+                <p class="contact-referral-lead">Send a short professional introduction from me to a colleague’s inbox (portfolio-style email).</p>
+                <form id="referral-form" class="referral-form" action="#" method="post">
+                    <div class="contact-honeypot" aria-hidden="true">
+                        <label for="referral-website">Website</label>
+                        <input type="text" id="referral-website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="referral-recipient" name="recipient_email" placeholder="Colleague’s email" required autocomplete="email" inputmode="email" aria-label="Colleague email address">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="referral-submit-btn">Refer me</button>
+                    <p id="referral-form-status" class="referral-form-status" role="status"></p>
+                </form>
             </div>
         </div>
     </section>
@@ -796,7 +797,7 @@
     <!-- Calendly Inline Widget -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <script src="script.js?v=mail-api-2"></script>
+    <script src="script.js?v=referral-api-1"></script>
 </body>
 </html>
 

@@ -18,7 +18,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from google.auth.transport.requests import Request as GoogleAuthRequest
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-from mail_html import contact_bodies, scorecard_bodies
+from mail_html import contact_bodies, referral_outbound_bodies, scorecard_bodies
 from pydantic import BaseModel, EmailStr, Field, TypeAdapter, ValidationError
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -71,7 +71,16 @@ class ScorecardIn(BaseModel):
     average: str = Field(..., max_length=10)
 
 
-MailPayload = Annotated[Union[ContactIn, ScorecardIn], Field(discriminator="kind")]
+class ReferralIn(BaseModel):
+    kind: Literal["referral"] = "referral"
+    recipient_email: EmailStr
+    website: str = Field(default="", max_length=500)
+
+
+MailPayload = Annotated[
+    Union[ContactIn, ScorecardIn, ReferralIn],
+    Field(discriminator="kind"),
+]
 _MAIL_PAYLOAD_ADAPTER = TypeAdapter(MailPayload)
 
 
@@ -105,11 +114,18 @@ def _send_via_gmail_api(msg: EmailMessage) -> None:
     service.users().messages().send(userId="me", body={"raw": raw}).execute()
 
 
-def _send_rich_email(*, subject: str, plain: str, html_body: str, reply_to: str) -> None:
+def _send_rich_email(
+    *,
+    subject: str,
+    plain: str,
+    html_body: str,
+    reply_to: str,
+    to_addr: str | None = None,
+) -> None:
     msg = EmailMessage()
     msg["Subject"] = subject
     msg["From"] = MAIL_FROM
-    msg["To"] = MAIL_FROM
+    msg["To"] = to_addr or MAIL_FROM
     msg["Reply-To"] = reply_to
     msg.set_content(plain)
     msg.add_alternative(html_body, subtype="html")
@@ -117,11 +133,20 @@ def _send_rich_email(*, subject: str, plain: str, html_body: str, reply_to: str)
 
 
 def _send_email_checked(
-    *, subject: str, plain: str, html_body: str, reply_to: str
+    *,
+    subject: str,
+    plain: str,
+    html_body: str,
+    reply_to: str,
+    to_addr: str | None = None,
 ) -> None:
     try:
         _send_rich_email(
-            subject=subject, plain=plain, html_body=html_body, reply_to=reply_to
+            subject=subject,
+            plain=plain,
+            html_body=html_body,
+            reply_to=reply_to,
+            to_addr=to_addr,
         )
     except Exception:
         logger.exception("Mail delivery failed (Gmail API)")
@@ -170,6 +195,22 @@ async def send_mail(request: Request) -> dict[str, str]:
             plain=plain,
             html_body=html_body,
             reply_to=str(payload.email),
+        )
+        return {"ok": "sent"}
+
+    if isinstance(payload, ReferralIn):
+        if (payload.website or "").strip():
+            raise HTTPException(status_code=400, detail="bad request")
+        plain, html_body = referral_outbound_bodies(
+            recipient_email=str(payload.recipient_email),
+        )
+        subj = "Introduction — Payam Dehkordy (Staff QA Automation · Full-Stack)"
+        _send_email_checked(
+            subject=subj,
+            plain=plain,
+            html_body=html_body,
+            reply_to=MAIL_FROM,
+            to_addr=str(payload.recipient_email),
         )
         return {"ok": "sent"}
 

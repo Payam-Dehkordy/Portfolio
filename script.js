@@ -1358,160 +1358,6 @@ function closeCalendlyModal() {
   }
 }
 
-/** mailto: draft — subject + body prefilled; visitor adds recipient in their own client (better deliverability). */
-const REFERRAL_EMAIL_SUBJECT =
-    'Recommendation — Payam Dehkordy (Staff QA Automation / Full-Stack)';
-
-/** Plain text — used by mailto + webmail URLs (HTML cannot be passed reliably in query strings). */
-const REFERRAL_EMAIL_BODY = [
-    '------------------------------------------------------------',
-    '  PAYAM DEHKORDY — referral draft',
-    '------------------------------------------------------------',
-    '',
-    'Hi,',
-    '',
-    "I'd like to recommend Payam Dehkordy for QA automation, quality engineering, or full-stack web development.",
-    '',
-    'CONTACT & LINKS',
-    '  Portfolio   https://www.payam-dehkordy.com/',
-    '  Email       payam.dehkordy@gmail.com',
-    '  Phone       +374 55252581',
-    '  LinkedIn    https://www.linkedin.com/in/payam-dehkordy',
-    '  GitHub      https://github.com/Payam-Dehkordy',
-    '',
-    'CV (PDF)',
-    '  https://www.payam-dehkordy.com/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf',
-    '',
-    'ATS CV (PDF)',
-    '  https://www.payam-dehkordy.com/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf',
-    '',
-    'Best regards,',
-    '[Your name]',
-    '',
-    '------------------------------------------------------------',
-].join('\n');
-
-/**
- * Inline HTML email — Sahakyan-style card (table layout + branded header). Paste into Gmail / Outlook compose.
- * Same palette as portfolio: #0d1117 header, #c29734 accent, neutral body card on gray canvas.
- */
-const REFERRAL_EMAIL_HTML = [
-    '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">',
-    '<title>Referral — Payam Dehkordy</title></head>',
-    '<body style="margin:0;padding:0;background-color:#e8eaed;font-family:\'Segoe UI\',Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;">',
-    '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#e8eaed;padding:28px 14px;">',
-    '<tr><td align="center">',
-    '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="640" style="max-width:640px;width:100%;background-color:#ffffff;border:1px solid #d0d7de;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(1,4,9,0.06);">',
-    '<tr><td style="padding:22px 26px;background-color:#0d1117;border-bottom:3px solid #c29734;">',
-    '<p style="margin:0;font-size:22px;font-weight:600;color:#f0f6fc;line-height:1.25;">Payam Dehkordy</p>',
-    '<p style="margin:8px 0 0;font-size:13px;color:#c29734;letter-spacing:0.03em;">Staff QA Automation · Full-Stack Developer</p>',
-    '</td></tr>',
-    '<tr><td style="padding:26px 26px 10px;">',
-    '<p style="margin:0 0 16px;font-size:16px;line-height:1.55;color:#24292f;">Hi,</p>',
-    '<p style="margin:0 0 22px;font-size:15px;line-height:1.62;color:#24292f;">I&#39;d like to recommend Payam Dehkordy for QA automation, quality engineering, or full-stack web development.</p>',
-    '</td></tr>',
-    '<tr><td style="padding:0 26px 22px;">',
-    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #c29734;border-radius:8px;">',
-    '<tr><td style="padding:12px 16px 8px;font-size:11px;font-weight:700;color:#656d76;text-transform:uppercase;letter-spacing:0.07em;">Contact &amp; links</td></tr>',
-    '<tr><td style="padding:4px 16px 16px;">',
-    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">',
-    '<tr><td style="padding:8px 0;color:#57606a;font-size:13px;width:118px;vertical-align:top;"><strong>Portfolio</strong></td><td style="padding:8px 0;"><a href="https://www.payam-dehkordy.com/" style="color:#0969da;text-decoration:none;font-size:14px;">payam-dehkordy.com</a></td></tr>',
-    '<tr><td style="padding:8px 0;color:#57606a;font-size:13px;vertical-align:top;"><strong>Email</strong></td><td style="padding:8px 0;"><a href="mailto:payam.dehkordy@gmail.com" style="color:#0969da;text-decoration:none;font-size:14px;">payam.dehkordy@gmail.com</a></td></tr>',
-    '<tr><td style="padding:8px 0;color:#57606a;font-size:13px;vertical-align:top;"><strong>Phone</strong></td><td style="padding:8px 0;font-size:14px;color:#24292f;">+374 55252581</td></tr>',
-    '<tr><td style="padding:8px 0;color:#57606a;font-size:13px;vertical-align:top;"><strong>LinkedIn</strong></td><td style="padding:8px 0;"><a href="https://www.linkedin.com/in/payam-dehkordy" style="color:#0969da;text-decoration:none;font-size:14px;">linkedin.com/in/payam-dehkordy</a></td></tr>',
-    '<tr><td style="padding:8px 0;color:#57606a;font-size:13px;vertical-align:top;"><strong>GitHub</strong></td><td style="padding:8px 0;"><a href="https://github.com/Payam-Dehkordy" style="color:#0969da;text-decoration:none;font-size:14px;">github.com/Payam-Dehkordy</a></td></tr>',
-    '</table></td></tr></table>',
-    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:14px;border-collapse:collapse;background:#ffffff;border:1px solid #d0d7de;border-radius:8px;">',
-    '<tr><td style="padding:12px 16px 8px;font-size:11px;font-weight:700;color:#656d76;text-transform:uppercase;letter-spacing:0.07em;">CV downloads</td></tr>',
-    '<tr><td style="padding:4px 16px 14px;">',
-    '<p style="margin:0 0 8px;font-size:14px;"><a href="https://www.payam-dehkordy.com/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf" style="color:#0969da;text-decoration:none;">CV (PDF)</a></p>',
-    '<p style="margin:0;font-size:14px;"><a href="https://www.payam-dehkordy.com/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf" style="color:#0969da;text-decoration:none;">ATS CV (PDF)</a></p>',
-    '</td></tr></table>',
-    '</td></tr>',
-    '<tr><td style="padding:0 26px 26px;">',
-    '<p style="margin:0;font-size:15px;line-height:1.55;color:#24292f;">Best regards,<br><span style="color:#656d76;">[Your name]</span></p>',
-    '</td></tr>',
-    '<tr><td style="padding:14px 26px;background:#f6f8fa;border-top:1px solid #d0d7de;text-align:center;font-size:11px;line-height:1.45;color:#656d76;">',
-    'Draft layout from <a href="https://www.payam-dehkordy.com/" style="color:#0969da;text-decoration:none;">payam-dehkordy.com</a> · Replace [Your name] before sending.',
-    '</td></tr>',
-    '</table></td></tr></table></body></html>',
-].join('');
-
-/**
- * Prefer a real mail client over assigning location — works more reliably on Windows.
- * If the user set Chrome as the default “mailto” handler, Chrome cannot compose mail and may do nothing.
- */
-function openReferralEmailDraft() {
-    const mailto = `mailto:?subject=${encodeURIComponent(REFERRAL_EMAIL_SUBJECT)}&body=${encodeURIComponent(REFERRAL_EMAIL_BODY)}`;
-    const link = document.createElement('a');
-    link.href = mailto;
-    link.rel = 'noopener noreferrer';
-    link.setAttribute('aria-hidden', 'true');
-    link.style.position = 'fixed';
-    link.style.left = '-9999px';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-/**
- * Pre-filled compose in major webmail providers (opens in a new tab; user must be signed in).
- * URLs follow each vendor’s public compose / deeplink patterns (may change over time).
- */
-function referralWebmailComposeUrl(provider) {
-    const subj = encodeURIComponent(REFERRAL_EMAIL_SUBJECT);
-    const body = encodeURIComponent(REFERRAL_EMAIL_BODY);
-    switch (provider) {
-        case 'gmail':
-            return `https://mail.google.com/mail/?view=cm&fs=1&su=${subj}&body=${body}`;
-        case 'outlook':
-            return `https://outlook.live.com/mail/0/deeplink/compose?subject=${subj}&body=${body}`;
-        case 'yahoo':
-            return `https://compose.mail.yahoo.com/?subject=${subj}&body=${body}`;
-        default:
-            return null;
-    }
-}
-
-function openReferralWebmail(provider) {
-    const url = referralWebmailComposeUrl(provider);
-    if (url) {
-        window.open(url, '_blank', 'noopener,noreferrer');
-    }
-}
-
-/** Paste into Gmail / Outlook — preserves styled HTML (Clipboard API). Plain mailto/webmail cannot carry HTML in URLs. */
-async function copyReferralFormatted() {
-    try {
-        if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
-            const htmlBlob = new Blob([REFERRAL_EMAIL_HTML], { type: 'text/html' });
-            const plainBlob = new Blob([REFERRAL_EMAIL_BODY], { type: 'text/plain' });
-            await navigator.clipboard.write([
-                new ClipboardItem({
-                    'text/html': htmlBlob,
-                    'text/plain': plainBlob,
-                }),
-            ]);
-            showNotification(
-                'Copied formatted referral — paste into your compose window (Ctrl+V).',
-                'success',
-            );
-            return;
-        }
-    } catch {
-        /* fall through */
-    }
-    try {
-        await navigator.clipboard.writeText(REFERRAL_EMAIL_BODY);
-        showNotification(
-            'Copied plain text only — try Chrome or Edge for styled paste, or use Copy again over HTTPS.',
-            'info',
-        );
-    } catch {
-        showNotification('Could not copy — select and copy manually from the address bar page.', 'error');
-    }
-}
-
 // Calendly Modal Button Handler
 document.addEventListener('DOMContentLoaded', () => {
   const bookCallBtn = document.getElementById('book-call-btn');
@@ -1523,21 +1369,79 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.querySelectorAll('.referral-draft-btn').forEach((btn) => {
-    btn.addEventListener('click', () => openReferralEmailDraft());
-  });
-
-  document.querySelectorAll('.referral-webmail-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const provider = btn.getAttribute('data-webmail');
-      if (provider) openReferralWebmail(provider);
+  var referralForm = document.getElementById('referral-form');
+  if (referralForm) {
+    referralForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      var recipientInput = document.getElementById('referral-recipient');
+      var hp = referralForm.querySelector('[name="website"]');
+      var statusEl = document.getElementById('referral-form-status');
+      var submitBtn = document.getElementById('referral-submit-btn');
+      var originalBtnText = submitBtn ? submitBtn.textContent : '';
+      if (!recipientInput || !recipientInput.value.trim()) {
+        return;
+      }
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+      if (statusEl) {
+        statusEl.textContent = '';
+        statusEl.style.color = '';
+      }
+      try {
+        var res = await fetch('/api/mail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            kind: 'referral',
+            recipient_email: recipientInput.value.trim(),
+            website: hp ? hp.value : ''
+          })
+        });
+        var errBody = null;
+        try {
+          errBody = await res.json();
+        } catch (_) {}
+        if (res.ok) {
+          if (statusEl) {
+            statusEl.textContent = 'Introduction sent.';
+            statusEl.style.color = '#C29734';
+          }
+          referralForm.reset();
+          if (submitBtn) {
+            submitBtn.textContent = 'Sent';
+            setTimeout(function() {
+              submitBtn.textContent = originalBtnText;
+              submitBtn.disabled = false;
+            }, 2500);
+          }
+        } else {
+          if (statusEl) {
+            statusEl.innerHTML = portfolioMailErrorMessage(errBody);
+            statusEl.style.color = 'red';
+          }
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+          }
+        }
+      } catch (_) {
+        if (statusEl) {
+          statusEl.textContent = 'Could not send — try again later.';
+          statusEl.style.color = 'red';
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      }
     });
-  });
+  }
 
-  document.querySelectorAll('.referral-copy-rich-btn').forEach((btn) => {
-    btn.addEventListener('click', () => copyReferralFormatted());
-  });
-  
   // Close modal on Escape key
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {

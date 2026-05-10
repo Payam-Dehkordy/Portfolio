@@ -1195,31 +1195,6 @@ section {
     letter-spacing: 0.02em;
 }
 
-.contact-cv-webmail-label {
-    margin: 1rem 0 0.55rem;
-    font-size: 10px;
-    font-weight: 600;
-    color: #8b949e;
-    letter-spacing: 0.02em;
-}
-
-.contact-cv-webmail-row {
-    margin-bottom: 0.65rem;
-}
-
-.contact-cv-rich-row {
-    margin-bottom: 0.55rem;
-}
-
-.contact-cv-section-hint kbd {
-    font-size: 0.85em;
-    padding: 0.05rem 0.25rem;
-    border-radius: 3px;
-    background: #21262d;
-    border: 1px solid #30363d;
-    color: #e6edf3;
-}
-
 .contact-cv-section-row {
     display: flex;
     flex-wrap: wrap;
@@ -1229,28 +1204,41 @@ section {
     margin-bottom: 0.45rem;
 }
 
-.contact-cv-section-hint {
+.referral-block-title {
+    margin: 1.35rem 0 0.45rem;
+}
+
+.contact-referral-lead {
+    margin: 0 auto 1rem;
+    max-width: 28rem;
+    font-size: 9px;
+    line-height: 1.55;
+    color: #8b949e;
+}
+
+.referral-form {
+    max-width: 22rem;
     margin: 0 auto;
-    font-size: 8px;
+    text-align: left;
+    padding: 1.25rem 1.35rem 1.35rem;
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+}
+
+.referral-form .form-group {
+    margin-bottom: 0.85rem;
+}
+
+.referral-form .btn-primary {
+    width: 100%;
+}
+
+.referral-form-status {
+    margin: 0.65rem 0 0;
+    font-size: 9px;
     line-height: 1.45;
-    color: #6e7681;
-    max-width: 52rem;
-}
-
-.contact-cv-section-hint strong {
-    color: #c29734;
-    font-weight: 600;
-}
-
-/* Same pill size/style as CV download links (<a class="social-link social-link-text">) */
-button.referral-draft-btn.social-link.social-link-text,
-button.referral-webmail-btn.social-link.social-link-text,
-button.referral-copy-rich-btn.social-link.social-link-text {
-    appearance: none;
-    -webkit-appearance: none;
-    font-family: inherit;
-    cursor: pointer;
-    line-height: 1.25;
+    min-height: 1.25em;
 }
 
 /* Honeypot — hidden from visual layout; bots often fill it */
