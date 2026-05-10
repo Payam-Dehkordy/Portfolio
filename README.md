@@ -93,7 +93,7 @@ README.md          # (this file)
 
 ## 🌐 Deploying
 
-**Production (recommended):** DigitalOcean droplet — **[`deploy/nginx-portfolio.conf`](deploy/nginx-portfolio.conf)** + **`/var/www/portfolio`**. Full checklist: **[docs/DROPLET_MIGRATION_ROADMAP.md](docs/DROPLET_MIGRATION_ROADMAP.md)**.
+**Production (recommended):** DigitalOcean droplet — **`deploy/nginx-portfolio.conf`** + **`/var/www/portfolio`**. Step-by-step checklist lives in the private [**Droplet** repo](https://github.com/Payam-Dehkordy/Droplet) → [**docs/PORTFOLIO_HOSTING.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/PORTFOLIO_HOSTING.md). Local stub: [**docs/DROPLET_MIGRATION_ROADMAP.md**](docs/DROPLET_MIGRATION_ROADMAP.md).
 
 **Legacy:** GitHub Pages (disable after cutover so DNS and canonical URLs stay single-origin).
 
