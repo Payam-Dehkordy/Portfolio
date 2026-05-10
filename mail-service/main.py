@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 import os
 import smtplib
+import socket
 import ssl
 from email.message import EmailMessage
 from typing import Annotated, Literal, Union
@@ -34,6 +35,35 @@ MAIL_USER = os.environ.get("MAIL_SMTP_USER", MAIL_FROM).strip()
 MAIL_PASS = os.environ.get("MAIL_SMTP_APP_PASSWORD", "").strip()
 SMTP_HOST = os.environ.get("MAIL_SMTP_HOST", "smtp.gmail.com").strip()
 SMTP_PORT = int(os.environ.get("MAIL_SMTP_PORT", "587"))
+# VPS often has no IPv6 egress; getaddrinfo returns AAAA first → connect() → Errno 101 ENETUNREACH.
+_FORCE_IPV4 = os.environ.get("MAIL_SMTP_FORCE_IPV4", "1").strip().lower() in (
+    "1",
+    "true",
+    "yes",
+)
+
+
+class SMTPIPv4(smtplib.SMTP):
+    """Like SMTP, but open TCP via IPv4 only when MAIL_SMTP_FORCE_IPV4 is set (default on)."""
+
+    def _get_socket(self, host: str, port: int, timeout: float | None):
+        if not _FORCE_IPV4:
+            return super()._get_socket(host, port, timeout)
+        last_exc: OSError | None = None
+        for res in socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM):
+            af, socktype, proto, _canon, sa = res
+            sock = socket.socket(af, socktype, proto)
+            sock.settimeout(timeout)
+            try:
+                sock.connect(sa)
+                return sock
+            except OSError as e:
+                last_exc = e
+                sock.close()
+        if last_exc is not None:
+            raise last_exc
+        raise OSError(f"no IPv4 addresses found for {host!r}")
+
 
 logger = logging.getLogger(__name__)
 
@@ -89,7 +119,7 @@ def _send_email(*, subject: str, body: str, reply_to: str) -> None:
     msg.set_content(body)
 
     ctx = ssl.create_default_context()
-    with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=30) as smtp:
+    with SMTPIPv4(SMTP_HOST, SMTP_PORT, timeout=30) as smtp:
         smtp.starttls(context=ctx)
         smtp.login(MAIL_USER, MAIL_PASS)
         smtp.send_message(msg)
