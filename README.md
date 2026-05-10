@@ -99,7 +99,7 @@ README.md          # (this file)
 
 On push to **`main`** / **`master`**, or **workflow_dispatch**, **`.github/workflows/deploy.yml`** rsyncs the static tree (excludes **`deploy/`**, **`docs/`**, **`.github/`**, **`CNAME`**, **`README.md`**) and uploads **`deploy/nginx-portfolio.conf`** to **`/tmp/portfolio-nginx.conf`**, then installs it with passwordless sudo.
 
-**Repository secrets:** `SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY_B64`, **`SSH_TARGET_DIR`** = **`/var/www/portfolio`** (required exact match). Optional `SSH_PORT` (default **22**).
+**Repository secrets:** `SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY_B64`, **`SSH_TARGET_DIR`** = **`/var/www/portfolio`** (required exact match). Optional `SSH_PORT` (default **22**). Windows **`do_chikoja`** / **`do_portfolio`** keys & PowerShell base64: [**Droplet → SSH_KEYS_AND_ACTIONS.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/SSH_KEYS_AND_ACTIONS.md).
 
 **One-time on the droplet:** install **`deploy/sudoers-portfolio-deploy.example`** for your deploy user; TLS bootstrap uses **`deploy/nginx-portfolio-bootstrap-http80.conf`** (see Droplet doc §3). Until **`/etc/letsencrypt/live/www.payam-dehkordy.com/fullchain.pem`** exists, the workflow **rsyncs only** and prints a **warning** (so nginx is not broken by missing cert paths). After Certbot and disabling the bootstrap **`sites-enabled`** symlink (Droplet §4), re-run the workflow to install the canonical vhost.
 
