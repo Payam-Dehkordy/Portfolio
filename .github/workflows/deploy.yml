@@ -1,3 +1,6 @@
+# Only workflow defined in-repo for deploy. If GitHub also runs "pages build and deployment",
+# disable Settings → Pages → Source (None) — production is the droplet, not GitHub Pages.
+#
 # Secrets (repo → Settings → Secrets and variables → Actions):
 #   SSH_HOST, SSH_USER, SSH_PRIVATE_KEY_B64
 #   SSH_TARGET_DIR  MUST be /var/www/portfolio (document root only).

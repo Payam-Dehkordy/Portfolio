@@ -97,6 +97,8 @@ README.md          # (this file)
 
 **In this repo:** `deploy/nginx-portfolio.conf`, `deploy/nginx-portfolio-bootstrap-http80.conf`, `deploy/sudoers-portfolio-deploy.example`, **`mail-service/`** (posts to **`/api/mail`**, Gmail SMTP — **From:** **`payam.dehkordy@gmail.com`**). Automated deploy: **`.github/workflows/deploy.yml`** (rsync excludes **`deploy/`**, **`docs/`**, **`mail-service/`** from the web root; CI syncs **`mail-service/`** separately to **`/opt/portfolio-mail`**). One-time on the droplet: **`/etc/portfolio-mail.env`** from **`mail-service/portfolio-mail.env.example`** — [**Droplet — PORTFOLIO_HOSTING.md § Phase 2**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/PORTFOLIO_HOSTING.md). SSH secrets and **`SSH_TARGET_DIR`** = **`/var/www/portfolio`**: [**Droplet — SSH_KEYS_AND_ACTIONS.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/SSH_KEYS_AND_ACTIONS.md) and [**CI_AND_SECRETS.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/CI_AND_SECRETS.md).
 
+**Why two workflows on GitHub?** If you also see **“pages build and deployment”**, **GitHub Pages** is still turned on for this repo. That job is created by GitHub (not by a file in this repo). Production is the **droplet** only — open **Settings → Pages → Build and deployment**, set **Source** to **None** (disable Pages) so only **Deploy Portfolio (static)** runs on push.
+
 ---
 
 ## 📱 Responsive UI
