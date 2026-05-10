@@ -12,7 +12,7 @@ import ssl
 from email.message import EmailMessage
 from typing import Annotated, Literal, Union
 
-from fastapi import Body, FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, Field
 from slowapi import Limiter, _rate_limit_exceeded_handler
@@ -64,6 +64,11 @@ class ScorecardIn(BaseModel):
     average: str = Field(..., max_length=10)
 
 
+# Pydantic v2 discriminated union (FastAPI embeds as JSON body).
+# Avoid FastAPI Body(discriminator=…) alone — it can be parsed as a query param named "payload".
+MailPayload = Annotated[Union[ContactIn, ScorecardIn], Field(discriminator="kind")]
+
+
 def _require_mail_env() -> None:
     if not MAIL_FROM or not MAIL_USER or not MAIL_PASS:
         raise HTTPException(
@@ -94,13 +99,7 @@ def health() -> dict[str, str]:
 
 @app.post("/api/mail")
 @limiter.limit("12/minute")
-async def send_mail(
-    request: Request,
-    payload: Annotated[
-        Union[ContactIn, ScorecardIn],
-        Body(discriminator="kind"),
-    ],
-) -> dict[str, str]:
+async def send_mail(request: Request, payload: MailPayload) -> dict[str, str]:
     origin = request.headers.get("origin") or ""
     if origin and origin.rstrip("/") not in {o.rstrip("/") for o in ALLOWED_ORIGINS}:
         raise HTTPException(status_code=403, detail="origin")
