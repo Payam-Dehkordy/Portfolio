@@ -1262,8 +1262,8 @@ button.referral-draft-btn.social-link.social-link-text {
 
 .form-group textarea {
     resize: vertical;
-    min-height: 5.5rem;
-    /* Grow/shrink with content where supported; avoids stretching the form taller than the left column */
+    min-height: 2.75rem;
+    /* Grow/shrink with content where supported */
     field-sizing: content;
 }
 
