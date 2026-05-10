@@ -1110,6 +1110,7 @@ section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4.5rem;
+    align-items: start;
 }
 
 .contact-info h3 {
@@ -1179,9 +1180,10 @@ section {
 }
 
 .contact-cv-section {
-    margin-top: 1.25rem;
-    padding-top: 1rem;
+    margin-top: 2.75rem;
+    padding-top: 1.5rem;
     border-top: 1px solid #21262d;
+    width: 100%;
 }
 
 .contact-cv-section-title {
@@ -1205,7 +1207,7 @@ section {
     font-size: 8px;
     line-height: 1.45;
     color: #6e7681;
-    max-width: 420px;
+    max-width: 52rem;
 }
 
 .contact-cv-section-hint strong {
@@ -1233,13 +1235,24 @@ button.referral-draft-btn.social-link.social-link-text i {
 
 .contact-form {
     background: #161b22;
-    padding: 2.25rem;
+    padding: 2.5rem 2.25rem;
     border-radius: 8px;
     border: 1px solid #21262d;
+    display: flex;
+    flex-direction: column;
+    min-height: 460px;
 }
 
 .form-group {
     margin-bottom: 0.75rem;
+}
+
+.contact-form .form-group-message {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.85rem;
+    min-height: 0;
 }
 
 .form-group input,
@@ -1263,7 +1276,12 @@ button.referral-draft-btn.social-link.social-link-text i {
 
 .form-group textarea {
     resize: vertical;
-    min-height: 60px;
+    min-height: 140px;
+}
+
+.contact-form .form-group-message textarea {
+    flex: 1;
+    min-height: 140px;
 }
 
 /* Footer */
@@ -1447,6 +1465,15 @@ button.referral-draft-btn.social-link.social-link-text i {
     .contact-content {
         grid-template-columns: 1fr;
         gap: 3rem;
+    }
+
+    .contact-form {
+        min-height: 0;
+    }
+
+    .contact-form .form-group-message textarea {
+        flex: none;
+        min-height: 140px;
     }
 
     .contact-container {
