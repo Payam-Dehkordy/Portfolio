@@ -682,11 +682,29 @@ section {
 .portfolio-item[data-portfolio-id="goldenarms"] .portfolio-image img,
 .portfolio-item[data-portfolio-id="robs-furniture"] .portfolio-image img,
 .portfolio-item[data-portfolio-id="robs-rebrand"] .portfolio-image img,
-.portfolio-item[data-portfolio-id="parsa-world-rebrand"] .portfolio-image img,
-.portfolio-item[data-portfolio-id="chikoja"] .portfolio-image img {
+.portfolio-item[data-portfolio-id="parsa-world-rebrand"] .portfolio-image img {
     object-fit: contain;
     background: #0d1117;
     padding: 0.5rem;
+}
+
+/*
+ * Square / circular SVG logos: default img is width/height 100% + cover, which clips these marks.
+ * Use intrinsic sizing inside the flex-centered .portfolio-image box so object-fit:contain shows the full graphic.
+ */
+#portfolio .portfolio-item[data-portfolio-id="chikoja"] .portfolio-image img.portfolio-img-fit-contain,
+.portfolio-image img.portfolio-img-fit-contain {
+    width: auto;
+    height: auto;
+    max-width: calc(100% - 1rem);
+    max-height: calc(100% - 1rem);
+    object-fit: contain;
+    object-position: center center;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    flex: 0 1 auto;
+    align-self: center;
+    background: #0d1117;
 }
 
 .portfolio-item:hover .portfolio-image img {
