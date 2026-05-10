@@ -259,6 +259,39 @@ const portfolioDetails = {
         ],
         image: 'assets/images/Automation-AI.webp'
     },
+    chikoja: {
+        title: 'Chi Koja — Telegram Bot & Visitor Site',
+        subtitle: 'End-to-end automation for a Persian-facing community supergroup in Yerevan — business ads, moderation, and discovery',
+        platforms:
+            'Stack: Python 3.12+, aiogram 3 (async Telegram Bot API), aiohttp, SQLite, Groq (Llama-class LLM), Nginx + TLS webhook, systemd, GitHub Actions deploy',
+        technologies:
+            'Live bot @ChiKojaBot · Visitor site & webhook host: chikoja.payam-dehkordy.com · Repo: github.com/Payam-Dehkordy/ChiKoja',
+        responsibilities: [
+            'Designed and shipped a production Telegram supergroup bot that runs silently in-channel: deterministic moderation (links, flood, foreign bots on join), optional Groq-powered LLM classification for advertisement vs spam, monthly token budgeting, and duplicate / fuzzy-dedupe guardrails.',
+            'Implemented SQLite-backed persistence: tracked messages, escalated /report flow with admin DM notifications, configurable post-retention purge from Telegram while retaining audit rows, and an AI-ingested catalog indexed by a fixed Persian taxonomy (category / subcategory only).',
+            'Built private-chat UX with aiogram: /catalog navigates an inline keyboard and forwards original group posts (not bot-generated summaries) so users browse real ads by leaf; DM commands, rules, and help in Persian where appropriate.',
+            'Delivered ops-ready deployment: HTTPS webhook behind Nginx, environment-driven configuration, and CI/CD (rsync + service restart) for repeatable releases.',
+            'Shipped a static bilingual visitor landing page (English / Persian) served from the same deploy — marketing front door separate from bot runtime.',
+        ],
+        examples: [
+            {
+                title: 'AI + automation boundary:',
+                description:
+                    'LLM used for classification and catalog labeling against an explicit taxonomy; retrieval and browsing stay deterministic (SQLite + forwards) — no chatty LLM in /catalog DM flows.',
+            },
+            {
+                title: 'Reliability & cost controls:',
+                description:
+                    'Concurrency limits on Groq calls, UTC-month token ledger, graceful handling when AI is skipped — posts remain visible unless deterministic rules fire.',
+            },
+            {
+                title: 'Community fit:',
+                description:
+                    'Tailored for Iranian business listings in Armenia (“Chi? Koja? Yerevan”) with operator-tunable moderation and a clear path from public group → private catalog discovery.',
+            },
+        ],
+        liveUrl: 'https://chikoja.payam-dehkordy.com',
+    },
     'maggy-beauty': {
         title: 'Maggy Beauty – E-Commerce Platform',
         subtitle: 'QA Engineer – Maggy Beauty (Startup) - E-commerce Platform (Web & Mobile)',
