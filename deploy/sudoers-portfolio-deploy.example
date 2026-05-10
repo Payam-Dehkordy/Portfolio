@@ -1,0 +1,20 @@
+# Example sudoers snippet for the CI/deploy user (e.g. "deploy") so GitHub Actions can:
+#   install the canonical nginx vhost, test config, reload nginx
+#
+# Install with: sudo visudo -f /etc/sudoers.d/portfolio-deploy
+# Replace "deploy" with your SSH user from GitHub Actions.
+#
+# IMPORTANT: sudoers matches the *full path* to each binary. On Ubuntu 24, run:
+#   command -v systemctl cp ln nginx
+# and adjust lines below if any differ (e.g. /bin vs /usr/bin).
+#
+# Portfolio web root is /var/www/portfolio. The nginx config is staged to /tmp by CI
+# (rsync does not place deploy/ under the document root — see DROPLET_MIGRATION_ROADMAP.md).
+
+deploy ALL=(ALL) NOPASSWD: /usr/bin/cp /tmp/portfolio-nginx.conf /etc/nginx/sites-available/portfolio.conf
+deploy ALL=(ALL) NOPASSWD: /bin/cp /tmp/portfolio-nginx.conf /etc/nginx/sites-available/portfolio.conf
+deploy ALL=(ALL) NOPASSWD: /usr/bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf
+deploy ALL=(ALL) NOPASSWD: /bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf
+deploy ALL=(ALL) NOPASSWD: /usr/sbin/nginx -t
+deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload nginx
+deploy ALL=(ALL) NOPASSWD: /bin/systemctl reload nginx

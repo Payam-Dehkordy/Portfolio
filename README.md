@@ -6,7 +6,7 @@ A modern, responsive portfolio showcasing my expertise as a Staff Software QA Au
 
 ## 🚀 Live Demo
 
-Visit: [Your Live Portfolio URL Here]
+**Production:** [https://www.payam-dehkordy.com](https://www.payam-dehkordy.com)
 
 ---
 
@@ -76,11 +76,11 @@ README.md          # (this file)
 ### Installation
 1. Clone the repo:
    ```
-   git clone https://github.com/yourusername/portfolio.git
+   git clone https://github.com/Payam-Dehkordy/Portfolio.git
    ```
 2. Navigate to the directory:
    ```
-   cd portfolio
+   cd Portfolio
    ```
 3. Open `index.html` directly, or use a local server for best results:
    ```
@@ -93,14 +93,9 @@ README.md          # (this file)
 
 ## 🌐 Deploying
 
-### GitHub Pages
-1. Push code to your GitHub repository
-2. Go to Repository Settings > Pages
-3. Select your source branch (main or master)
-4. Find your public URL: `https://yourusername.github.io/repository-name`
+**Production (recommended):** DigitalOcean droplet — **[`deploy/nginx-portfolio.conf`](deploy/nginx-portfolio.conf)** + **`/var/www/portfolio`**. Full checklist: **[docs/DROPLET_MIGRATION_ROADMAP.md](docs/DROPLET_MIGRATION_ROADMAP.md)**.
 
-### Other hosts:
-- **Netlify**, **Vercel**, or **Firebase Hosting**
+**Legacy:** GitHub Pages (disable after cutover so DNS and canonical URLs stay single-origin).
 
 ---
 
