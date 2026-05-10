@@ -301,24 +301,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const totalScore = calculateScore();
             const averageScore = (totalScore / 10).toFixed(1);
             
-            // Prepare form data
-            const formData = new FormData();
-            formData.append('email', email);
-            formData.append('score', totalScore);
-            formData.append('average', averageScore);
-            formData.append('_subject', 'QA Health Scorecard - Detailed Report Request');
-            formData.append('_replyto', email);
-
             try {
-                // Use Formspree endpoint (same as contact form)
-                const response = await fetch('https://formspree.io/f/xeopzzyo', {
+                const response = await fetch('/api/mail', {
                     method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        kind: 'scorecard',
+                        email: email,
+                        score: totalScore,
+                        average: averageScore
+                    })
                 });
 
                 if (response.ok) {
-                    // Success
                     if (submitBtn) {
                         submitBtn.textContent = '✓ Sent!';
                         submitBtn.style.background = '#10b981';
@@ -329,8 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }, 2000);
                     }
                     emailForm.reset();
-                    
-                    // Show success message
+
                     const successMsg = document.createElement('p');
                     successMsg.textContent = 'Thank you! We\'ll send your detailed report shortly.';
                     successMsg.style.color = '#10b981';
@@ -339,20 +336,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     emailForm.parentNode.appendChild(successMsg);
                     setTimeout(() => successMsg.remove(), 5000);
                 } else {
-                    throw new Error('Form submission failed');
+                    throw new Error('Mail request failed');
                 }
             } catch (error) {
                 console.error('Error submitting email:', error);
-                
-                // Fallback: Use mailto for local testing
-                const subject = encodeURIComponent('QA Health Scorecard - Detailed Report Request');
-                const body = encodeURIComponent(`Email: ${email}\nScore: ${totalScore}/50 (${averageScore}/5.0 average)\n\nPlease send detailed report.`);
-                window.location.href = `mailto:payam.dehkordy@gmail.com?subject=${subject}&body=${body}`;
-                
                 if (submitBtn) {
                     submitBtn.textContent = originalBtnText;
                     submitBtn.disabled = false;
                 }
+                const failMsg = document.createElement('p');
+                failMsg.textContent = 'Could not send — try again later or email payam.dehkordy@gmail.com directly.';
+                failMsg.style.color = '#ef4444';
+                failMsg.style.fontSize = '8px';
+                failMsg.style.marginTop = '8px';
+                emailForm.parentNode.appendChild(failMsg);
+                setTimeout(() => failMsg.remove(), 8000);
             }
         });
     }

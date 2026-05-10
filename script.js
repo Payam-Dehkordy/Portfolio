@@ -1232,24 +1232,44 @@ window.addEventListener('scroll', () => {
     }
 });
 
+function portfolioMailErrorMessage(payload) {
+  if (!payload || typeof payload !== 'object') return 'Something went wrong. Please try again or email directly.';
+  const d = payload.detail;
+  if (typeof d === 'string') return d;
+  if (Array.isArray(d)) {
+    return d.map((e) => (e && (e.msg || e.message)) || '').filter(Boolean).join('. ') || 'Invalid input.';
+  }
+  return 'Something went wrong. Please try again or email directly.';
+}
+
 var form = document.getElementById("my-form");
 if (form) {
   form.addEventListener("submit", async function(event) {
     event.preventDefault();
     var status = document.getElementById("my-form-status");
-    var data = new FormData(form);
     var submitBtn = document.getElementById('my-form-button');
+    var hp = form.querySelector('[name="website"]');
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
     }
-    fetch(form.action, {
-      method: form.method,
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    }).then(response => {
+    var payload = {
+      kind: 'contact',
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      subject: document.getElementById('subject').value.trim(),
+      message: document.getElementById('message').value.trim(),
+      website: hp ? hp.value : ''
+    };
+    fetch('/api/mail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(async (response) => {
       if (response.ok) {
-        // Remove the button and show the message in its place
         if (submitBtn) {
           submitBtn.parentNode.removeChild(submitBtn);
         }
@@ -1257,18 +1277,14 @@ if (form) {
         status.style.color = "#C29734";
         form.reset();
       } else {
-        response.json().then(data => {
-          if (Object.hasOwn(data, 'errors')) {
-            status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
-          } else {
-            status.innerHTML = "Oops! There was a problem submitting your form.";
-          }
-          status.style.color = "red";
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Send Message';
-          }
-        });
+        var errBody = null;
+        try { errBody = await response.json(); } catch (_) {}
+        status.innerHTML = portfolioMailErrorMessage(errBody);
+        status.style.color = "red";
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }
       }
     }).catch(() => {
       status.innerHTML = "Oops! There was a problem submitting your form.";

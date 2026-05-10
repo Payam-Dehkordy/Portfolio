@@ -49,6 +49,11 @@ coverage/
 tmp/
 temp/
 
+# Python (mail-service)
+__pycache__/
+*.py[cod]
+venv/
+
 # Adobe files (keep source but ignore auto-saves)
 *.tmp
 Adobe After Effects Auto-Save/

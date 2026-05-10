@@ -4,7 +4,7 @@
 # Optional: SSH_PORT (default 22)
 #
 # Deploy user needs passwordless sudo — install deploy/sudoers-portfolio-deploy.example
-# on the droplet (mkdir/chown under /var/www/portfolio + nginx; paths: command -v mkdir chown chmod cp ln nginx systemctl).
+# on the droplet (mkdir/chown under /var/www/portfolio + /opt/portfolio-mail + nginx + portfolio-mail systemd).
 
 name: Deploy Portfolio (static)
 
@@ -107,11 +107,46 @@ jobs:
             --exclude "deploy/" \
             --exclude "docs/" \
             --exclude "README.md" \
+            --exclude "mail-service/" \
             -e "$RSYNC_RSH" \
             ./ \
             "$REMOTE/"
 
           "${SSH_BASE[@]}" "chmod -R a+rX '$SSH_TARGET_DIR'"
+
+          "${SSH_BASE[@]}" env REMOTE_USER="$SSH_USER" bash -s <<'ENSURE_MAILDIR'
+          set -euo pipefail
+          die_sudo() {
+            echo "::error::Passwordless sudo incomplete for mail deploy. Merge latest deploy/sudoers-portfolio-deploy.example into /etc/sudoers.d/portfolio-deploy then sudo visudo -c."
+            exit 1
+          }
+          sudo -n /usr/bin/mkdir -p /opt/portfolio-mail 2>/dev/null || sudo -n /bin/mkdir -p /opt/portfolio-mail 2>/dev/null || die_sudo
+          sudo -n /usr/bin/chown -R "$REMOTE_USER" /opt/portfolio-mail 2>/dev/null || sudo -n /bin/chown -R "$REMOTE_USER" /opt/portfolio-mail 2>/dev/null || die_sudo
+          ENSURE_MAILDIR
+
+          rsync -az --delete \
+            --exclude "__pycache__/" \
+            --exclude "*.pyc" \
+            -e "$RSYNC_RSH" \
+            mail-service/ \
+            "$SSH_USER@$SSH_HOST:/opt/portfolio-mail/"
+
+          scp -P "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" \
+            mail-service/portfolio-mail.service \
+            "$SSH_USER@$SSH_HOST:/tmp/portfolio-mail.service"
+
+          "${SSH_BASE[@]}" bash -s <<'INSTALL_MAIL'
+          set -euo pipefail
+          if ! [ -x /opt/portfolio-mail/venv/bin/python3 ]; then
+            python3 -m venv /opt/portfolio-mail/venv
+          fi
+          /opt/portfolio-mail/venv/bin/pip install -q -r /opt/portfolio-mail/requirements.txt
+          sudo -n /usr/bin/cp /tmp/portfolio-mail.service /etc/systemd/system/portfolio-mail.service \
+            || sudo -n /bin/cp /tmp/portfolio-mail.service /etc/systemd/system/portfolio-mail.service
+          sudo -n /usr/bin/systemctl daemon-reload || sudo -n /bin/systemctl daemon-reload
+          sudo -n /usr/bin/systemctl enable portfolio-mail 2>/dev/null || sudo -n /bin/systemctl enable portfolio-mail 2>/dev/null || true
+          sudo -n /usr/bin/systemctl restart portfolio-mail || sudo -n /bin/systemctl restart portfolio-mail
+          INSTALL_MAIL
 
           scp -P "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" \
             deploy/nginx-portfolio.conf \
@@ -151,6 +186,8 @@ jobs:
           echo "GET https://www.payam-dehkordy.com/ → HTTP ${code}"
           code_services=$(curl -sS -o /dev/null -w "%{http_code}" -k --resolve www.payam-dehkordy.com:443:127.0.0.1 "https://www.payam-dehkordy.com/services/qa-retainer.html" 2>/dev/null || echo "fail")
           echo "GET /services/qa-retainer.html → HTTP ${code_services}"
+          code_health=$(curl -sS -o /dev/null -w "%{http_code}" "http://127.0.0.1:8791/health" 2>/dev/null || echo "fail")
+          echo "GET http://127.0.0.1:8791/health (portfolio-mail) → HTTP ${code_health}"
           echo "::endgroup::"
           echo "::group::document root"
           ls -la /var/www/portfolio 2>/dev/null | head -20 || echo "missing /var/www/portfolio"

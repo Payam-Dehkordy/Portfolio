@@ -1253,6 +1253,15 @@ button.referral-copy-rich-btn.social-link.social-link-text {
     line-height: 1.25;
 }
 
+/* Honeypot — hidden from visual layout; bots often fill it */
+.contact-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
 .contact-form {
     background: #161b22;
     padding: 2.5rem 2.25rem;

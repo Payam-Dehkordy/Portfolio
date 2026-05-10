@@ -32,3 +32,17 @@ deploy ALL=(ALL) NOPASSWD: /bin/ln -sf /etc/nginx/sites-available/portfolio.conf
 deploy ALL=(ALL) NOPASSWD: /usr/sbin/nginx -t
 deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload nginx
 deploy ALL=(ALL) NOPASSWD: /bin/systemctl reload nginx
+
+# Portfolio mail API — /opt/portfolio-mail (GitHub Actions rsync + systemd unit from CI)
+deploy ALL=(ALL) NOPASSWD: /usr/bin/mkdir -p /opt/portfolio-mail
+deploy ALL=(ALL) NOPASSWD: /bin/mkdir -p /opt/portfolio-mail
+deploy ALL=(ALL) NOPASSWD: /usr/bin/chown -R deploy /opt/portfolio-mail
+deploy ALL=(ALL) NOPASSWD: /bin/chown -R deploy /opt/portfolio-mail
+deploy ALL=(ALL) NOPASSWD: /usr/bin/cp /tmp/portfolio-mail.service /etc/systemd/system/portfolio-mail.service
+deploy ALL=(ALL) NOPASSWD: /bin/cp /tmp/portfolio-mail.service /etc/systemd/system/portfolio-mail.service
+deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl daemon-reload
+deploy ALL=(ALL) NOPASSWD: /bin/systemctl daemon-reload
+deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable portfolio-mail
+deploy ALL=(ALL) NOPASSWD: /bin/systemctl enable portfolio-mail
+deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart portfolio-mail
+deploy ALL=(ALL) NOPASSWD: /bin/systemctl restart portfolio-mail
