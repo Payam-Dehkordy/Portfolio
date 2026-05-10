@@ -1218,7 +1218,8 @@ section {
 }
 
 /* Same pill size/style as CV download links (<a class="social-link social-link-text">) */
-button.referral-draft-btn.social-link.social-link-text {
+button.referral-draft-btn.social-link.social-link-text,
+button.referral-gmail-btn.social-link.social-link-text {
     appearance: none;
     -webkit-appearance: none;
     font-family: inherit;

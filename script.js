@@ -1364,9 +1364,32 @@ const REFERRAL_EMAIL_BODY = [
     '[Your name]',
 ].join('\n');
 
+/**
+ * Prefer a real mail client over assigning location — works more reliably on Windows.
+ * If the user set Chrome as the default “mailto” handler, Chrome cannot compose mail and may do nothing.
+ */
 function openReferralEmailDraft() {
     const mailto = `mailto:?subject=${encodeURIComponent(REFERRAL_EMAIL_SUBJECT)}&body=${encodeURIComponent(REFERRAL_EMAIL_BODY)}`;
-    window.location.assign(mailto);
+    const link = document.createElement('a');
+    link.href = mailto;
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-hidden', 'true');
+    link.style.position = 'fixed';
+    link.style.left = '-9999px';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+/** Gmail web compose — reliable fallback when mailto is misconfigured (e.g. Chrome set as mailto handler on Windows). */
+function openReferralInGmail() {
+    const params = new URLSearchParams();
+    params.set('view', 'cm');
+    params.set('fs', '1');
+    params.set('su', REFERRAL_EMAIL_SUBJECT);
+    params.set('body', REFERRAL_EMAIL_BODY);
+    const url = `https://mail.google.com/mail/?${params.toString()}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 // Calendly Modal Button Handler
@@ -1382,6 +1405,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.referral-draft-btn').forEach((btn) => {
     btn.addEventListener('click', () => openReferralEmailDraft());
+  });
+
+  document.querySelectorAll('.referral-gmail-btn').forEach((btn) => {
+    btn.addEventListener('click', () => openReferralInGmail());
   });
   
   // Close modal on Escape key
