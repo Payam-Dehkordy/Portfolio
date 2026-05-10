@@ -1195,6 +1195,18 @@ section {
     letter-spacing: 0.02em;
 }
 
+.contact-cv-webmail-label {
+    margin: 1rem 0 0.55rem;
+    font-size: 10px;
+    font-weight: 600;
+    color: #8b949e;
+    letter-spacing: 0.02em;
+}
+
+.contact-cv-webmail-row {
+    margin-bottom: 0.65rem;
+}
+
 .contact-cv-section-row {
     display: flex;
     flex-wrap: wrap;
@@ -1219,7 +1231,7 @@ section {
 
 /* Same pill size/style as CV download links (<a class="social-link social-link-text">) */
 button.referral-draft-btn.social-link.social-link-text,
-button.referral-gmail-btn.social-link.social-link-text {
+button.referral-webmail-btn.social-link.social-link-text {
     appearance: none;
     -webkit-appearance: none;
     font-family: inherit;

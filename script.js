@@ -1381,15 +1381,30 @@ function openReferralEmailDraft() {
     document.body.removeChild(link);
 }
 
-/** Gmail web compose — reliable fallback when mailto is misconfigured (e.g. Chrome set as mailto handler on Windows). */
-function openReferralInGmail() {
-    const params = new URLSearchParams();
-    params.set('view', 'cm');
-    params.set('fs', '1');
-    params.set('su', REFERRAL_EMAIL_SUBJECT);
-    params.set('body', REFERRAL_EMAIL_BODY);
-    const url = `https://mail.google.com/mail/?${params.toString()}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+/**
+ * Pre-filled compose in major webmail providers (opens in a new tab; user must be signed in).
+ * URLs follow each vendor’s public compose / deeplink patterns (may change over time).
+ */
+function referralWebmailComposeUrl(provider) {
+    const subj = encodeURIComponent(REFERRAL_EMAIL_SUBJECT);
+    const body = encodeURIComponent(REFERRAL_EMAIL_BODY);
+    switch (provider) {
+        case 'gmail':
+            return `https://mail.google.com/mail/?view=cm&fs=1&su=${subj}&body=${body}`;
+        case 'outlook':
+            return `https://outlook.live.com/mail/0/deeplink/compose?subject=${subj}&body=${body}`;
+        case 'yahoo':
+            return `https://compose.mail.yahoo.com/?subject=${subj}&body=${body}`;
+        default:
+            return null;
+    }
+}
+
+function openReferralWebmail(provider) {
+    const url = referralWebmailComposeUrl(provider);
+    if (url) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
 }
 
 // Calendly Modal Button Handler
@@ -1407,8 +1422,11 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => openReferralEmailDraft());
   });
 
-  document.querySelectorAll('.referral-gmail-btn').forEach((btn) => {
-    btn.addEventListener('click', () => openReferralInGmail());
+  document.querySelectorAll('.referral-webmail-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const provider = btn.getAttribute('data-webmail');
+      if (provider) openReferralWebmail(provider);
+    });
   });
   
   // Close modal on Escape key
