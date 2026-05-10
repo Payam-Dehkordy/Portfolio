@@ -1342,6 +1342,55 @@ function closeCalendlyModal() {
   }
 }
 
+/** Plain-text referral note for visitors to paste from their own mailbox (better deliverability than site-sent mail). */
+const REFERRAL_EMAIL_COPY_TEXT = [
+    'Suggested subject: Recommendation — Payam Dehkordy (Staff QA Automation / Full-Stack)',
+    '',
+    'Hi,',
+    '',
+    "I'd like to recommend Payam Dehkordy for QA automation, quality engineering, or full-stack web development.",
+    '',
+    'Portfolio: https://www.payam-dehkordy.com/',
+    'Email: payam.dehkordy@gmail.com',
+    'Phone: +374 55252581',
+    'LinkedIn: https://www.linkedin.com/in/payam-dehkordy',
+    'GitHub: https://github.com/Payam-Dehkordy',
+    '',
+    'CV (PDF): https://www.payam-dehkordy.com/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf',
+    'ATS CV (PDF): https://www.payam-dehkordy.com/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf',
+    '',
+    'Best regards,',
+    '[Your name]',
+].join('\n');
+
+function fallbackCopyReferralText(text) {
+    try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showNotification('Copied — paste into your email and address it to your contact.', 'success');
+    } catch {
+        showNotification('Could not copy automatically — select text from a desktop editor or contact me directly.', 'error');
+    }
+}
+
+function copyReferralEmailTemplate() {
+    const text = REFERRAL_EMAIL_COPY_TEXT;
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(text).then(() => {
+            showNotification('Copied — paste into your email and address it to your contact.', 'success');
+        }).catch(() => fallbackCopyReferralText(text));
+    } else {
+        fallbackCopyReferralText(text);
+    }
+}
+
 // Calendly Modal Button Handler
 document.addEventListener('DOMContentLoaded', () => {
   const bookCallBtn = document.getElementById('book-call-btn');
@@ -1351,6 +1400,11 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       openCalendlyModal();
     });
+  }
+
+  const referralBtn = document.getElementById('footer-copy-referral-btn');
+  if (referralBtn) {
+    referralBtn.addEventListener('click', () => copyReferralEmailTemplate());
   }
   
   // Close modal on Escape key
