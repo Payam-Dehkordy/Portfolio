@@ -14,7 +14,7 @@ from typing import Annotated, Literal, Union
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, TypeAdapter, ValidationError
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
@@ -64,9 +64,9 @@ class ScorecardIn(BaseModel):
     average: str = Field(..., max_length=10)
 
 
-# Pydantic v2 discriminated union (FastAPI embeds as JSON body).
-# Avoid FastAPI Body(discriminator=…) alone — it can be parsed as a query param named "payload".
+# Discriminated union validated explicitly — avoids FastAPI/slowapi mis-reading the JSON body (422).
 MailPayload = Annotated[Union[ContactIn, ScorecardIn], Field(discriminator="kind")]
+_MAIL_PAYLOAD_ADAPTER = TypeAdapter(MailPayload)
 
 
 def _require_mail_env() -> None:
@@ -99,12 +99,22 @@ def health() -> dict[str, str]:
 
 @app.post("/api/mail")
 @limiter.limit("12/minute")
-async def send_mail(request: Request, payload: MailPayload) -> dict[str, str]:
+async def send_mail(request: Request) -> dict[str, str]:
     origin = request.headers.get("origin") or ""
     if origin and origin.rstrip("/") not in {o.rstrip("/") for o in ALLOWED_ORIGINS}:
         raise HTTPException(status_code=403, detail="origin")
 
     _require_mail_env()
+
+    try:
+        raw = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="invalid json")
+
+    try:
+        payload = _MAIL_PAYLOAD_ADAPTER.validate_python(raw)
+    except ValidationError as e:
+        raise HTTPException(status_code=422, detail=e.errors())
 
     if isinstance(payload, ContactIn):
         if (payload.website or "").strip():
