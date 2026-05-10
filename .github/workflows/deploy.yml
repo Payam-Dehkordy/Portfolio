@@ -159,15 +159,16 @@ jobs:
           set -euo pipefail
           TMP=/tmp/portfolio-nginx.conf
           CERT=/etc/letsencrypt/live/www.payam-dehkordy.com/fullchain.pem
-          if [ ! -f "$CERT" ]; then
-            echo "::warning::TLS cert not found at $CERT — rsync done; finish Droplet doc §3 (Certbot), then re-run this workflow."
-            exit 0
-          fi
+          # Always install the vhost (includes location /api/ → portfolio-mail). Do not skip when $CERT
+          # is missing from this check — that left stale nginx without /api/ and caused POST …/api/mail 405.
           sudo -n /usr/bin/cp "$TMP" /etc/nginx/sites-available/portfolio.conf \
             || sudo -n /bin/cp "$TMP" /etc/nginx/sites-available/portfolio.conf
           sudo -n /usr/bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf \
             || sudo -n /bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf
-          sudo -n /usr/sbin/nginx -t
+          if ! sudo -n /usr/sbin/nginx -t; then
+            echo "::error::nginx -t failed. Issue TLS with Certbot so ssl_certificate paths exist (see Droplet PORTFOLIO_HOSTING.md); expected cert: $CERT"
+            exit 1
+          fi
           sudo -n /usr/bin/systemctl reload nginx \
             || sudo -n /bin/systemctl reload nginx
           REMOTE_INSTALL
