@@ -6,6 +6,7 @@ Listen: 127.0.0.1:8791 — nginx proxies https://www.payam-dehkordy.com/api/
 
 from __future__ import annotations
 
+import errno
 import logging
 import os
 import smtplib
@@ -35,6 +36,10 @@ MAIL_USER = os.environ.get("MAIL_SMTP_USER", MAIL_FROM).strip()
 MAIL_PASS = os.environ.get("MAIL_SMTP_APP_PASSWORD", "").strip()
 SMTP_HOST = os.environ.get("MAIL_SMTP_HOST", "smtp.gmail.com").strip()
 SMTP_PORT = int(os.environ.get("MAIL_SMTP_PORT", "587"))
+SMTP_SSL_PORT = int(os.environ.get("MAIL_SMTP_SSL_PORT", "465"))
+SMTP_TIMEOUT = float(os.environ.get("MAIL_SMTP_TIMEOUT", "45"))
+# starttls | ssl | auto — auto tries STARTTLS on SMTP_PORT then implicit TLS on SMTP_SSL_PORT if connect times out.
+SMTP_CONNECTION = os.environ.get("MAIL_SMTP_CONNECTION", "auto").strip().lower()
 # VPS often has no IPv6 egress; getaddrinfo returns AAAA first → connect() → Errno 101 ENETUNREACH.
 _FORCE_IPV4 = os.environ.get("MAIL_SMTP_FORCE_IPV4", "1").strip().lower() in (
     "1",
@@ -57,6 +62,28 @@ class SMTPIPv4(smtplib.SMTP):
             try:
                 sock.connect(sa)
                 return sock
+            except OSError as e:
+                last_exc = e
+                sock.close()
+        if last_exc is not None:
+            raise last_exc
+        raise OSError(f"no IPv4 addresses found for {host!r}")
+
+
+class SMTPIPv4_SSL(smtplib.SMTP_SSL):
+    """SMTP_SSL with IPv4-only TCP when MAIL_SMTP_FORCE_IPV4 is set."""
+
+    def _get_socket(self, host: str, port: int, timeout: float | None):
+        if not _FORCE_IPV4:
+            return super()._get_socket(host, port, timeout)
+        last_exc: OSError | None = None
+        for res in socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM):
+            af, socktype, proto, _canon, sa = res
+            sock = socket.socket(af, socktype, proto)
+            sock.settimeout(timeout)
+            try:
+                sock.connect(sa)
+                return self.context.wrap_socket(sock, server_hostname=self._host)
             except OSError as e:
                 last_exc = e
                 sock.close()
@@ -119,10 +146,53 @@ def _send_email(*, subject: str, body: str, reply_to: str) -> None:
     msg.set_content(body)
 
     ctx = ssl.create_default_context()
-    with SMTPIPv4(SMTP_HOST, SMTP_PORT, timeout=30) as smtp:
-        smtp.starttls(context=ctx)
-        smtp.login(MAIL_USER, MAIL_PASS)
-        smtp.send_message(msg)
+
+    def send_starttls() -> None:
+        with SMTPIPv4(SMTP_HOST, SMTP_PORT, timeout=SMTP_TIMEOUT) as smtp:
+            smtp.starttls(context=ctx)
+            smtp.login(MAIL_USER, MAIL_PASS)
+            smtp.send_message(msg)
+
+    def send_ssl() -> None:
+        with SMTPIPv4_SSL(
+            SMTP_HOST,
+            SMTP_SSL_PORT,
+            timeout=SMTP_TIMEOUT,
+            context=ctx,
+        ) as smtp:
+            smtp.login(MAIL_USER, MAIL_PASS)
+            smtp.send_message(msg)
+
+    mode = SMTP_CONNECTION
+    if mode == "ssl":
+        send_ssl()
+        return
+    if mode == "starttls":
+        send_starttls()
+        return
+
+    # auto: STARTTLS first; on TCP timeout try implicit TLS (465) — some networks block 587 only.
+    try:
+        send_starttls()
+    except TimeoutError:
+        logger.warning(
+            "SMTP STARTTLS timed out (host=%s port=%s); retrying implicit TLS on port %s",
+            SMTP_HOST,
+            SMTP_PORT,
+            SMTP_SSL_PORT,
+        )
+        send_ssl()
+    except OSError as e:
+        if e.errno not in (errno.ETIMEDOUT, errno.ECONNRESET):
+            raise
+        logger.warning(
+            "SMTP STARTTLS connect error %s (host=%s port=%s); retrying implicit TLS on port %s",
+            e,
+            SMTP_HOST,
+            SMTP_PORT,
+            SMTP_SSL_PORT,
+        )
+        send_ssl()
 
 
 def _send_email_checked(*, subject: str, body: str, reply_to: str) -> None:
@@ -131,9 +201,11 @@ def _send_email_checked(*, subject: str, body: str, reply_to: str) -> None:
         _send_email(subject=subject, body=body, reply_to=reply_to)
     except Exception:
         logger.exception(
-            "SMTP send failed (host=%s port=%s user=%s)",
+            "SMTP send failed (host=%s ports=%s/%s connection=%s user=%s)",
             SMTP_HOST,
             SMTP_PORT,
+            SMTP_SSL_PORT,
+            SMTP_CONNECTION,
             MAIL_USER,
         )
         raise HTTPException(
