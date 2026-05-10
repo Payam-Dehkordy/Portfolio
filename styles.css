@@ -1110,7 +1110,7 @@ section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4.5rem;
-    align-items: start;
+    align-items: stretch;
 }
 
 .contact-info h3 {
@@ -1204,9 +1204,15 @@ section {
     margin-bottom: 0.45rem;
 }
 
+/* Same card shell as .contact-form (background, border, radius, padding) */
 .referral-form {
     margin: 0;
     text-align: center;
+    background: #161b22;
+    padding: 2.5rem 2.25rem;
+    border-radius: 8px;
+    border: 1px solid #21262d;
+    box-sizing: border-box;
 }
 
 /* Email field shares CV row — constrained width so the row doesn’t stretch full-width */
@@ -1268,6 +1274,11 @@ section {
     padding: 2.5rem 2.25rem;
     border-radius: 8px;
     border: 1px solid #21262d;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
 }
 
 .form-group {
@@ -1275,6 +1286,10 @@ section {
 }
 
 .contact-form .form-group-message {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
     margin-bottom: 0.85rem;
 }
 
@@ -1302,6 +1317,15 @@ section {
     min-height: 2.75rem;
     /* Grow/shrink with content where supported */
     field-sizing: content;
+}
+
+/* Contact layout: stretch message area so both .contact-content columns match height */
+.contact-form .form-group-message textarea {
+    flex: 1 1 auto;
+    min-height: 7rem;
+    width: 100%;
+    box-sizing: border-box;
+    field-sizing: fixed;
 }
 
 /* Footer */
