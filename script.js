@@ -825,13 +825,15 @@ function typeWriter(element, text, speed = 100) {
 document.addEventListener('DOMContentLoaded', () => {
     const heroTitle = document.querySelector('.hero-title');
     const heroSubtitle = document.querySelector('.hero-subtitle');
+    const heroTagline = document.querySelector('.hero-tagline');
     const heroDescription = document.querySelector('.hero-description');
     const heroButtons = document.querySelector('.hero-buttons');
     const terminal = document.querySelector('.terminal');
     
-    // Hide all elements initially
+    // Hide all elements initially (sequential reveal in animateHeroElements)
     if (heroTitle) heroTitle.style.opacity = '0';
     if (heroSubtitle) heroSubtitle.style.opacity = '0';
+    if (heroTagline) heroTagline.style.opacity = '0';
     if (heroDescription) heroDescription.style.opacity = '0';
     if (heroButtons) heroButtons.style.opacity = '0';
     if (terminal) terminal.style.opacity = '0';
@@ -882,8 +884,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 50);
                 }
             }, 600);
+
+            // Tagline (focus areas) — after subtitle, before description
+            setTimeout(() => {
+                if (heroTagline) {
+                    heroTagline.style.transition = 'opacity 1s ease, transform 1s ease';
+                    heroTagline.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        heroTagline.style.opacity = '1';
+                        heroTagline.style.transform = 'translateY(0)';
+                    }, 50);
+                }
+            }, 1150);
             
-            // Animate description
+            // Animate description (after tagline)
             setTimeout(() => {
                 if (heroDescription) {
                     heroDescription.style.transition = 'opacity 1s ease, transform 1s ease';
@@ -893,7 +907,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         heroDescription.style.transform = 'translateY(0)';
                     }, 50);
                 }
-            }, 1400);
+            }, 1850);
             
             // Animate buttons
             setTimeout(() => {
@@ -905,9 +919,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         heroButtons.style.transform = 'translateY(0)';
                     }, 50);
                 }
-            }, 2200);
+            }, 2650);
             
-            // Animate terminal with realistic typing
+            // Animate terminal with realistic typing (last)
             setTimeout(() => {
                 if (terminal) {
                     terminal.style.transition = 'opacity 1s ease, transform 1s ease';
@@ -915,13 +929,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => {
                         terminal.style.opacity = '1';
                         terminal.style.transform = 'translateY(0)';
-                        // Start typing after terminal fully fades in (doubled speed: 1000ms -> 500ms)
                         setTimeout(() => {
                             animateTerminal(terminal);
                         }, 500);
                     }, 50);
                 }
-            }, 3000);
+            }, 3450);
         }
         
         setTimeout(() => {
@@ -941,7 +954,7 @@ function animateTerminal(terminal) {
         { type: 'command', text: '$ which company', delay: 500 },
         { type: 'output', text: 'Synopsys', delay: 600 },
         { type: 'command', text: '$ skills --list', delay: 500 },
-        { type: 'output', text: 'QA Automation | Full Stack Dev | Electronic Engineering', delay: 600 }
+        { type: 'output', text: 'QA Automation | Full-Stack Development | EDA Quality | AI Agent & Workflow Automation', delay: 600 }
     ];
     
     terminal.innerHTML = '<span class="terminal-cursor">█</span>';

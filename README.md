@@ -52,7 +52,7 @@ script.js          # Main JS/interactivity
 README.md          # (this file)
 ```
 
-Production **contact form** and **QA scorecard** email use this repo’s **`mail-service`** (Gmail API over HTTPS), not client-side mailto only.
+Production mail uses this repo’s **`mail-service`** (Gmail API over HTTPS): **contact form** (`kind: contact`), **QA scorecard** (`kind: scorecard`), and **referral introductions** (`kind: referral`, colleague email + honeypot). Same **`POST /api/mail`** proxy — not client-side mailto only.
 
 ---
 
@@ -72,8 +72,8 @@ Production **contact form** and **QA scorecard** email use this repo’s **`mail
 - Image previews, company logos, and project details
 
 ### Contact Section
-- Social/contact icons for email, phone, LinkedIn, and GitHub
-- All social icons open in new tabs for seamless networking
+- Contact form (general inquiries), CV PDF downloads, **Refer me** (sends an introduction email to a colleague via `kind: referral`)
+- Social/contact icons for email, phone, LinkedIn, and GitHub (open in new tabs where applicable)
 
 ---
 

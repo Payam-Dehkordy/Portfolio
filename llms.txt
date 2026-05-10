@@ -21,6 +21,7 @@
 
 ## Contact / mail (production)
 - Same-origin **POST `/api/mail`** on `www.payam-dehkordy.com` — nginx proxies to a small Python service (`portfolio-mail` on the VPS) that sends via **Gmail API** (OAuth), not open SMTP from the browser.
+- JSON payloads use discriminator **`kind`**: **`contact`** (visitor message), **`scorecard`** (QA Health Scorecard follow-up), **`referral`** (introduction email **to** `recipient_email`; honeypot field `website`).
 - Repository: `mail-service/` in **Payam-Dehkordy/Portfolio**; operator docs: Droplet **docs/PORTFOLIO_HOSTING.md** § Phase 2.
 
 ## Expertise Areas
