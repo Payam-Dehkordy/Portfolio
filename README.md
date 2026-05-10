@@ -93,17 +93,9 @@ README.md          # (this file)
 
 ## 🌐 Deploying
 
-**Production:** DigitalOcean droplet — web root **`/var/www/portfolio`**, canonical nginx **`deploy/nginx-portfolio.conf`**. Full checklist (bootstrap TLS, DNS, GitHub Pages): [**Droplet → PORTFOLIO_HOSTING.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/PORTFOLIO_HOSTING.md). Pointer only in-repo: [**docs/DROPLET_MIGRATION_ROADMAP.md**](docs/DROPLET_MIGRATION_ROADMAP.md).
+**Hosting (single source of truth):** [**Droplet — docs/PORTFOLIO_HOSTING.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/PORTFOLIO_HOSTING.md) — DNS, TLS, Cloudflare (**Full (strict)**), nginx, sudoers, CI.
 
-### GitHub Actions (automated deploy)
-
-On push to **`main`** / **`master`**, or **workflow_dispatch**, **`.github/workflows/deploy.yml`** rsyncs the static tree (excludes **`deploy/`**, **`docs/`**, **`.github/`**, **`CNAME`**, **`README.md`**) and uploads **`deploy/nginx-portfolio.conf`** to **`/tmp/portfolio-nginx.conf`**, then installs it with passwordless sudo.
-
-**Repository secrets:** `SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY_B64`, **`SSH_TARGET_DIR`** = **`/var/www/portfolio`** (required exact match). Optional `SSH_PORT` (default **22**). Windows **`do_chikoja`** / **`do_portfolio`** keys & PowerShell base64: [**Droplet → SSH_KEYS_AND_ACTIONS.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/SSH_KEYS_AND_ACTIONS.md).
-
-**One-time on the droplet:** install **`deploy/sudoers-portfolio-deploy.example`** for your deploy user; TLS bootstrap uses **`deploy/nginx-portfolio-bootstrap-http80.conf`** (see Droplet doc §3). Until **`/etc/letsencrypt/live/www.payam-dehkordy.com/fullchain.pem`** exists, the workflow **rsyncs only** and prints a **warning** (so nginx is not broken by missing cert paths). After Certbot and disabling the bootstrap **`sites-enabled`** symlink (Droplet §4), re-run the workflow to install the canonical vhost.
-
-**Legacy:** GitHub Pages — disable after DNS points at the droplet; then remove **`CNAME`** from this repo if desired.
+**In this repo:** `deploy/nginx-portfolio.conf`, `deploy/nginx-portfolio-bootstrap-http80.conf`, `deploy/sudoers-portfolio-deploy.example`. Automated deploy: **`.github/workflows/deploy.yml`** (rsync excludes **`deploy/`**, **`docs/`**, **`.github/`**, **`README.md`**). SSH secrets and **`SSH_TARGET_DIR`** = **`/var/www/portfolio`**: [**Droplet — SSH_KEYS_AND_ACTIONS.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/SSH_KEYS_AND_ACTIONS.md) and [**CI_AND_SECRETS.md**](https://github.com/Payam-Dehkordy/Droplet/blob/main/docs/CI_AND_SECRETS.md).
 
 ---
 

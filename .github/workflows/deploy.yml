@@ -106,7 +106,6 @@ jobs:
             --exclude ".cursor/" \
             --exclude "deploy/" \
             --exclude "docs/" \
-            --exclude "CNAME" \
             --exclude "README.md" \
             -e "$RSYNC_RSH" \
             ./ \
