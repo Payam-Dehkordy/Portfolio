@@ -1231,9 +1231,6 @@ button.referral-draft-btn.social-link.social-link-text {
     padding: 2.5rem 2.25rem;
     border-radius: 8px;
     border: 1px solid #21262d;
-    display: flex;
-    flex-direction: column;
-    min-height: 460px;
 }
 
 .form-group {
@@ -1241,11 +1238,7 @@ button.referral-draft-btn.social-link.social-link-text {
 }
 
 .contact-form .form-group-message {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
     margin-bottom: 0.85rem;
-    min-height: 0;
 }
 
 .form-group input,
@@ -1269,12 +1262,9 @@ button.referral-draft-btn.social-link.social-link-text {
 
 .form-group textarea {
     resize: vertical;
-    min-height: 140px;
-}
-
-.contact-form .form-group-message textarea {
-    flex: 1;
-    min-height: 140px;
+    min-height: 5.5rem;
+    /* Grow/shrink with content where supported; avoids stretching the form taller than the left column */
+    field-sizing: content;
 }
 
 /* Footer */
@@ -1440,15 +1430,6 @@ button.referral-draft-btn.social-link.social-link-text {
     .contact-content {
         grid-template-columns: 1fr;
         gap: 3rem;
-    }
-
-    .contact-form {
-        min-height: 0;
-    }
-
-    .contact-form .form-group-message textarea {
-        flex: none;
-        min-height: 140px;
     }
 
     .contact-container {
