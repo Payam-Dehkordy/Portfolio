@@ -1195,6 +1195,24 @@ section {
     letter-spacing: 0.02em;
 }
 
+/* One row: download chips (left) + referral card (right); wraps on narrow viewports */
+.contact-cv-section-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1rem 1.5rem;
+}
+
+.contact-cv-download-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    flex: 0 1 auto;
+}
+
 .contact-cv-section-row {
     display: flex;
     flex-wrap: wrap;
@@ -1204,15 +1222,17 @@ section {
     margin-bottom: 0.45rem;
 }
 
-/* Card matches .contact-form — only wraps referral fields, not CV download links */
+/* Card matches .contact-form — only wraps referral fields */
 .referral-form {
-    margin: 1.25rem 0 0;
+    margin: 0;
     text-align: center;
     background: #161b22;
-    padding: 2.5rem 2.25rem;
+    padding: 1.15rem 1.75rem;
     border-radius: 8px;
     border: 1px solid #21262d;
     box-sizing: border-box;
+    flex: 0 1 auto;
+    max-width: 100%;
 }
 
 .referral-form-actions {
