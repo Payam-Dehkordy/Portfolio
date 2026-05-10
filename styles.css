@@ -1204,28 +1204,12 @@ section {
     margin-bottom: 0.45rem;
 }
 
-.referral-block-title {
-    margin: 1.35rem 0 0.45rem;
-}
-
-.contact-referral-lead {
-    margin: 0 auto 1rem;
-    max-width: 28rem;
-    font-size: 9px;
-    line-height: 1.55;
-    color: #8b949e;
-}
-
 .referral-form {
     margin: 0;
     text-align: center;
 }
 
-/* Same flex row pattern as CV downloads; input sized for typical email, not full column width */
-.referral-form-row {
-    margin-bottom: 0.35rem;
-}
-
+/* Email field shares CV row — constrained width so the row doesn’t stretch full-width */
 .referral-email-input {
     flex: 0 1 20rem;
     max-width: 20rem;
