@@ -1207,6 +1207,19 @@ section {
     margin-bottom: 0.65rem;
 }
 
+.contact-cv-rich-row {
+    margin-bottom: 0.55rem;
+}
+
+.contact-cv-section-hint kbd {
+    font-size: 0.85em;
+    padding: 0.05rem 0.25rem;
+    border-radius: 3px;
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+}
+
 .contact-cv-section-row {
     display: flex;
     flex-wrap: wrap;
@@ -1231,7 +1244,8 @@ section {
 
 /* Same pill size/style as CV download links (<a class="social-link social-link-text">) */
 button.referral-draft-btn.social-link.social-link-text,
-button.referral-webmail-btn.social-link.social-link-text {
+button.referral-webmail-btn.social-link.social-link-text,
+button.referral-copy-rich-btn.social-link.social-link-text {
     appearance: none;
     -webkit-appearance: none;
     font-family: inherit;
