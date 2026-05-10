@@ -1229,10 +1229,6 @@ button.referral-draft-btn.social-link.social-link-text i {
     font-size: 0.95em;
 }
 
-.footer-referral .referral-draft-btn {
-    margin-top: 0.35rem;
-}
-
 .contact-form {
     background: #161b22;
     padding: 2.5rem 2.25rem;
@@ -1366,24 +1362,6 @@ button.referral-draft-btn.social-link.social-link-text i {
 
 .footer-social .social-link:hover {
     color: #c29734;
-}
-
-.footer-referral {
-    margin: 1rem auto 1.25rem;
-    max-width: 520px;
-    padding: 0 12px;
-}
-
-.footer-referral-hint {
-    font-size: 8px;
-    line-height: 1.45;
-    color: #6e7681;
-    margin: 0 0 0.65rem;
-}
-
-.footer-referral-hint strong {
-    color: #c29734;
-    font-weight: 600;
 }
 
 /* Responsive Design */
