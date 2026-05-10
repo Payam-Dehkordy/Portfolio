@@ -682,7 +682,8 @@ section {
 .portfolio-item[data-portfolio-id="goldenarms"] .portfolio-image img,
 .portfolio-item[data-portfolio-id="robs-furniture"] .portfolio-image img,
 .portfolio-item[data-portfolio-id="robs-rebrand"] .portfolio-image img,
-.portfolio-item[data-portfolio-id="parsa-world-rebrand"] .portfolio-image img {
+.portfolio-item[data-portfolio-id="parsa-world-rebrand"] .portfolio-image img,
+.portfolio-item[data-portfolio-id="chikoja"] .portfolio-image img {
     object-fit: contain;
     background: #0d1117;
     padding: 0.5rem;
