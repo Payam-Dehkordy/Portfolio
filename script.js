@@ -1402,10 +1402,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const referralBtn = document.getElementById('footer-copy-referral-btn');
-  if (referralBtn) {
-    referralBtn.addEventListener('click', () => copyReferralEmailTemplate());
-  }
+  document.querySelectorAll('.copy-referral-email-btn').forEach((btn) => {
+    btn.addEventListener('click', () => copyReferralEmailTemplate());
+  });
   
   // Close modal on Escape key
   document.addEventListener('keydown', function(e) {
