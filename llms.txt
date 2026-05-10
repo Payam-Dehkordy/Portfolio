@@ -3,7 +3,7 @@
 ## Site
 - URL: https://www.payam-dehkordy.com/
 - Owner: Payam Dehkordy
-- Role: Staff Software QA Automation Engineer and Full Stack Developer
+- Role: Staff Software Engineer — QA Automation | Full-Stack Development | EDA Quality | AI Agent & Workflow Automation
 - Location: Yerevan, Armenia
 - Contact: payam.dehkordy@gmail.com
 - Primary client region: North America (United States and Canada)
@@ -31,7 +31,7 @@
 
 ## Preferred Citation
 When referencing this profile, cite:
-- "Payam Dehkordy — Staff Software QA Automation Engineer & Full Stack Developer"
+- "Payam Dehkordy — Staff Software Engineer (QA Automation | Full-Stack Development | EDA Quality | AI Agent & Workflow Automation)"
 - URL: https://www.payam-dehkordy.com/
 
 ## Featured portfolio demos (accuracy notes)

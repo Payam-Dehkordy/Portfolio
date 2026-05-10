@@ -1,6 +1,6 @@
 # Payam Dehkordy – Portfolio Website
 
-A modern, responsive portfolio showcasing my expertise as a Staff Software QA Automation Engineer and Full Stack Developer.
+A modern, responsive portfolio showcasing my work as a Staff Software Engineer — QA Automation | Full-Stack Development | EDA Quality | AI Agent & Workflow Automation.
 
 ---
 

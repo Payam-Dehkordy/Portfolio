@@ -232,7 +232,7 @@ const portfolioDetails = {
     },
     'ai-agent-integration': {
         title: 'AI Chat & Agent Integration System',
-        subtitle: 'Staff QA / Full-Stack Engineering – AI Enablement for Delivery Teams',
+        subtitle: 'Staff Software Engineer scope — QA Automation · Full-Stack · AI agent & workflow automation',
         platforms: 'Tech Stack: LLM APIs, JavaScript, Python, prompt orchestration, workflow automation',
         technologies: 'Project: Embedded AI Chat, Task-Focused Agents, and Skill-File Driven Workflows',
         responsibilities: [

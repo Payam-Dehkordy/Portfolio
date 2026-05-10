@@ -17,6 +17,10 @@ _ACCENT = "#c29734"
 _FONT = "'JetBrains Mono', Consolas, 'Liberation Mono', Courier, monospace"
 
 _SITE = "https://www.payam-dehkordy.com"
+_JOB_TITLE = "Staff Software Engineer"
+_FOCUS_AREAS = (
+    "QA Automation | Full-Stack Development | EDA Quality | AI Agent & Workflow Automation"
+)
 _CV_PDF = f"{_SITE}/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf"
 _CV_ATS = f"{_SITE}/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf"
 # Same asset as the site header — absolute URL for email clients
@@ -214,11 +218,12 @@ def referral_outbound_bodies() -> tuple[str, str]:
     """Email sent To colleague — first-person intro from Payam (multipart)."""
     plain = (
         "Hi,\n\n"
-        "I'm Payam Dehkordy — Staff Software QA Automation Engineer & Full Stack Developer "
-        "(Yerevan). I help teams ship reliable software through test automation, quality "
-        "engineering, and full-stack delivery.\n\n"
-        "If you're exploring QA leadership, automation architecture, or web delivery for "
-        "North American–aligned teams, I'd be glad to connect.\n\n"
+        f"I'm Payam Dehkordy — {_JOB_TITLE} (Yerevan).\n"
+        f"{_FOCUS_AREAS}\n\n"
+        "I help teams ship reliable software through test automation, quality engineering, "
+        "full-stack delivery, EDA quality, and AI-enabled workflows.\n\n"
+        "If you're exploring QA leadership, automation architecture, EDA quality, or "
+        "web delivery for North American–aligned teams, I'd be glad to connect.\n\n"
         "CONTACT & LINKS\n"
         f"  Portfolio   {_SITE}/\n"
         "  Email       payam.dehkordy@gmail.com\n"
@@ -238,13 +243,18 @@ def referral_outbound_bodies() -> tuple[str, str]:
           <tr>
             <td style="padding:18px 26px;">
               <p style="font-family:{_FONT};font-size:14px;color:{_TEXT};line-height:1.65;margin:0 0 14px;">Hi,</p>
+              <p style="font-family:{_FONT};font-size:13px;color:{_TEXT};line-height:1.65;margin:0 0 10px;">
+                I'm <strong style="color:{_ACCENT};font-weight:600;">Payam Dehkordy</strong> — {_JOB_TITLE} (Yerevan).
+              </p>
+              <p style="font-family:{_FONT};font-size:11px;color:{_ACCENT};line-height:1.55;margin:0 0 14px;">
+                {_FOCUS_AREAS.replace('&', '&amp;')}
+              </p>
               <p style="font-family:{_FONT};font-size:13px;color:{_TEXT};line-height:1.65;margin:0 0 14px;">
-                I'm <strong style="color:{_ACCENT};font-weight:600;">Payam Dehkordy</strong> — Staff Software QA Automation Engineer
-                &amp; Full Stack Developer (Yerevan). I help teams ship reliable software through test automation,
-                quality engineering, and full-stack delivery.
+                I help teams ship reliable software through test automation, quality engineering,
+                full-stack delivery, EDA quality, and AI-enabled workflows.
               </p>
               <p style="font-family:{_FONT};font-size:13px;color:{_TEXT};line-height:1.65;margin:0;">
-                If you're exploring QA leadership, automation architecture, or web delivery for North American–aligned teams,
+                If you're exploring QA leadership, automation architecture, EDA quality, or web delivery for North American–aligned teams,
                 I'd be glad to connect.
               </p>
             </td>

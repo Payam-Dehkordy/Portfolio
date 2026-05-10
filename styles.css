@@ -174,9 +174,19 @@ body {
 .hero-subtitle {
     font-size: 0.8rem;
     font-weight: 300;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.35rem;
     color: #8b949e;
     letter-spacing: 0.5px;
+}
+
+.hero-tagline {
+    font-size: 8px;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    color: #c29734;
+    letter-spacing: 0.03em;
+    line-height: 1.55;
+    max-width: 34rem;
 }
 
 .hero-description {
@@ -1641,6 +1651,11 @@ section {
 
     .hero-subtitle {
         font-size: 0.7rem;
+    }
+
+    .hero-tagline {
+        font-size: 7px;
+        max-width: 100%;
     }
 
     .hero-description {
