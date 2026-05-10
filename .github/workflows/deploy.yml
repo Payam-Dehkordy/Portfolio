@@ -87,13 +87,17 @@ jobs:
           RSYNC_RSH="ssh -p $PORT -o IdentitiesOnly=yes -i $HOME/.ssh/id_ed25519"
           SSH_BASE=(ssh -p "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" "$SSH_USER@$SSH_HOST")
 
-          # /var/www/* is root-owned; deploy cannot mkdir without sudo (see sudoers-portfolio-deploy.example).
-          "${SSH_BASE[@]}" bash -s <<'ENSURE_WEBROOT'
+          # /var/www/* is root-owned; CI user needs NOPASSWD (deploy/sudoers-portfolio-deploy.example on server).
+          "${SSH_BASE[@]}" env REMOTE_USER="$SSH_USER" bash -s <<'ENSURE_WEBROOT'
           set -euo pipefail
-          sudo -n /usr/bin/mkdir -p /var/www/portfolio || sudo -n /bin/mkdir -p /var/www/portfolio
-          sudo -n /usr/bin/chown -R deploy /var/www/portfolio || sudo -n /bin/chown -R deploy /var/www/portfolio
-          sudo -n /usr/bin/chgrp -R www-data /var/www/portfolio || sudo -n /bin/chgrp -R www-data /var/www/portfolio
-          sudo -n /usr/bin/chmod -R g+rX /var/www/portfolio || sudo -n /bin/chmod -R g+rX /var/www/portfolio
+          die_sudo() {
+            echo "::error::Passwordless sudo is not configured for this user. On the droplet as root: sudo visudo -f /etc/sudoers.d/portfolio-deploy — paste the FULL file from https://github.com/Payam-Dehkordy/Portfolio/blob/main/deploy/sudoers-portfolio-deploy.example If your SSH login is not deploy, replace every leading deploy on sudo lines with your username (must match GitHub SSH_USER). Verify paths: command -v mkdir chown chgrp chmod cp ln nginx systemctl. Then sudo visudo -c."
+            exit 1
+          }
+          sudo -n /usr/bin/mkdir -p /var/www/portfolio 2>/dev/null || sudo -n /bin/mkdir -p /var/www/portfolio 2>/dev/null || die_sudo
+          sudo -n /usr/bin/chown -R "$REMOTE_USER" /var/www/portfolio 2>/dev/null || sudo -n /bin/chown -R "$REMOTE_USER" /var/www/portfolio 2>/dev/null || die_sudo
+          sudo -n /usr/bin/chgrp -R www-data /var/www/portfolio 2>/dev/null || sudo -n /bin/chgrp -R www-data /var/www/portfolio 2>/dev/null || die_sudo
+          sudo -n /usr/bin/chmod -R g+rX /var/www/portfolio 2>/dev/null || sudo -n /bin/chmod -R g+rX /var/www/portfolio 2>/dev/null || die_sudo
           ENSURE_WEBROOT
 
           rsync -az --delete \
