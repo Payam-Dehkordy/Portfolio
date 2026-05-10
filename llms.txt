@@ -19,6 +19,10 @@
 - QA Retainer service for startups and scaling teams.
 - A free QA Health Scorecard assessment with practical recommendations.
 
+## Contact / mail (production)
+- Same-origin **POST `/api/mail`** on `www.payam-dehkordy.com` — nginx proxies to a small Python service (`portfolio-mail` on the VPS) that sends via **Gmail API** (OAuth), not open SMTP from the browser.
+- Repository: `mail-service/` in **Payam-Dehkordy/Portfolio**; operator docs: Droplet **docs/PORTFOLIO_HOSTING.md** § Phase 2.
+
 ## Expertise Areas
 - QA automation strategy and framework design
 - CI/CD quality gates and release readiness

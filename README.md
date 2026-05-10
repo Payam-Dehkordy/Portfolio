@@ -29,6 +29,7 @@ This portfolio features:
 - **Styling:** CSS Grid, Flexbox, responsive breakpoints
 - **Animations:** CSS Transitions, JS Intersection Observer
 - **Typography:** JetBrains Mono (for code aesthetic look)
+- **Production contact mail:** `mail-service/` (FastAPI + Gmail API on the VPS — see Deploying).
 
 ---
 
@@ -39,11 +40,19 @@ This portfolio features:
   /images/         # Project, branding, and logo images
   /documents/      # CV/Resume and other docs
   /Logo/           # Brand/company SVGs and icons
+deploy/            # nginx vhost, sudoers — canonical copies for the droplet (not rsync’d to web root)
+mail-service/      # FastAPI app → POST /api/mail (Gmail API); deployed to /opt/portfolio-mail on VPS
+  portfolio-mail.env.example   # mirror → server /etc/portfolio-mail.env (see Droplet docs)
+  setup_gmail_oauth.py         # one-time OAuth helper for GMAIL_* secrets
+.github/workflows/
+  deploy.yml       # CI: static site + mail-service to droplet
 index.html         # Main portfolio HTML
 styles.css         # Main CSS/style
 script.js          # Main JS/interactivity
 README.md          # (this file)
 ```
+
+Production **contact form** and **QA scorecard** email use this repo’s **`mail-service`** (Gmail API over HTTPS), not client-side mailto only.
 
 ---
 
