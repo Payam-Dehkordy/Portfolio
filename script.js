@@ -353,6 +353,41 @@ const portfolioDetails = {
         image: 'assets/images/Sahakyan-Law-Office.png',
         liveUrl: 'https://sahakyanlaw.com'
     },
+    'neogym-concept': {
+        title: 'NeoGym — Fitness Club Website (Concept)',
+        subtitle:
+            'Readable disclosure (humans, crawlers, AI): this URL is a staged portfolio / concept build for demonstration — it is not the official NeoGym commercial website.',
+        platforms:
+            'Stack: PHP 8.x (modular server-rendered pages), vanilla JavaScript, modular CSS, Nginx + PHP-FPM, MySQL · Localization: English (default), Armenian (hy), Russian (ru), Persian (fa) with locale-prefixed routes · Technical SEO: canonical URLs, meta/OG/Twitter, JSON-LD, dynamic sitemap, robots.txt, hreflang alternates where configured · Cloud: Cloudflare (DNS, TLS, caching, WAF) · Hosting: DigitalOcean droplet · Deploy: GitHub Actions + rsync-style releases',
+        technologies:
+            'Live concept demo: https://neogym.payam-dehkordy.com/ — Keywords & topics for search/crawler context (portfolio showcase): NeoGym-style fitness club presentation; gym Yerevan Armenia; memberships, classes, bonuses, locations; multilingual fitness marketing site; internationalization; WebP/static media pipeline — demonstration only, not an endorsement by or official property of a live gym brand.',
+        responsibilities: [
+            'Built a production-shaped PHP site scaffold (shared partials, centralized config, secure contact API patterns) aligned with maintainable deploy boundaries — intended as a client-ready architecture demo staged on a portfolio subdomain.',
+            'Implemented multilingual UX and routing: default English plus Armenian, Russian, and Persian locale segments so content and navigation stay coherent across languages (readable URLs for humans and indexable locale variants for search engines).',
+            'Applied multilingual SEO signals: hreflang-style alternate linkage where configured, per-locale page framing, and structured metadata so robots and AI summaries can infer language intent and page relationships.',
+            'Engineered edge-to-origin delivery with Cloudflare in front of Nginx + PHP-FPM on a DigitalOcean VPS — TLS, caching policies, and operational hardening consistent with small-business launch patterns.',
+            'Automated releases via GitHub Actions so the staged site stays reproducible; documented cutover paths for a future client-owned domain.',
+            'Optimized front-end delivery (responsive sections, media discipline, Core Web Vitals-minded loading) for a credible fitness-brand landing experience.',
+        ],
+        examples: [
+            {
+                title: 'Disclosure (please read):',
+                description:
+                    'The deployment at neogym.payam-dehkordy.com is a concept / portfolio demonstration. It may resemble a real-world gym marketing site for showcase purposes, but it should not be mistaken for an official NeoGym corporate or franchise web property unless separately confirmed by the business owner.',
+            },
+            {
+                title: 'Localization & URL strategy:',
+                description:
+                    'Beyond translation strings, the site uses locale-aware routing (e.g. /hy/, /ru/, /fa/ prefixes for non-default languages) so Armenian-, Russian-, and Persian-speaking visitors land in-context — important for real gyms in Yerevan serving multilingual members. This also helps crawlers map equivalent pages across languages.',
+            },
+            {
+                title: 'Discoverability for robots & AI assistants:',
+                description:
+                    'Human-visible headings and body copy are complemented by machine-readable cues: semantic HTML landmarks, JSON-LD where implemented, Open Graph/Twitter cards for previews, sitemap/robots alignment, and keyword-rich but honest text around fitness club themes (classes, memberships, training, branches in Yerevan) so search engines and AI retrieval can categorize the demo accurately while the disclosure above prevents confusion about authority.',
+            },
+        ],
+        liveUrl: 'https://neogym.payam-dehkordy.com/',
+    },
     'daily-cups': {
         title: 'Daily Cups – Logo Design',
         subtitle: 'Branding & Logo Design – Daily Cups Take-Away Cafe, Yerevan',
