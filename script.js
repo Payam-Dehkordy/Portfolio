@@ -1255,17 +1255,27 @@ function portfolioMailErrorMessage(payload) {
   return 'Something went wrong. Please try again or email directly.';
 }
 
+function setFormStatus(el, msg, type) {
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.remove('form-status--success', 'form-status--error');
+  if (type) el.classList.add('form-status--' + type);
+}
+
 var form = document.getElementById("my-form");
 if (form) {
+  var contactStatus = document.getElementById("my-form-status");
+  var contactBtn = document.getElementById('my-form-button');
+  var contactBtnLabel = contactBtn ? contactBtn.textContent : 'Send Message';
+
   form.addEventListener("submit", async function(event) {
     event.preventDefault();
-    var status = document.getElementById("my-form-status");
-    var submitBtn = document.getElementById('my-form-button');
     var hp = form.querySelector('[name="website"]');
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
+    if (contactBtn) {
+      contactBtn.disabled = true;
+      contactBtn.textContent = 'Sending\u2026';
     }
+    setFormStatus(contactStatus, '', '');
     var payload = {
       kind: 'contact',
       name: document.getElementById('name').value.trim(),
@@ -1274,39 +1284,38 @@ if (form) {
       message: document.getElementById('message').value.trim(),
       website: hp ? hp.value : ''
     };
-    fetch('/api/mail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    }).then(async (response) => {
+    try {
+      var response = await fetch('/api/mail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
       if (response.ok) {
-        if (submitBtn) {
-          submitBtn.parentNode.removeChild(submitBtn);
-        }
-        status.innerHTML = "Thanks for your submission!";
-        status.style.color = "#C29734";
+        setFormStatus(contactStatus, 'Thanks for your submission!', 'success');
         form.reset();
+        if (contactBtn) {
+          contactBtn.textContent = 'Sent \u2714';
+          setTimeout(function() {
+            contactBtn.disabled = false;
+            contactBtn.textContent = contactBtnLabel;
+          }, 3000);
+        }
       } else {
         var errBody = null;
         try { errBody = await response.json(); } catch (_) {}
-        status.innerHTML = portfolioMailErrorMessage(errBody);
-        status.style.color = "red";
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Message';
+        setFormStatus(contactStatus, portfolioMailErrorMessage(errBody), 'error');
+        if (contactBtn) {
+          contactBtn.disabled = false;
+          contactBtn.textContent = contactBtnLabel;
         }
       }
-    }).catch(() => {
-      status.innerHTML = "Oops! There was a problem submitting your form.";
-      status.style.color = "red";
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Message';
+    } catch (_) {
+      setFormStatus(contactStatus, 'Could not send \u2014 try again later.', 'error');
+      if (contactBtn) {
+        contactBtn.disabled = false;
+        contactBtn.textContent = contactBtnLabel;
       }
-    });
+    }
   });
 }
 
@@ -1388,12 +1397,6 @@ document.addEventListener('DOMContentLoaded', () => {
     var referralSubmitBtn = document.getElementById('referral-submit-btn');
     var referralBtnLabel = referralSubmitBtn ? referralSubmitBtn.textContent : 'Refer me';
 
-    function setReferralStatus(msg, color) {
-      if (!referralStatusEl) return;
-      referralStatusEl.textContent = msg;
-      referralStatusEl.style.color = color || '';
-    }
-
     function resetReferralBtn() {
       if (!referralSubmitBtn) return;
       referralSubmitBtn.disabled = false;
@@ -1409,7 +1412,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       referralSubmitBtn.disabled = true;
       referralSubmitBtn.textContent = 'Sending\u2026';
-      setReferralStatus('', '');
+      setFormStatus(referralStatusEl, '', '');
 
       try {
         var res = await fetch('/api/mail', {
@@ -1423,7 +1426,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (res.ok) {
-          setReferralStatus('Introduction sent \u2714', '#C29734');
+          setFormStatus(referralStatusEl, 'Introduction sent \u2714', 'success');
           referralForm.reset();
           referralSubmitBtn.textContent = 'Sent \u2714';
           setTimeout(resetReferralBtn, 3000);
@@ -1432,10 +1435,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         var errBody = null;
         try { errBody = await res.json(); } catch (_) {}
-        setReferralStatus(portfolioMailErrorMessage(errBody), '#f85149');
+        setFormStatus(referralStatusEl, portfolioMailErrorMessage(errBody), 'error');
         resetReferralBtn();
       } catch (_) {
-        setReferralStatus('Could not send \u2014 try again later.', '#f85149');
+        setFormStatus(referralStatusEl, 'Could not send \u2014 try again later.', 'error');
         resetReferralBtn();
       }
     });

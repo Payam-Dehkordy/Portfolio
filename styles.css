@@ -1310,17 +1310,23 @@ section {
     white-space: nowrap;
 }
 
-.referral-form-status {
+.form-status {
     margin: 0;
     padding: 0;
     font-size: 0.85rem;
     line-height: 1.4;
     min-height: 0;
-    text-align: left;
     width: 100%;
+    transition: color 0.2s ease;
 }
-.referral-form-status:not(:empty) {
-    margin-top: 0.4rem;
+.form-status:not(:empty) {
+    margin-top: 0.5rem;
+}
+.form-status.form-status--success {
+    color: #c29734;
+}
+.form-status.form-status--error {
+    color: #f85149;
 }
 
 /* Honeypot — hidden from visual layout; bots often fill it */
