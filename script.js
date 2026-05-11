@@ -1258,7 +1258,7 @@ function portfolioMailErrorMessage(payload) {
 function setFormStatus(el, msg, type) {
   if (!el) return;
   el.textContent = msg;
-  el.classList.remove('form-status--success', 'form-status--error');
+  el.classList.remove('form-status--error');
   if (type) el.classList.add('form-status--' + type);
 }
 
@@ -1339,14 +1339,15 @@ if (form) {
         body: JSON.stringify(payload)
       });
       if (response.ok) {
-        setFormStatus(contactStatus, 'Thanks for your submission!', 'success');
         form.reset();
         if (contactBtn) {
-          contactBtn.textContent = 'Sent \u2714';
+          contactBtn.textContent = 'Sent';
+          contactBtn.classList.add('btn--sent');
           setTimeout(function() {
-            contactBtn.disabled = false;
+            contactBtn.classList.remove('btn--sent');
             contactBtn.textContent = contactBtnLabel;
-          }, 3000);
+            contactBtn.disabled = false;
+          }, 2500);
         }
       } else {
         var errBody = null;
@@ -1474,10 +1475,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (res.ok) {
-          setFormStatus(referralStatusEl, 'Introduction sent \u2714', 'success');
           referralForm.reset();
-          referralSubmitBtn.textContent = 'Sent \u2714';
-          setTimeout(resetReferralBtn, 3000);
+          referralSubmitBtn.textContent = 'Sent';
+          referralSubmitBtn.classList.add('btn--sent');
+          setTimeout(function() {
+            referralSubmitBtn.classList.remove('btn--sent');
+            resetReferralBtn();
+          }, 2500);
           return;
         }
 

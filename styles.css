@@ -219,12 +219,19 @@ body {
     background: #345a6c;
     color: #f0f6fc;
     border-color: #345a6c;
+    transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.15s ease;
 }
 
 .btn-primary:hover {
     background: #456d82;
     border-color: #456d82;
     transform: translateY(-1px);
+}
+
+.btn-primary.btn--sent {
+    background: #c29734;
+    border-color: #c29734;
+    color: #0d1117;
 }
 
 .btn-secondary {
@@ -1326,9 +1333,6 @@ section {
 }
 .form-status:not(:empty) {
     margin-top: 0.5rem;
-}
-.form-status.form-status--success {
-    color: #c29734;
 }
 .form-status.form-status--error {
     color: #f85149;
