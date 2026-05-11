@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const skillCategories = document.querySelectorAll('.skill-category');
     skillCategories.forEach((category, index) => {
         category.classList.add('fade-in');
-        category.style.animationDelay = `${index * 0.1}s`;
+        category.style.transitionDelay = `${index * 0.1}s`;
         observer.observe(category);
     });
     
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const experienceItems = document.querySelectorAll('.experience-item-sidebar');
     experienceItems.forEach((item, index) => {
         item.classList.add('fade-in');
-        item.style.animationDelay = `${index * 0.1}s`;
+        item.style.transitionDelay = `${index * 0.1}s`;
         observer.observe(item);
     });
     
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     portfolioItems.forEach((item, index) => {
         item.classList.add('fade-in');
-        item.style.animationDelay = `${index * 0.1}s`;
+        item.style.transitionDelay = `${index * 0.1}s`;
         observer.observe(item);
     });
     
@@ -528,6 +528,19 @@ const aboutStats = document.querySelector('.about-stats');
 if (aboutStats) {
     statsObserver.observe(aboutStats);
 }
+
+// Reset scroll animations when user returns to the very top so they
+// replay on the next scroll-down (single source of truth: .fade-in/.visible)
+window.addEventListener('scroll', () => {
+    if (window.scrollY === 0) {
+        setTimeout(() => {
+            document.querySelectorAll('.fade-in.visible, .slide-in-left.visible').forEach(el => {
+                el.classList.remove('visible');
+                observer.observe(el);
+            });
+        }, 100);
+    }
+}, { passive: true });
 
 // Back to top (button is in HTML)
 const backToTopBtn = document.getElementById('back-to-top');
