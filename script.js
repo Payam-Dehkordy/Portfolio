@@ -389,7 +389,7 @@ function animateTerminal(terminal) {
         { type: 'output', text: ' - AI Agent & Workflow Automation', delay: 600 }
     ];
     
-    terminal.innerHTML = '<span class="terminal-cursor">â–ˆ</span>';
+    terminal.innerHTML = '<span class="terminal-cursor">█</span>';
     
     let currentLineIndex = 0;
     let currentCharIndex = 0;
@@ -437,7 +437,7 @@ function animateTerminal(terminal) {
                 // Remove old cursor and add new one after current text
                 const oldCursor = terminal.querySelector('.terminal-cursor');
                 if (oldCursor) oldCursor.remove();
-                lineElement.insertAdjacentHTML('afterend', '<span class="terminal-cursor">â–ˆ</span>');
+                lineElement.insertAdjacentHTML('afterend', '<span class="terminal-cursor">█</span>');
                 
                 // Continue typing command (doubled speed: 150ms -> 75ms)
                 setTimeout(typeLine, 75);
@@ -449,7 +449,7 @@ function animateTerminal(terminal) {
                 // Remove old cursor and add new one after output
                 const oldCursor = terminal.querySelector('.terminal-cursor');
                 if (oldCursor) oldCursor.remove();
-                lineElement.insertAdjacentHTML('afterend', '<span class="terminal-cursor">â–ˆ</span>');
+                lineElement.insertAdjacentHTML('afterend', '<span class="terminal-cursor">█</span>');
                 
                 // Move to next line after delay
                 setTimeout(() => {
