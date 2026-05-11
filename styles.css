@@ -296,6 +296,21 @@ body {
     color: var(--clr-bg-primary);
 }
 
+.btn-accent,
+.btn-gold {
+    background: var(--clr-accent);
+    color: var(--clr-bg-tertiary);
+    border: 1px solid var(--clr-accent);
+}
+
+.btn-accent:hover,
+.btn-gold:hover {
+    background: var(--clr-accent-light);
+    border-color: var(--clr-accent-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(194, 151, 52, 0.3);
+}
+
 .btn-secondary {
     background: transparent;
     color: var(--clr-text-secondary);
@@ -1804,7 +1819,16 @@ section {
     }
 }
 
+/* Utility classes */
+.text-accent { color: var(--clr-accent); }
+.hero-buttons--center { justify-content: center; }
+
 /* Animation Classes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .hero-hidden { opacity: 0; transform: translateY(20px); }
 .hero-revealed { opacity: 1; transform: translateY(0); }
 
@@ -1830,16 +1854,6 @@ section {
     transform: translateX(0);
 }
 
-.slide-in-right {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: all 0.6s ease;
-}
-
-.slide-in-right.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
 
 .terminal {
     background: var(--clr-bg-primary);

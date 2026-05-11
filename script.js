@@ -3,20 +3,9 @@
 function calculateExperience() {
     const currentYear = new Date().getFullYear();
 
-    // Update every element that declares a start year
     document.querySelectorAll('[data-start-year]').forEach((element) => {
         const startYear = parseInt(element.getAttribute('data-start-year'), 10);
         if (Number.isNaN(startYear)) return;
-        const years = Math.max(0, currentYear - startYear);
-        element.textContent = `${years}+`;
-    });
-
-    // Backward compatibility for any old IDs that may still exist
-    const legacyIds = ['experience-years', 'experience-years-about'];
-    legacyIds.forEach((id) => {
-        const element = document.getElementById(id);
-        if (!element) return;
-        const startYear = parseInt(element.getAttribute('data-start-year') || '2017', 10);
         const years = Math.max(0, currentYear - startYear);
         element.textContent = `${years}+`;
     });
@@ -283,16 +272,10 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
     
-    // Add slide animations to specific elements
     const aboutText = document.querySelector('.about-text');
-    const aboutImage = document.querySelector('.about-image');
     if (aboutText) {
         aboutText.classList.add('slide-in-left');
         observer.observe(aboutText);
-    }
-    if (aboutImage) {
-        aboutImage.classList.add('slide-in-right');
-        observer.observe(aboutImage);
     }
     
     // Add animations to skill categories
@@ -400,7 +383,10 @@ function animateTerminal(terminal) {
         { type: 'command', text: '$ which company', delay: 500 },
         { type: 'output', text: 'Synopsys', delay: 600 },
         { type: 'command', text: '$ skills --list', delay: 500 },
-        { type: 'output', text: 'QA Automation | Full-Stack Development | EDA Quality | AI Agent & Workflow Automation', delay: 600 }
+        { type: 'output', text: ' - QA Automation', delay: 600 },
+        { type: 'output', text: ' - Full-Stack Development', delay: 600 },
+        { type: 'output', text: ' - EDA Quality', delay: 600 },
+        { type: 'output', text: ' - AI Agent & Workflow Automation', delay: 600 }
     ];
     
     terminal.innerHTML = '<span class="terminal-cursor">â–ˆ</span>';
@@ -539,31 +525,6 @@ if (backToTopBtn) {
     });
 }
 
-// Preloader
-window.addEventListener('load', () => {
-    const preloader = document.querySelector('.preloader');
-    if (preloader) {
-        preloader.style.opacity = '0';
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 500);
-    }
-});
-
-// Inject fadeIn keyframe used by portfolio filter animation
-const style = document.createElement('style');
-style.textContent = `@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`;
-document.head.appendChild(style);
-
-// Reset scroll position on page load
-window.addEventListener('load', () => {
-    window.scrollTo(0, 0);
-});
-
-// Reset scroll position on page refresh
-window.addEventListener('beforeunload', () => {
-    window.scrollTo(0, 0);
-});
 
 
 function portfolioMailErrorMessage(payload) {

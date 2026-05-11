@@ -70,8 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         scoreStatusEl.className = 'score-status ' + statusClass;
         recommendationsEl.innerHTML = recommendations;
 
-        // Show results section and scroll to it
-        resultsSection.style.display = 'block';
+        resultsSection.classList.remove('results-section--hidden');
         setTimeout(() => {
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 300);
@@ -319,10 +318,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     if (submitBtn) {
                         submitBtn.textContent = '✓ Sent!';
-                        submitBtn.style.background = '#10b981';
+                        submitBtn.classList.add('btn--sent');
                         setTimeout(() => {
+                            submitBtn.classList.remove('btn--sent');
                             submitBtn.textContent = originalBtnText;
-                            submitBtn.style.background = '';
                             submitBtn.disabled = false;
                         }, 2000);
                     }
@@ -330,9 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     const successMsg = document.createElement('p');
                     successMsg.textContent = 'Thank you! We\'ll send your detailed report shortly.';
-                    successMsg.style.color = '#10b981';
-                    successMsg.style.fontSize = '8px';
-                    successMsg.style.marginTop = '8px';
+                    successMsg.className = 'form-status';
                     emailForm.parentNode.appendChild(successMsg);
                     setTimeout(() => successMsg.remove(), 5000);
                 } else {
@@ -346,9 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 const failMsg = document.createElement('p');
                 failMsg.textContent = 'Could not send — try again later or email payam.dehkordy@gmail.com directly.';
-                failMsg.style.color = '#ef4444';
-                failMsg.style.fontSize = '8px';
-                failMsg.style.marginTop = '8px';
+                failMsg.className = 'form-status form-status--error';
                 emailForm.parentNode.appendChild(failMsg);
                 setTimeout(() => failMsg.remove(), 8000);
             }

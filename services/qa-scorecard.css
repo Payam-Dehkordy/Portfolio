@@ -228,6 +228,10 @@
 }
 
 /* Results Section */
+.results-section--hidden {
+    display: none;
+}
+
 .results-section {
     padding: 60px 0;
     background: var(--clr-bg-secondary);

@@ -600,19 +600,6 @@
     margin-bottom: 2rem;
 }
 
-/* Doubled selector for specificity boost over base .btn styles */
-.btn-gold.btn-gold {
-    background: var(--clr-accent);
-    color: var(--clr-bg-tertiary); /* #23272f — needs dedicated --clr-btn-text-dark token */
-    border: 1px solid var(--clr-accent);
-}
-
-.btn-gold.btn-gold:hover {
-    background: var(--clr-accent-light);
-    border-color: var(--clr-accent-light);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(194, 151, 52, 0.3);
-}
 
 @media (max-width: 768px) {
     .offer-hero h1 {
