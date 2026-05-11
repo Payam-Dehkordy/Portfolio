@@ -22,7 +22,7 @@
     --clr-accent-hover: #a88326;
     --clr-btn-primary: #345a6c;
     --clr-btn-primary-hover: #456d82;
-    --clr-link-hover: #79c0ff;
+    --clr-link-hover: var(--clr-accent-light);
     --clr-error: #f85149;
     --clr-sent: #c29734;
     --clr-overlay: rgba(0, 0, 0, 0.85);
@@ -33,10 +33,10 @@
 
     /* Type scale (body base = 10px → 1rem = 10px) */
     --fs-2xs: 0.5rem;
-    --fs-xs: 0.625rem;
-    --fs-sm: 0.75rem;
-    --fs-base: 0.8125rem;
-    --fs-md: 0.875rem;
+    --fs-xs: 0.6rem;
+    --fs-sm: 0.7rem;
+    --fs-base: 0.8rem;
+    --fs-md: 0.9rem;
     --fs-lg: 1rem;
     --fs-xl: 1.1rem;
     --fs-2xl: 1.2rem;
@@ -78,6 +78,16 @@ body {
     color: var(--clr-text-secondary);
     background-color: var(--clr-bg-primary);
     font-size: 10px;
+}
+
+a {
+    color: var(--clr-accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--clr-accent-light);
 }
 
 .container {
@@ -126,7 +136,7 @@ body {
 .nav-logo h2 {
     color: var(--clr-accent);
     font-weight: 400;
-    font-size: var(--fs-lg);
+    font-size: var(--fs-md);
     letter-spacing: -0.5px;
 }
 
@@ -140,7 +150,7 @@ body {
     text-decoration: none;
     color: var(--clr-text-secondary);
     font-weight: 400;
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
     transition: color 0.3s ease;
     position: relative;
 }
@@ -206,7 +216,7 @@ body {
 }
 
 .hero-container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
@@ -218,7 +228,7 @@ body {
 }
 
 .hero-title {
-    font-size: var(--fs-3xl);
+    font-size: var(--fs-2xl);
     font-weight: 300;
     margin-bottom: 0.5rem;
     line-height: 1.2;
@@ -236,7 +246,7 @@ body {
 }
 
 .hero-subtitle {
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
     font-weight: 300;
     margin-bottom: 0.35rem;
     color: var(--clr-text-muted);
@@ -244,21 +254,21 @@ body {
 }
 
 .hero-tagline {
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
     font-weight: 400;
     margin-bottom: 0.75rem;
     color: var(--clr-accent);
     letter-spacing: 0.03em;
     line-height: 1.55;
-    max-width: 34rem;
+    max-width: 40rem;
 }
 
 .hero-description {
-    font-size: var(--fs-md);
+    font-size: var(--fs-base);
     margin-bottom: 1.2rem;
     color: var(--clr-text-muted);
     line-height: 1.7;
-    max-width: 500px;
+    max-width: 580px;
 }
 
 .hero-buttons {
@@ -275,7 +285,7 @@ body {
     transition: all 0.3s ease;
     cursor: pointer;
     display: inline-block;
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
     font-family: inherit;
 }
 
@@ -355,7 +365,7 @@ section {
 
 .section-title {
     text-align: center;
-    font-size: var(--fs-xl);
+    font-size: var(--fs-lg);
     font-weight: 300;
     margin-bottom: 1.5rem;
     color: var(--clr-text-primary);
@@ -393,7 +403,7 @@ section {
 }
 
 .about-text p {
-    font-size: var(--fs-md);
+    font-size: var(--fs-base);
     margin-bottom: 0.8rem;
     color: var(--clr-text-muted);
     line-height: 1.7;
@@ -413,7 +423,7 @@ section {
 }
 
 .stat h3 {
-    font-size: var(--fs-lg);
+    font-size: var(--fs-md);
     font-weight: 300;
     color: var(--clr-accent);
     margin-bottom: 0.2rem;
@@ -422,7 +432,7 @@ section {
 .stat p {
     color: var(--clr-text-muted);
     font-weight: 400;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
 }
 
 /* Main Layout */
@@ -460,9 +470,9 @@ section {
 }
 
 .sidebar-title {
-    font-size: var(--fs-base);
-    font-weight: 600;
-    color: var(--clr-text-secondary);
+    font-size: var(--fs-lg);
+    font-weight: 300;
+    color: var(--clr-text-primary);
     margin-bottom: 1.5rem;
     text-align: center;
     position: relative;
@@ -570,7 +580,7 @@ section {
 }
 
 .experience-header-sidebar h4 {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     font-weight: 400;
     color: var(--clr-text-primary);
     margin-bottom: 0.2rem;
@@ -578,7 +588,7 @@ section {
 
 .company-sidebar {
     display: block;
-    font-size: var(--fs-xs);
+    font-size: var(--fs-2xs);
     color: var(--clr-accent);
     font-weight: 400;
     margin-bottom: 0.2rem;
@@ -586,7 +596,7 @@ section {
 
 .period-sidebar {
     display: block;
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
     color: var(--clr-text-muted);
     font-weight: 400;
     margin-bottom: 0.1rem;
@@ -613,7 +623,7 @@ section {
     margin-bottom: 0.4rem;
     color: var(--clr-text-muted);
     line-height: 1.4;
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
 }
 
 .experience-content-sidebar li::before {
@@ -621,7 +631,7 @@ section {
     position: absolute;
     left: 0;
     color: var(--clr-accent);
-    font-size: var(--fs-lg);
+    font-size: var(--fs-md);
 }
 
 /* Skills Section */
@@ -647,7 +657,7 @@ section {
 }
 
 .skill-category h3 {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     font-weight: 400;
     margin-bottom: 0.6rem;
     color: var(--clr-text-primary);
@@ -664,7 +674,7 @@ section {
     color: var(--clr-text-secondary);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     font-weight: 400;
     border: 1px solid var(--clr-border-hover);
 }
@@ -691,7 +701,7 @@ section {
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 400;
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-base);
     font-family: inherit;
 }
 
@@ -712,6 +722,8 @@ section {
     background: var(--clr-bg-secondary);
     overflow: hidden;
     transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .portfolio-item:hover {
@@ -773,10 +785,20 @@ section {
 
 .portfolio-content {
     padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.portfolio-links {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+    margin-top: auto;
 }
 
 .portfolio-content h3 {
-    font-size: var(--fs-2xs);
+    font-size: var(--fs-sm);
     font-weight: 400;
     margin-bottom: 0.2rem;
     color: var(--clr-text-primary);
@@ -786,7 +808,7 @@ section {
     color: var(--clr-text-muted);
     margin-bottom: 0.4rem;
     line-height: 1.4;
-    font-size: var(--fs-2xs);
+    font-size: var(--fs-xs);
 }
 
 .portfolio-link {
@@ -794,7 +816,7 @@ section {
     text-decoration: none;
     font-weight: 400;
     transition: color 0.3s ease;
-    font-size: var(--fs-2xs);
+    font-size: var(--fs-xs);
 }
 
 .portfolio-link:hover {
@@ -806,10 +828,11 @@ section {
     background: rgba(194, 151, 52, 0.1);
     border: 1px solid var(--clr-accent);
     color: var(--clr-accent);
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.6rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: var(--fs-2xs);
+    font-size: var(--fs-xs);
+    white-space: nowrap;
     transition: all 0.3s ease;
     font-family: inherit;
     font-weight: 400;
@@ -853,7 +876,7 @@ section {
     padding: 0.4rem 0.8rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: var(--fs-2xs);
+    font-size: var(--fs-xs);
     display: flex;
     align-items: center;
     gap: 0.3rem;
@@ -875,7 +898,7 @@ section {
 }
 
 .portfolio-nav-btn i {
-    font-size: var(--fs-2xs);
+    font-size: var(--fs-xs);
 }
 
 .portfolio-details-close {
@@ -1096,7 +1119,7 @@ section {
 .contact-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 90px 20px;
+    padding: 90px 20px 40px;
 }
 
 .contact-content {
@@ -1107,7 +1130,7 @@ section {
 }
 
 .contact-info h3 {
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-lg);
     font-weight: 400;
     margin-bottom: 0.75rem;
     color: var(--clr-text-primary);
@@ -1117,7 +1140,7 @@ section {
     color: var(--clr-text-muted);
     margin-bottom: 1.5rem;
     line-height: 1.5;
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-md);
 }
 
 .contact-details {
@@ -1130,13 +1153,13 @@ section {
     gap: 0.9rem;
     margin-bottom: 0.9rem;
     color: var(--clr-text-muted);
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-md);
 }
 
 .contact-item i {
     color: var(--clr-accent);
     width: 24px;
-    font-size: var(--fs-4xl);
+    font-size: var(--fs-2xl);
 }
 
 .social-links {
@@ -1156,7 +1179,7 @@ section {
     text-decoration: none;
     transition: all 0.3s ease;
     border: 1px solid var(--clr-border-hover);
-    font-size: var(--fs-3xl);
+    font-size: var(--fs-xl);
 }
 
 .social-link:hover {
@@ -1168,30 +1191,43 @@ section {
 .social-link-text {
     width: auto;
     padding: 0 12px;
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-sm);
     white-space: nowrap;
 }
 
 .contact-cv-section {
     margin-top: 2.75rem;
-    padding-top: 1.5rem;
+    padding-top: 2.5rem;
     border-top: 1px solid var(--clr-border);
     width: 100%;
     text-align: center;
 }
 
 .contact-cv-section-title {
-    margin: 0 0 0.6rem;
-    font-size: var(--fs-xl);
-    font-weight: 600;
-    color: var(--clr-accent);
+    margin: 0 0 2.5rem;
+    font-size: var(--fs-lg);
+    font-weight: 300;
+    color: var(--clr-text-primary);
     letter-spacing: 0.02em;
+    position: relative;
+}
+
+.contact-cv-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: var(--clr-accent);
+    border-radius: 1px;
 }
 
 .contact-cv-section-fyi {
     margin: 0.65rem auto 0.35rem;
     max-width: 32rem;
-    font-size: var(--fs-md);
+    font-size: var(--fs-sm);
     line-height: 1.5;
     color: var(--clr-text-muted);
 }
@@ -1264,7 +1300,7 @@ section {
     height: 28px;
     border: 1px solid var(--clr-border-hover);
     border-radius: 4px;
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-sm);
     font-family: inherit;
     background: var(--clr-bg-primary);
     color: var(--clr-text-secondary);
@@ -1301,7 +1337,7 @@ section {
 .form-status {
     margin: 0;
     padding: 0;
-    font-size: var(--fs-md);
+    font-size: var(--fs-2xs);
     line-height: 1.4;
     min-height: 0;
     width: 100%;
@@ -1353,7 +1389,7 @@ section {
     padding: 5px 10px;
     border: 1px solid var(--clr-border-hover);
     border-radius: 6px;
-    font-size: var(--fs-input);
+    font-size: var(--fs-md);
     transition: border-color 0.3s ease;
     font-family: inherit;
     background: var(--clr-bg-primary);
@@ -1374,7 +1410,7 @@ section {
 }
 .form-field-error {
     color: var(--clr-error);
-    font-size: var(--fs-base);
+    font-size: var(--fs-2xs);
     line-height: 1.3;
     margin: 0.25rem 0 0;
 }
@@ -1416,7 +1452,7 @@ section {
 
 .footer-content p {
     margin-bottom: 0.2rem;
-    font-size: var(--fs-base);
+    font-size: var(--fs-xs);
 }
 
 .footer-links {
@@ -1430,7 +1466,7 @@ section {
 .footer-links a {
     color: var(--clr-text-muted);
     text-decoration: none;
-    font-size: var(--fs-base);
+    font-size: var(--fs-xs);
     transition: color 0.3s ease;
 }
 
@@ -1445,7 +1481,7 @@ section {
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    font-size: var(--fs-base);
+    font-size: var(--fs-xs);
 }
 
 .footer-contact a {
@@ -1471,7 +1507,7 @@ section {
 
 .footer-social .social-link {
     color: var(--clr-text-muted);
-    font-size: var(--fs-lg);
+    font-size: var(--fs-sm);
     transition: color 0.3s ease;
 }
 
@@ -1532,7 +1568,7 @@ section {
     }
 
     .hero-title {
-        font-size: var(--fs-4xl);
+        font-size: var(--fs-3xl);
     }
 
     .hero-buttons {
@@ -1594,7 +1630,7 @@ section {
         width: 100%;
         height: auto;
         padding: 5px 10px;
-        font-size: var(--fs-input);
+        font-size: var(--fs-2xl);
         border-radius: 6px;
     }
 
@@ -1605,7 +1641,7 @@ section {
 
     .filter-btn {
         padding: 6px 12px;
-        font-size: var(--fs-xl);
+        font-size: var(--fs-sm);
         margin: 2px;
     }
 
@@ -1680,20 +1716,20 @@ section {
     }
 
     .hero-title {
-        font-size: var(--fs-2xl);
+        font-size: var(--fs-xl);
     }
 
     .hero-subtitle {
-        font-size: var(--fs-sm);
+        font-size: var(--fs-xs);
     }
 
     .hero-tagline {
-        font-size: var(--fs-sm);
+        font-size: var(--fs-xs);
         max-width: 100%;
     }
 
     .hero-description {
-        font-size: var(--fs-base);
+        font-size: var(--fs-sm);
     }
 
     .section-title {
@@ -1710,7 +1746,7 @@ section {
         width: 100%;
         max-width: 200px;
         padding: 4px 10px;
-        font-size: var(--fs-sm);
+        font-size: var(--fs-xs);
     }
 
     .container {
@@ -1760,7 +1796,7 @@ section {
     }
 
     .portfolio-content h3 {
-        font-size: var(--fs-2xs);
+        font-size: var(--fs-xs);
     }
 
     .portfolio-content p {
@@ -1768,23 +1804,23 @@ section {
     }
 
     .contact-info h3 {
-        font-size: var(--fs-lg);
+        font-size: var(--fs-base);
     }
 
     .contact-info p {
-        font-size: var(--fs-lg);
+        font-size: var(--fs-base);
     }
 
     .contact-item {
-        font-size: var(--fs-lg);
+        font-size: var(--fs-base);
     }
 
     .contact-item i {
-        font-size: var(--fs-close);
+        font-size: var(--fs-lg);
     }
 
     .sidebar-title {
-        font-size: var(--fs-sm);
+        font-size: var(--fs-lg);
     }
 
     .experience-header-sidebar h4 {
@@ -1863,7 +1899,7 @@ section {
     border-radius: 6px;
     padding: 1rem;
     font-family: 'JetBrains Mono', monospace;
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-base);
     margin-top: 1.5rem;
     line-height: 1.6;
     text-align: left;
@@ -2008,7 +2044,7 @@ section {
     .calendly-modal-close {
         top: 0.75rem;
         right: 0.75rem;
-        font-size: var(--fs-input);
+        font-size: var(--fs-2xl);
         width: 2rem;
         height: 2rem;
     }

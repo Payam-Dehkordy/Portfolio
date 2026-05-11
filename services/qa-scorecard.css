@@ -35,7 +35,7 @@
 }
 
 .hero-content h1 {
-    font-size: 2rem;
+    font-size: var(--fs-4xl);
     font-weight: 400;
     color: var(--clr-text-primary);
     margin-bottom: 1rem;
@@ -43,7 +43,7 @@
 }
 
 .hero-subtitle {
-    font-size: 1rem;
+    font-size: var(--fs-lg);
     font-weight: 300;
     color: var(--clr-text-muted);
     margin-bottom: 2rem;
@@ -115,7 +115,7 @@
 }
 
 .progress-text {
-    font-size: 8px;
+    font-size: var(--fs-base);
     color: var(--clr-text-muted);
     text-align: center;
 }
@@ -156,21 +156,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: var(--fs-md);
     font-weight: 400;
     font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
     flex-shrink: 0;
 }
 
 .question-title {
-    font-size: 0.9rem;
+    font-size: var(--fs-md);
     font-weight: 400;
     color: var(--clr-text-primary);
     margin: 0;
 }
 
 .question-text {
-    font-size: 8px;
+    font-size: var(--fs-base);
     color: var(--clr-text-muted);
     margin-bottom: 16px;
     line-height: 1.6;
@@ -216,7 +216,7 @@
 }
 
 .option-text {
-    font-size: 8px;
+    font-size: var(--fs-base);
     color: var(--clr-text-muted);
     line-height: 1.6;
     flex: 1;
@@ -251,7 +251,7 @@
 }
 
 .results-title {
-    font-size: 1.4rem;
+    font-size: var(--fs-lg);
     font-weight: 400;
     color: var(--clr-text-primary);
     margin-bottom: 2rem;
@@ -276,17 +276,17 @@
 }
 
 .score-total {
-    font-size: 1.4rem;
+    font-size: var(--fs-3xl);
     color: var(--clr-text-muted);
 }
 
 .score-average {
-    font-size: 0.9rem;
+    font-size: var(--fs-md);
     color: var(--clr-text-muted);
 }
 
 .score-status {
-    font-size: 1rem;
+    font-size: var(--fs-lg);
     font-weight: 400;
     padding: 16px 24px;
     border-radius: 8px;
@@ -328,7 +328,7 @@
 }
 
 .recommendations h3 {
-    font-size: 0.9rem;
+    font-size: var(--fs-md);
     font-weight: 400;
     color: var(--clr-accent);
     margin-bottom: 12px;
@@ -341,7 +341,7 @@
 }
 
 .recommendations li {
-    font-size: 8px;
+    font-size: var(--fs-base);
     color: var(--clr-text-muted);
     line-height: 1.6;
     margin-bottom: 8px;
@@ -357,7 +357,7 @@
 }
 
 .recommendations p {
-    font-size: 8px;
+    font-size: var(--fs-base);
     color: var(--clr-text-muted);
     line-height: 1.6;
     margin: 0;
@@ -382,7 +382,7 @@
 }
 
 .email-optional > p {
-    font-size: 8px;
+    font-size: var(--fs-base);
     color: var(--clr-text-muted);
     margin-bottom: 12px;
 }
@@ -399,7 +399,7 @@
     border: 1px solid var(--clr-border);
     border-radius: 6px;
     padding: 5px 12px;
-    font-size: 8px;
+    font-size: var(--fs-base);
     color: var(--clr-text-primary);
     font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 }
@@ -415,7 +415,7 @@
     border: 1px solid var(--clr-accent);
     border-radius: 6px;
     padding: 5px 12px;
-    font-size: 8px;
+    font-size: var(--fs-base);
     font-weight: 400;
     font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
     cursor: pointer;
@@ -428,7 +428,7 @@
 }
 
 .email-note {
-    font-size: 7px;
+    font-size: var(--fs-sm);
     color: var(--clr-text-dim);
     margin: 0;
 }
@@ -446,7 +446,7 @@
     padding: 5px 12px;
     border: 1px solid;
     border-radius: 6px;
-    font-size: 8px;
+    font-size: var(--fs-base);
     font-weight: 400;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -486,11 +486,11 @@
     }
 
     .hero-content h1 {
-        font-size: 1.4rem;
+        font-size: var(--fs-3xl);
     }
 
     .hero-subtitle {
-        font-size: 0.9rem;
+        font-size: var(--fs-md);
     }
 
     .progress-container {
@@ -502,7 +502,7 @@
     }
 
     .question-title {
-        font-size: 0.8rem;
+        font-size: var(--fs-base);
     }
 
     .score-number {
