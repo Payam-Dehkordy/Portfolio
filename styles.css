@@ -284,7 +284,10 @@ a:hover:not(.btn):not(.social-link):not(.contact-item) {
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     font-size: var(--fs-sm);
     font-family: inherit;
 }
@@ -709,6 +712,10 @@ section {
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     font-size: var(--fs-base);
     font-family: inherit;
 }
@@ -844,6 +851,10 @@ section {
     transition: all 0.3s ease;
     font-family: inherit;
     font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .portfolio-view-btn:hover {
@@ -1532,11 +1543,8 @@ a.contact-item:hover {
     border-color: var(--clr-accent);
 }
 
-/* Back to Top Button */
-.back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
+/* Shared circle button (back-to-top, modal close, etc.) */
+.btn-circle {
     width: 38px;
     height: 38px;
     border: none;
@@ -1545,19 +1553,26 @@ a.contact-item:hover {
     color: var(--clr-bg-tertiary);
     font-size: var(--fs-2xl);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
-    z-index: 1002;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
 }
 
-.back-to-top:hover {
+.btn-circle:hover {
     background: var(--clr-accent-hover);
     transform: translateY(-2px);
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1002;
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Responsive Design */
@@ -1603,6 +1618,10 @@ a.contact-item:hover {
 
     .nav-menu li {
         margin: 0.8rem 0;
+    }
+
+    .contact-info-cta-link {
+        display: block;
     }
 
     .hero-container {
@@ -1662,11 +1681,14 @@ a.contact-item:hover {
         border-radius: 8px;
         width: 100%;
         max-width: 100%;
+        flex-direction: column;
+        gap: 0.75rem;
     }
 
     .referral-form .referral-form-actions {
         flex-wrap: wrap;
         gap: 0.5rem;
+        width: 100%;
     }
 
     .referral-form .referral-email-input {
@@ -1675,8 +1697,12 @@ a.contact-item:hover {
         width: 100%;
         height: auto;
         padding: 5px 10px;
-        font-size: var(--fs-2xl);
+        font-size: var(--fs-base);
         border-radius: 6px;
+    }
+
+    .referral-form .referral-submit-btn {
+        width: 100%;
     }
 
     .portfolio-filter {
@@ -2020,29 +2046,12 @@ a.contact-item:hover {
 
 .calendly-modal-close {
     position: absolute;
-    top: 0.05rem;
-    right: 0.05rem;
-    background: transparent;
-    border: none;
-    color: var(--clr-accent);
-    font-size: var(--fs-close);
-    cursor: pointer;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    transition: all 0.3s ease;
+    top: 0.5rem;
+    right: 0.5rem;
     z-index: 10002;
     line-height: 1;
 }
 
-.calendly-modal-close:hover {
-    color: var(--clr-accent-light);
-    background: transparent;
-    transform: scale(1.05);
-}
 
 .calendly-inline-widget-container {
     flex: 1;
@@ -2077,20 +2086,25 @@ a.contact-item:hover {
 @media (max-width: 768px) {
     .calendly-modal-content {
         padding: 1rem;
+        width: 95%;
         max-width: 95%;
         max-height: 95vh;
     }
     
     .calendly-inline-widget-container {
-        min-width: 100% !important;
-        height: 600px !important;
+        width: 100%;
+        min-width: 0;
+        height: 600px;
+        overflow: auto;
+    }
+
+    .calendly-inline-widget-container iframe {
+        width: 100%;
+        max-width: 100%;
     }
     
     .calendly-modal-close {
-        top: 0.75rem;
-        right: 0.75rem;
-        font-size: var(--fs-2xl);
-        width: 2rem;
-        height: 2rem;
+        top: 0.4rem;
+        right: 0.4rem;
     }
 }
