@@ -359,8 +359,15 @@ section {
     padding-top: 40px;
 }
 
-#experience {
-  scroll-margin-top: 52px;
+/* Single source of truth: offset all anchor targets by the fixed navbar height */
+#home,
+#about,
+#skills,
+#experience,
+#portfolio,
+#contact,
+#cv {
+    scroll-margin-top: 60px;
 }
 
 .section-title {
@@ -1119,7 +1126,7 @@ section {
 .contact-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 90px 20px 40px;
+    padding: 40px 20px;
 }
 
 .contact-content {
