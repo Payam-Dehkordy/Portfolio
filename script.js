@@ -1262,6 +1262,52 @@ function setFormStatus(el, msg, type) {
   if (type) el.classList.add('form-status--' + type);
 }
 
+function clearFieldErrors(formEl) {
+  formEl.querySelectorAll('.form-field--invalid').forEach(function(f) {
+    f.classList.remove('form-field--invalid');
+  });
+  formEl.querySelectorAll('.form-field-error').forEach(function(e) {
+    e.remove();
+  });
+}
+
+function showFieldError(field, msg) {
+  field.classList.add('form-field--invalid');
+  var hint = document.createElement('p');
+  hint.className = 'form-field-error';
+  hint.textContent = msg;
+  field.parentNode.appendChild(hint);
+  field.addEventListener('input', function handler() {
+    field.classList.remove('form-field--invalid');
+    if (hint.parentNode) hint.remove();
+    field.removeEventListener('input', handler);
+  });
+}
+
+function validateField(field) {
+  if (field.validity.valueMissing) {
+    showFieldError(field, 'This field is required.');
+    return false;
+  }
+  if (field.validity.typeMismatch && field.type === 'email') {
+    showFieldError(field, 'Please enter a valid email address.');
+    return false;
+  }
+  return true;
+}
+
+function validateForm(formEl) {
+  clearFieldErrors(formEl);
+  var fields = formEl.querySelectorAll('input[required], textarea[required]');
+  var firstInvalid = null;
+  fields.forEach(function(f) {
+    if (f.offsetParent === null) return;
+    if (!validateField(f) && !firstInvalid) firstInvalid = f;
+  });
+  if (firstInvalid) { firstInvalid.focus(); return false; }
+  return true;
+}
+
 var form = document.getElementById("my-form");
 if (form) {
   var contactStatus = document.getElementById("my-form-status");
@@ -1270,6 +1316,8 @@ if (form) {
 
   form.addEventListener("submit", async function(event) {
     event.preventDefault();
+    if (!validateForm(form)) return;
+
     var hp = form.querySelector('[name="website"]');
     if (contactBtn) {
       contactBtn.disabled = true;
@@ -1405,8 +1453,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     referralForm.addEventListener('submit', async function(event) {
       event.preventDefault();
+      if (!validateForm(referralForm)) return;
       var recipientInput = document.getElementById('referral-recipient');
-      if (!recipientInput || !recipientInput.value.trim()) return;
 
       var hp = referralForm.querySelector('[name="website"]');
 
