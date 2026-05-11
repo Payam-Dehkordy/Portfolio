@@ -373,6 +373,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
 });
 
+// Parallax: hero slides up as user scrolls down
+(function () {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                hero.style.transform = `translateY(${window.pageYOffset * -0.3}px)`;
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+})();
+
 // Terminal typing animation
 function animateTerminal(terminal) {
     const lines = [

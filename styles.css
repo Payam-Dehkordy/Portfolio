@@ -190,6 +190,8 @@ body {
     width: 100%;
     left: 0;
     right: 0;
+    will-change: transform;
+    transition: transform 0.4s ease-out;
 }
 
 .hero::before {
