@@ -530,17 +530,20 @@ if (aboutStats) {
 }
 
 // Reset scroll animations when user returns to the very top so they
-// replay on the next scroll-down (single source of truth: .fade-in/.visible)
-window.addEventListener('scroll', () => {
-    if (window.scrollY === 0) {
-        setTimeout(() => {
-            document.querySelectorAll('.fade-in.visible, .slide-in-left.visible').forEach(el => {
-                el.classList.remove('visible');
-                observer.observe(el);
-            });
-        }, 100);
-    }
-}, { passive: true });
+// replay on the next scroll-down. Only on the main page (has .hero);
+// service pages start content at the top so resetting would hide it.
+if (document.querySelector('.hero')) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY === 0) {
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in.visible, .slide-in-left.visible').forEach(el => {
+                    el.classList.remove('visible');
+                    observer.observe(el);
+                });
+            }, 100);
+        }
+    }, { passive: true });
+}
 
 // Back to top (button is in HTML)
 const backToTopBtn = document.getElementById('back-to-top');
