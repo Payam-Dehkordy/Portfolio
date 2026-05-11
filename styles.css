@@ -86,7 +86,7 @@ a {
     transition: color 0.3s ease;
 }
 
-a:hover {
+a:hover:not(.btn):not(.social-link):not(.contact-item) {
     color: var(--clr-accent-light);
 }
 
@@ -319,6 +319,7 @@ a:hover {
 .btn-gold:hover {
     background: var(--clr-accent-light);
     border-color: var(--clr-accent-light);
+    color: var(--clr-bg-tertiary);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(194, 151, 52, 0.3);
 }
@@ -1154,6 +1155,7 @@ section {
     margin-bottom: 2.25rem;
 }
 
+a.contact-item,
 .contact-item {
     display: flex;
     align-items: center;
@@ -1161,6 +1163,12 @@ section {
     margin-bottom: 0.9rem;
     color: var(--clr-text-muted);
     font-size: var(--fs-base);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a.contact-item:hover {
+    color: var(--clr-accent);
 }
 
 .contact-item i {
@@ -1519,7 +1527,9 @@ section {
 }
 
 .footer-social .social-link:hover {
-    color: var(--clr-accent);
+    background: var(--clr-accent);
+    color: var(--clr-bg-primary);
+    border-color: var(--clr-accent);
 }
 
 /* Back to Top Button */
