@@ -1,7 +1,7 @@
 # Portfolio Code Quality Audit
 
 > **Date:** 2026-05-11  
-> **Last updated:** 2026-05-12  
+> **Last updated:** 2026-05-12 (v2)  
 > **Scope:** Full codebase — `index.html`, `styles.css`, `script.js`, `services/*`, `mail-service/*`, `.github/workflows/deploy.yml`, `deploy/nginx-portfolio.conf`  
 > **Principles:** SOLID, KISS, YAGNI, DRY, Security, Accessibility, Performance, Maintainability
 
@@ -30,6 +30,16 @@
 | DevOps | M8, N7 | deploy.yml sudo DRY, LICENSE, .editorconfig, .gitattributes |
 | HTML partials | C3 | build.py + _includes/ partial sync with {{ BASE }}/{{ SERVICES }}/{{ HASH_PREFIX }} variables, CI --check |
 | Performance | N4 | display=swap confirmed; FA subset deferred (acceptable for ~10 icons) |
+| Terminal animation | — | Line-by-line skill display, cursor fix (â–ˆ→█), cursor on new line after output |
+| Font-size overhaul | C2 | Reverted --fs-* tokens to original px proportions; replaced all hardcoded px/rem in service CSS with tokens; consistent section titles (--fs-lg + gold underline) |
+| Layout & spacing | — | Hero container max-width 1200px, portfolio card flex layout (buttons stick to bottom), contact-cv-section padding, contact-container symmetric padding |
+| Scroll & animation | — | Restored hero parallax scroll animation; scroll-margin-top: 60px on all sections for fixed navbar offset; animation reset only on main page (skip service pages) |
+| Link colors | — | Removed -webkit-link defaults; all links use gold (--clr-accent); scoped global a:hover to exclude .btn/.social-link/.contact-item |
+| Hover fixes | — | btn-gold hover keeps dark text (prevents same-color-as-bg); footer social-link hover gets gold background + dark icon |
+| Navigation consistency | C3 | CV link added to all 4 pages (index + 3 services); footer unified (social icons only, no duplicate nav/contact text) |
+| Contact UX | — | Contact items converted from static spans to actionable links (mailto, tel, maps, LinkedIn, GitHub); social-links moved from contact to footer |
+| Back-to-top button | M6 | Restored CSS for .back-to-top (position, size, colors via tokens, hover effect); JS toggles visibility |
+| Dev server | — | serve.py with no-cache headers for reliable local development |
 
 ### User Action Items
 
