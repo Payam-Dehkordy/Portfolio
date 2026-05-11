@@ -5,7 +5,9 @@
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
-        window.scrollTo(0,0);
+        if (!window.location.hash) {
+            window.scrollTo(0,0);
+        }
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,43 +17,44 @@
     <meta name="description" content="Assess your QA maturity in 10 minutes. Answer 10 questions and get instant results with personalized recommendations. No email required.">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.payam-dehkordy.com/services/qa-scorecard.html">
     <meta property="og:title" content="Free QA Health Scorecard - Assess Your QA Maturity">
     <meta property="og:description" content="Assess your QA maturity in 10 minutes. Answer 10 questions and get instant results.">
+    <!-- partial:head-common -->
+    <meta property="og:type" content="website">
     <meta property="og:image" content="https://www.payam-dehkordy.com/assets/Logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
     <meta property="og:image:secure_url" content="https://www.payam-dehkordy.com/assets/Logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="627">
-    
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.payam-dehkordy.com/services/qa-scorecard.html">
-    <meta property="twitter:title" content="Free QA Health Scorecard - Assess Your QA Maturity">
-    <meta property="twitter:description" content="Assess your QA maturity in 10 minutes. Answer 10 questions and get instant results.">
     <meta property="twitter:image" content="https://www.payam-dehkordy.com/assets/Logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
-    
-    <!-- Additional SEO -->
-    <meta name="keywords" content="QA Health Scorecard, QA Assessment, Test Automation Assessment, QA Maturity, QA Metrics, QA Evaluation">
     <meta name="author" content="Payam Dehkordy">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta property="og:site_name" content="Payam Dehkordy Portfolio">
     <meta property="og:locale" content="en_US">
+    <!-- /partial:head-common -->
+    <!-- Twitter -->
+    <meta property="twitter:url" content="https://www.payam-dehkordy.com/services/qa-scorecard.html">
+    <meta property="twitter:title" content="Free QA Health Scorecard - Assess Your QA Maturity">
+    <meta property="twitter:description" content="Assess your QA maturity in 10 minutes. Answer 10 questions and get instant results.">
+    <!-- Additional SEO -->
+    <meta name="keywords" content="QA Health Scorecard, QA Assessment, Test Automation Assessment, QA Maturity, QA Metrics, QA Evaluation">
     <link rel="canonical" href="https://www.payam-dehkordy.com/services/qa-scorecard.html">
     
     <link rel="icon" type="image/svg+xml" href="../assets/Logo/Logo.svg">
-    <link rel="stylesheet" href="../styles.css?v=mail-api-2">
+    <link rel="stylesheet" href="../styles.css?v=2">
     <link rel="stylesheet" href="qa-scorecard.css?v=mail-api-2">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- partial:nav -->
+    <header>
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="../index.html">
+                <a href="../index.html#home">
                     <img src="../assets/Logo/logo-full.svg" alt="Payam Dehkordy Logo" class="logo-image">
                 </a>
             </div>
@@ -78,13 +81,15 @@
                     <a href="../index.html#contact" class="nav-link">Contact</a>
                 </li>
             </ul>
-            <div class="hamburger">
+            <div class="hamburger" aria-label="Toggle menu" role="button" aria-expanded="false">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </div>
         </div>
     </nav>
+    </header>
+    <!-- /partial:nav -->
 
     <!-- Hero Section -->
     <section class="scorecard-hero">
@@ -460,21 +465,36 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- partial:footer -->
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Payam Dehkordy. All rights reserved.</p>
+        <div class="footer-content">
             <div class="footer-links">
-                <a href="../index.html">Home</a>
+                <a href="../index.html#home">Home</a>
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#portfolio">Portfolio</a>
                 <a href="qa-retainer.html">QA Services</a>
                 <a href="web-agency.html">Web Agency</a>
                 <a href="qa-scorecard.html">QA Assessment</a>
                 <a href="../index.html#contact">Contact</a>
             </div>
+            <div class="footer-contact">
+                <a href="mailto:payam.dehkordy@gmail.com" target="_blank" rel="noopener">payam.dehkordy@gmail.com</a>
+                <span>|</span>
+                <a href="tel:+37455252581">+374 55252581</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/payam-dehkordy" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Payam-Dehkordy" class="social-link" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:payam.dehkordy@gmail.com" class="social-link" target="_blank" rel="noopener" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Payam Dehkordy. All rights reserved.</p>
+            <p>Staff Software Engineer — QA Automation | Full-Stack Development | EDA Quality | AI Agent &amp; Workflow Automation</p>
         </div>
     </footer>
+    <!-- /partial:footer -->
 
-    <script src="../script.js"></script>
+    <script src="../script.js?v=2"></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",

@@ -5,7 +5,9 @@
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
-        window.scrollTo(0,0);
+        if (!window.location.hash) {
+            window.scrollTo(0,0);
+        }
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,43 +17,47 @@
     <meta name="description" content="Get enterprise-grade QA expertise for US and Canada teams at startup-friendly pricing. Cut release times by 50%, eliminate manual testing bottlenecks, and ship with confidence.">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.payam-dehkordy.com/services/qa-retainer.html">
     <meta property="og:title" content="QA Retainer Services - Enterprise QA Leadership for Scaling Teams">
     <meta property="og:description" content="Get enterprise-grade QA expertise for North American teams at startup-friendly pricing. Cut release times by 50% and ship with confidence.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:url" content="https://www.payam-dehkordy.com/services/qa-retainer.html">
+    <meta property="twitter:title" content="QA Retainer Services - Enterprise QA Leadership for Scaling Teams">
+    <meta property="twitter:description" content="Get enterprise-grade QA expertise for North American teams at startup-friendly pricing. Cut release times and ship with confidence.">
+    
+    <!-- Additional SEO -->
+    <meta name="keywords" content="QA Retainer, QA Consulting, Test Automation, QA Leadership, Fractional QA, Software Testing, Test Strategy, US QA Consultant, Canada QA Services, North America QA Automation">
+    <link rel="canonical" href="https://www.payam-dehkordy.com/services/qa-retainer.html">
+    
+    <!-- partial:head-common -->
+    <meta property="og:type" content="website">
     <meta property="og:image" content="https://www.payam-dehkordy.com/assets/Logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
     <meta property="og:image:secure_url" content="https://www.payam-dehkordy.com/assets/Logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="627">
-    
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.payam-dehkordy.com/services/qa-retainer.html">
-    <meta property="twitter:title" content="QA Retainer Services - Enterprise QA Leadership for Scaling Teams">
-    <meta property="twitter:description" content="Get enterprise-grade QA expertise for North American teams at startup-friendly pricing. Cut release times and ship with confidence.">
     <meta property="twitter:image" content="https://www.payam-dehkordy.com/assets/Logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
-    
-    <!-- Additional SEO -->
-    <meta name="keywords" content="QA Retainer, QA Consulting, Test Automation, QA Leadership, Fractional QA, Software Testing, Test Strategy, US QA Consultant, Canada QA Services, North America QA Automation">
     <meta name="author" content="Payam Dehkordy">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta property="og:site_name" content="Payam Dehkordy Portfolio">
     <meta property="og:locale" content="en_US">
-    <link rel="canonical" href="https://www.payam-dehkordy.com/services/qa-retainer.html">
+    <!-- /partial:head-common -->
     
     <link rel="icon" type="image/svg+xml" href="../assets/Logo/Logo.svg">
-    <link rel="stylesheet" href="../styles.css?v=mail-api-2">
+    <link rel="stylesheet" href="../styles.css?v=2">
     <link rel="stylesheet" href="qa-retainer.css?v=mail-api-2">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- partial:nav -->
+    <header>
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="../index.html">
+                <a href="../index.html#home">
                     <img src="../assets/Logo/logo-full.svg" alt="Payam Dehkordy Logo" class="logo-image">
                 </a>
             </div>
@@ -78,13 +84,15 @@
                     <a href="../index.html#contact" class="nav-link">Contact</a>
                 </li>
             </ul>
-            <div class="hamburger">
+            <div class="hamburger" aria-label="Toggle menu" role="button" aria-expanded="false">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </div>
         </div>
     </nav>
+    </header>
+    <!-- /partial:nav -->
 
     <!-- Hero Section -->
     <section class="offer-hero">
@@ -319,7 +327,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- partial:footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -342,25 +350,25 @@
                 <a href="https://github.com/Payam-Dehkordy" class="social-link" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
                 <a href="mailto:payam.dehkordy@gmail.com" class="social-link" target="_blank" rel="noopener" aria-label="Email"><i class="fas fa-envelope"></i></a>
             </div>
-            <p>&copy; 2024 Payam Dehkordy. All rights reserved.</p>
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Payam Dehkordy. All rights reserved.</p>
             <p>Staff Software Engineer — QA Automation | Full-Stack Development | EDA Quality | AI Agent &amp; Workflow Automation</p>
         </div>
     </footer>
+    <!-- /partial:footer -->
 
-    <!-- Custom Calendly Modal -->
+    <!-- partial:calendly -->
     <div id="calendly-modal" class="calendly-modal">
         <div class="calendly-modal-overlay" onclick="closeCalendlyModal()"></div>
         <div class="calendly-modal-content">
             <button class="calendly-modal-close" onclick="closeCalendlyModal()">&times;</button>
-            <div class="calendly-inline-widget-container" style="min-width:320px;height:630px;"></div>
+            <div class="calendly-inline-widget-container"></div>
         </div>
     </div>
-
-    <!-- Calendly Inline Widget -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <!-- /partial:calendly -->
 
-    <script src="../script.js?v=mail-api-2"></script>
+    <script src="../script.js?v=2"></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",

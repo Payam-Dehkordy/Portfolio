@@ -3,7 +3,7 @@
     min-height: 65vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    background: linear-gradient(135deg, var(--clr-bg-primary) 0%, var(--clr-bg-secondary) 100%);
     padding: 90px 0 50px;
 }
 
@@ -18,14 +18,14 @@
 }
 
 .agency-hero h1 {
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
     font-size: 1.8rem;
     margin-bottom: 1rem;
     font-weight: 400;
 }
 
 .agency-hero p {
-    color: #8b949e;
+    color: var(--clr-text-muted);
     font-size: 0.9rem;
     line-height: 1.7;
     max-width: 760px;
@@ -40,25 +40,25 @@
 }
 
 .packages-section {
-    background: #0d1117;
+    background: var(--clr-bg-primary);
 }
 
 .terms-section {
-    background: #161b22;
+    background: var(--clr-bg-secondary);
 }
 
 .distinction-section,
 .cta-section {
-    background: #0d1117;
+    background: var(--clr-bg-primary);
 }
 
 .agency-projects-section {
     padding: 55px 0;
-    background: #161b22;
+    background: var(--clr-bg-secondary);
 }
 
 .agency-projects-intro {
-    color: #8b949e;
+    color: var(--clr-text-muted);
     font-size: 0.8rem;
     line-height: 1.7;
     text-align: center;
@@ -73,21 +73,21 @@
 }
 
 .agency-project-card {
-    background: #0d1117;
-    border: 1px solid #21262d;
+    background: var(--clr-bg-primary);
+    border: 1px solid var(--clr-border);
     border-radius: 8px;
     padding: 1rem;
 }
 
 .agency-project-card h3 {
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
     font-weight: 400;
 }
 
 .agency-project-card p {
-    color: #8b949e;
+    color: var(--clr-text-muted);
     font-size: 0.56rem;
     line-height: 1.65;
     margin-bottom: 0.7rem;
@@ -100,7 +100,7 @@
 }
 
 .agency-project-card li {
-    color: #b1bac4;
+    color: var(--clr-text-body);
     font-size: 0.52rem;
     line-height: 1.6;
     margin-bottom: 0.35rem;
@@ -110,7 +110,7 @@
 
 .agency-project-card li::before {
     content: "•";
-    color: #c29734;
+    color: var(--clr-accent);
     position: absolute;
     left: 0;
 }
@@ -131,33 +131,33 @@
 .package-card,
 .terms-card,
 .distinction-card {
-    background: #161b22;
-    border: 1px solid #21262d;
+    background: var(--clr-bg-secondary);
+    border: 1px solid var(--clr-border);
     border-radius: 8px;
     padding: 1.2rem;
 }
 
 .package-card.featured {
-    border-color: #c29734;
+    border-color: var(--clr-accent);
     box-shadow: 0 0 0 1px rgba(194, 151, 52, 0.2);
 }
 
 .package-card h3,
 .distinction-card h3 {
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
     font-weight: 400;
 }
 
 .price {
-    color: #c29734;
+    color: var(--clr-accent);
     font-size: 1rem;
     margin-bottom: 0.6rem;
 }
 
 .package-desc {
-    color: #b1bac4;
+    color: var(--clr-text-body);
     font-size: 0.6rem;
     margin-bottom: 0.8rem;
 }
@@ -171,7 +171,7 @@
 
 .package-card li,
 .terms-card li {
-    color: #8b949e;
+    color: var(--clr-text-muted);
     font-size: 0.55rem;
     line-height: 1.6;
     margin-bottom: 0.45rem;
@@ -184,24 +184,24 @@
     content: "→";
     position: absolute;
     left: 0;
-    color: #c29734;
+    color: var(--clr-accent);
 }
 
 .distinction-card p {
-    color: #8b949e;
+    color: var(--clr-text-muted);
     font-size: 0.6rem;
     line-height: 1.6;
 }
 
 .cta-section h2 {
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
     font-size: 1.2rem;
     text-align: center;
     margin-bottom: 0.6rem;
 }
 
 .cta-section p {
-    color: #8b949e;
+    color: var(--clr-text-muted);
     font-size: 0.7rem;
     text-align: center;
     margin-bottom: 1.2rem;

@@ -7,7 +7,20 @@ from __future__ import annotations
 
 import html
 
-# Mirrors styles.css (site identity)
+from config import (
+    CV_ATS_URL,
+    CV_PDF_URL,
+    FOCUS_AREAS,
+    GITHUB_URL,
+    HEADER_LOGO_URL,
+    JOB_TITLE,
+    LINKEDIN_URL,
+    OWNER_EMAIL,
+    OWNER_NAME,
+    OWNER_PHONE,
+    SITE_URL,
+)
+
 _BG = "#0d1117"
 _CARD = "#161b22"
 _BORDER = "#21262d"
@@ -15,16 +28,6 @@ _TEXT = "#e6e6e6"
 _MUTED = "#8b949e"
 _ACCENT = "#c29734"
 _FONT = "'JetBrains Mono', Consolas, 'Liberation Mono', Courier, monospace"
-
-_SITE = "https://www.payam-dehkordy.com"
-_JOB_TITLE = "Staff Software Engineer"
-_FOCUS_AREAS = (
-    "QA Automation | Full-Stack Development | EDA Quality | AI Agent & Workflow Automation"
-)
-_CV_PDF = f"{_SITE}/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV.pdf"
-_CV_ATS = f"{_SITE}/assets/documents/Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf"
-# Same asset as the site header — absolute URL for email clients
-_HEADER_LOGO_URL = f"{_SITE}/assets/Logo/logo-full.svg"
 
 
 def _html_document_title(*, eyebrow: str, title: str, html_document_title: str | None) -> str:
@@ -51,7 +54,7 @@ def _wrapper(
         logo_src = html.escape(header_logo_url, quote=True)
         header_block = f"""          <tr>
             <td style="padding:22px 26px;border-bottom:1px solid {_BORDER};background-color:#0d1117;">
-              <img src="{logo_src}" alt="Payam Dehkordy" width="220" style="display:block;max-width:220px;width:100%;height:auto;border:0;outline:none;text-decoration:none;" />
+              <img src="{logo_src}" alt="{html.escape(OWNER_NAME)}" width="220" style="display:block;max-width:220px;width:100%;height:auto;border:0;outline:none;text-decoration:none;" />
             </td>
           </tr>"""
     else:
@@ -176,41 +179,28 @@ def scorecard_bodies(
     return plain, html_out
 
 
+def _email_link(url: str, label: str) -> str:
+    return f'<a href="{html.escape(url, quote=True)}" style="color:{_ACCENT};text-decoration:none;">{html.escape(label)}</a>'
+
+
 def _referral_links_rows_html() -> str:
     rows = [
-        ("Portfolio", f'<a href="{_SITE}/" style="color:{_ACCENT};text-decoration:none;">{_SITE}/</a>'),
-        (
-            "Email",
-            f'<a href="mailto:payam.dehkordy@gmail.com" style="color:{_ACCENT};text-decoration:none;">payam.dehkordy@gmail.com</a>',
-        ),
-        ("Phone", "+374 55252581"),
-        (
-            "LinkedIn",
-            '<a href="https://www.linkedin.com/in/payam-dehkordy" style="color:'
-            f'{_ACCENT};text-decoration:none;">linkedin.com/in/payam-dehkordy</a>',
-        ),
-        (
-            "GitHub",
-            '<a href="https://github.com/Payam-Dehkordy" style="color:'
-            f'{_ACCENT};text-decoration:none;">github.com/Payam-Dehkordy</a>',
-        ),
+        ("Portfolio", _email_link(f"{SITE_URL}/", f"{SITE_URL}/")),
+        ("Email", _email_link(f"mailto:{OWNER_EMAIL}", OWNER_EMAIL)),
+        ("Phone", html.escape(OWNER_PHONE)),
+        ("LinkedIn", _email_link(LINKEDIN_URL, LINKEDIN_URL.replace("https://www.", ""))),
+        ("GitHub", _email_link(GITHUB_URL, GITHUB_URL.replace("https://", ""))),
     ]
     inner = "".join(_field_row(label, val) for label, val in rows)
-    inner += _field_row(
-        "CV (PDF)",
-        f'<a href="{_CV_PDF}" style="color:{_ACCENT};text-decoration:none;">Download CV</a>',
-    )
-    inner += _field_row(
-        "ATS CV (PDF)",
-        f'<a href="{_CV_ATS}" style="color:{_ACCENT};text-decoration:none;">Download ATS CV</a>',
-    )
+    inner += _field_row("CV (PDF)", _email_link(CV_PDF_URL, "Download CV"))
+    inner += _field_row("ATS CV (PDF)", _email_link(CV_ATS_URL, "Download ATS CV"))
     return inner
 
 
 _REFERRAL_FOOTER_NOTE = (
-    "Reply to reach Payam directly. "
-    "This message was sent via payam-dehkordy.com because someone used the \"Refer me\" option "
-    "on Payam's portfolio to introduce him to you."
+    f"Reply to reach {OWNER_NAME.split()[0]} directly. "
+    f"This message was sent via {SITE_URL.replace('https://', '').replace('http://', '')} "
+    f"because someone used the \"Refer me\" option on {OWNER_NAME.split()[0]}'s portfolio to introduce him to you."
 )
 
 
@@ -218,24 +208,24 @@ def referral_outbound_bodies() -> tuple[str, str]:
     """Email sent To colleague — first-person intro from Payam (multipart)."""
     plain = (
         "Hi,\n\n"
-        f"I'm Payam Dehkordy — {_JOB_TITLE} (Yerevan).\n"
-        f"{_FOCUS_AREAS}\n\n"
+        f"I'm {OWNER_NAME} — {JOB_TITLE} ({OWNER_PHONE.split()[0] if ' ' in OWNER_PHONE else 'Yerevan'}).\n"
+        f"{FOCUS_AREAS}\n\n"
         "I help teams ship reliable software through test automation, quality engineering, "
         "full-stack delivery, EDA quality, and AI-enabled workflows.\n\n"
         "If you're exploring QA leadership, automation architecture, EDA quality, or "
         "web delivery for North American–aligned teams, I'd be glad to connect.\n\n"
         "CONTACT & LINKS\n"
-        f"  Portfolio   {_SITE}/\n"
-        "  Email       payam.dehkordy@gmail.com\n"
-        "  Phone       +374 55252581\n"
-        "  LinkedIn    https://www.linkedin.com/in/payam-dehkordy\n"
-        "  GitHub      https://github.com/Payam-Dehkordy\n\n"
+        f"  Portfolio   {SITE_URL}/\n"
+        f"  Email       {OWNER_EMAIL}\n"
+        f"  Phone       {OWNER_PHONE}\n"
+        f"  LinkedIn    {LINKEDIN_URL}\n"
+        f"  GitHub      {GITHUB_URL}\n\n"
         "CV (PDF)\n"
-        f"  {_CV_PDF}\n\n"
+        f"  {CV_PDF_URL}\n\n"
         "ATS CV (PDF)\n"
-        f"  {_CV_ATS}\n\n"
+        f"  {CV_ATS_URL}\n\n"
         "Best regards,\n"
-        "Payam Dehkordy\n\n"
+        f"{OWNER_NAME}\n\n"
         "---\n"
         f"{_REFERRAL_FOOTER_NOTE}\n"
     )
@@ -244,10 +234,10 @@ def referral_outbound_bodies() -> tuple[str, str]:
             <td style="padding:18px 26px;">
               <p style="font-family:{_FONT};font-size:14px;color:{_TEXT};line-height:1.65;margin:0 0 14px;">Hi,</p>
               <p style="font-family:{_FONT};font-size:13px;color:{_TEXT};line-height:1.65;margin:0 0 10px;">
-                I'm <strong style="color:{_ACCENT};font-weight:600;">Payam Dehkordy</strong> — {_JOB_TITLE} (Yerevan).
+                I'm <strong style="color:{_ACCENT};font-weight:600;">{html.escape(OWNER_NAME)}</strong> — {html.escape(JOB_TITLE)} (Yerevan).
               </p>
               <p style="font-family:{_FONT};font-size:11px;color:{_ACCENT};line-height:1.55;margin:0 0 14px;">
-                {_FOCUS_AREAS.replace('&', '&amp;')}
+                {html.escape(FOCUS_AREAS)}
               </p>
               <p style="font-family:{_FONT};font-size:13px;color:{_TEXT};line-height:1.65;margin:0 0 14px;">
                 I help teams ship reliable software through test automation, quality engineering,

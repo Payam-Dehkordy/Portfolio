@@ -32,6 +32,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Verify HTML partials are in sync
+        run: python3 build.py --check
+
       - name: Configure SSH key (secret)
         shell: bash
         env:
@@ -96,17 +99,13 @@ jobs:
           RSYNC_RSH="ssh -p $PORT -o IdentitiesOnly=yes -i $HOME/.ssh/id_ed25519"
           SSH_BASE=(ssh -p "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" "$SSH_USER@$SSH_HOST")
 
-          # /var/www/* is root-owned; CI user needs NOPASSWD (deploy/sudoers-portfolio-deploy.example on server).
           "${SSH_BASE[@]}" env REMOTE_USER="$SSH_USER" bash -s <<'ENSURE_WEBROOT'
           set -euo pipefail
-          die_sudo() {
-            echo "::error::Passwordless sudo is not configured for this user. On the droplet as root: sudo visudo -f /etc/sudoers.d/portfolio-deploy — paste the FULL file from https://github.com/Payam-Dehkordy/Portfolio/blob/main/deploy/sudoers-portfolio-deploy.example If your SSH login is not deploy, replace every leading deploy on sudo lines with your username (must match GitHub SSH_USER). Verify paths: command -v mkdir chown chgrp chmod cp ln nginx systemctl. Then sudo visudo -c."
-            exit 1
-          }
-          sudo -n /usr/bin/mkdir -p /var/www/portfolio 2>/dev/null || sudo -n /bin/mkdir -p /var/www/portfolio 2>/dev/null || die_sudo
-          sudo -n /usr/bin/chown -R "$REMOTE_USER" /var/www/portfolio 2>/dev/null || sudo -n /bin/chown -R "$REMOTE_USER" /var/www/portfolio 2>/dev/null || die_sudo
-          sudo -n /usr/bin/chgrp -R www-data /var/www/portfolio 2>/dev/null || sudo -n /bin/chgrp -R www-data /var/www/portfolio 2>/dev/null || die_sudo
-          sudo -n /usr/bin/chmod -R g+rX /var/www/portfolio 2>/dev/null || sudo -n /bin/chmod -R g+rX /var/www/portfolio 2>/dev/null || die_sudo
+          _sudo() { sudo -n "$@" 2>/dev/null || { echo "::error::Passwordless sudo not configured. See deploy/sudoers-portfolio-deploy.example"; exit 1; }; }
+          _sudo mkdir -p /var/www/portfolio
+          _sudo chown -R "$REMOTE_USER" /var/www/portfolio
+          _sudo chgrp -R www-data /var/www/portfolio
+          _sudo chmod -R g+rX /var/www/portfolio
           ENSURE_WEBROOT
 
           rsync -az --delete \
@@ -117,6 +116,11 @@ jobs:
             --exclude "docs/" \
             --exclude "README.md" \
             --exclude "mail-service/" \
+            --exclude "_includes/" \
+            --exclude "build.py" \
+            --exclude ".editorconfig" \
+            --exclude ".gitattributes" \
+            --exclude "LICENSE" \
             -e "$RSYNC_RSH" \
             ./ \
             "$REMOTE/"
@@ -125,12 +129,9 @@ jobs:
 
           "${SSH_BASE[@]}" env REMOTE_USER="$SSH_USER" bash -s <<'ENSURE_MAILDIR'
           set -euo pipefail
-          die_sudo() {
-            echo "::error::Passwordless sudo incomplete for mail deploy. Merge latest deploy/sudoers-portfolio-deploy.example into /etc/sudoers.d/portfolio-deploy then sudo visudo -c."
-            exit 1
-          }
-          sudo -n /usr/bin/mkdir -p /opt/portfolio-mail 2>/dev/null || sudo -n /bin/mkdir -p /opt/portfolio-mail 2>/dev/null || die_sudo
-          sudo -n /usr/bin/chown -R "$REMOTE_USER" /opt/portfolio-mail 2>/dev/null || sudo -n /bin/chown -R "$REMOTE_USER" /opt/portfolio-mail 2>/dev/null || die_sudo
+          _sudo() { sudo -n "$@" 2>/dev/null || { echo "::error::Passwordless sudo not configured for mail deploy. See deploy/sudoers-portfolio-deploy.example"; exit 1; }; }
+          _sudo mkdir -p /opt/portfolio-mail
+          _sudo chown -R "$REMOTE_USER" /opt/portfolio-mail
           ENSURE_MAILDIR
 
           # Exclude venv: it only exists on the server (--delete would try to remove it; running
@@ -150,15 +151,15 @@ jobs:
 
           "${SSH_BASE[@]}" bash -s <<'INSTALL_MAIL'
           set -euo pipefail
+          _sudo() { sudo -n "$@" 2>/dev/null || { echo "::error::sudo failed: $*"; exit 1; }; }
           if ! [ -x /opt/portfolio-mail/venv/bin/python3 ]; then
             python3 -m venv /opt/portfolio-mail/venv
           fi
           /opt/portfolio-mail/venv/bin/pip install -q -r /opt/portfolio-mail/requirements.txt
-          sudo -n /usr/bin/cp /tmp/portfolio-mail.service /etc/systemd/system/portfolio-mail.service \
-            || sudo -n /bin/cp /tmp/portfolio-mail.service /etc/systemd/system/portfolio-mail.service
-          sudo -n /usr/bin/systemctl daemon-reload || sudo -n /bin/systemctl daemon-reload
-          sudo -n /usr/bin/systemctl enable portfolio-mail 2>/dev/null || sudo -n /bin/systemctl enable portfolio-mail 2>/dev/null || true
-          sudo -n /usr/bin/systemctl restart portfolio-mail || sudo -n /bin/systemctl restart portfolio-mail
+          _sudo cp /tmp/portfolio-mail.service /etc/systemd/system/portfolio-mail.service
+          _sudo systemctl daemon-reload
+          _sudo systemctl enable portfolio-mail || true
+          _sudo systemctl restart portfolio-mail
           INSTALL_MAIL
 
           scp -P "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" \
@@ -167,20 +168,15 @@ jobs:
 
           "${SSH_BASE[@]}" bash -s <<'REMOTE_INSTALL'
           set -euo pipefail
+          _sudo() { sudo -n "$@" 2>/dev/null || { echo "::error::sudo failed: $*"; exit 1; }; }
           TMP=/tmp/portfolio-nginx.conf
-          CERT=/etc/letsencrypt/live/www.payam-dehkordy.com/fullchain.pem
-          # Always install the vhost (includes location /api/ → portfolio-mail). Do not skip when $CERT
-          # is missing from this check — that left stale nginx without /api/ and caused POST …/api/mail 405.
-          sudo -n /usr/bin/cp "$TMP" /etc/nginx/sites-available/portfolio.conf \
-            || sudo -n /bin/cp "$TMP" /etc/nginx/sites-available/portfolio.conf
-          sudo -n /usr/bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf \
-            || sudo -n /bin/ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf
-          if ! sudo -n /usr/sbin/nginx -t; then
-            echo "::error::nginx -t failed. Issue TLS with Certbot so ssl_certificate paths exist (see Droplet PORTFOLIO_HOSTING.md); expected cert: $CERT"
+          _sudo cp "$TMP" /etc/nginx/sites-available/portfolio.conf
+          _sudo ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf
+          if ! _sudo nginx -t; then
+            echo "::error::nginx -t failed. Issue TLS with Certbot (see Droplet docs)."
             exit 1
           fi
-          sudo -n /usr/bin/systemctl reload nginx \
-            || sudo -n /bin/systemctl reload nginx
+          _sudo systemctl reload nginx
           REMOTE_INSTALL
 
       - name: Purge Cloudflare edge cache

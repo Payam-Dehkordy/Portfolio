@@ -5,8 +5,8 @@
     min-height: 70vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
-    color: #e6e6e6;
+    background: linear-gradient(135deg, var(--clr-bg-primary) 0%, var(--clr-bg-secondary) 100%);
+    color: var(--clr-text-secondary);
     position: relative;
     overflow: hidden;
     padding: 80px 0 40px;
@@ -19,7 +19,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(88, 166, 255, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 80%, var(--clr-hero-glow) 0%, transparent 50%);
     z-index: 1;
 }
 
@@ -37,14 +37,14 @@
     font-weight: 400;
     margin-bottom: 1rem;
     line-height: 1.3;
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
 }
 
 .offer-hero h2 {
     font-size: 1rem;
     font-weight: 300;
     margin-bottom: 2rem;
-    color: #8b949e;
+    color: var(--clr-text-muted);
     line-height: 1.6;
     max-width: 700px;
     margin-left: auto;
@@ -58,9 +58,9 @@
 /* Assessment CTA Section */
 .assessment-cta-section {
     padding: 40px 0;
-    background: #161b22;
-    border-top: 1px solid #21262d;
-    border-bottom: 1px solid #21262d;
+    background: var(--clr-bg-secondary);
+    border-top: 1px solid var(--clr-border);
+    border-bottom: 1px solid var(--clr-border);
 }
 
 .assessment-cta-card {
@@ -70,8 +70,8 @@
 }
 
 .assessment-cta-content {
-    background: #0d1117;
-    border: 1px solid #21262d;
+    background: var(--clr-bg-primary);
+    border: 1px solid var(--clr-border);
     border-radius: 8px;
     padding: 24px;
     text-align: center;
@@ -80,13 +80,13 @@
 .assessment-cta-content h3 {
     font-size: 1rem;
     font-weight: 400;
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
     margin-bottom: 12px;
 }
 
 .assessment-cta-content p {
     font-size: 8px;
-    color: #8b949e;
+    color: var(--clr-text-muted);
     margin-bottom: 16px;
     line-height: 1.6;
 }
@@ -94,9 +94,9 @@
 .btn-assessment {
     display: inline-block;
     padding: 5px 12px;
-    background: #c29734;
-    color: #23272f;
-    border: 1px solid #c29734;
+    background: var(--clr-accent);
+    color: var(--clr-bg-tertiary); /* #23272f — needs dedicated --clr-btn-text-dark token */
+    border: 1px solid var(--clr-accent);
     border-radius: 6px;
     font-size: 8px;
     font-weight: 400;
@@ -106,14 +106,14 @@
 }
 
 .btn-assessment:hover {
-    background: #d4a842;
-    border-color: #d4a842;
+    background: var(--clr-accent-light);
+    border-color: var(--clr-accent-light);
     transform: translateY(-1px);
 }
 
 .transformation-section {
     padding: 60px 0;
-    background: #0d1117;
+    background: var(--clr-bg-primary);
 }
 
 .transformation-section .container {
@@ -127,7 +127,7 @@
     font-weight: 400;
     margin-bottom: 3rem;
     text-align: center;
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
 }
 
 .transformation-grid {
@@ -138,15 +138,15 @@
 }
 
 .transformation-card {
-    background: #161b22;
-    border: 1px solid #21262d;
+    background: var(--clr-bg-secondary);
+    border: 1px solid var(--clr-border);
     border-radius: 8px;
     padding: 24px;
     transition: all 0.3s ease;
 }
 
 .transformation-card:hover {
-    border-color: #c29734;
+    border-color: var(--clr-accent);
     transform: translateY(-2px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
@@ -155,7 +155,7 @@
     font-size: 0.9rem;
     font-weight: 400;
     margin-bottom: 16px;
-    color: #c29734;
+    color: var(--clr-accent);
 }
 
 .transformation-before-after {
@@ -191,35 +191,35 @@
 }
 
 .transformation-before h4 {
-    color: #f87171;
+    color: #f87171; /* TODO: needs --clr-danger or --clr-before token */
 }
 
 .transformation-after h4 {
-    color: #34d399;
+    color: #34d399; /* TODO: needs --clr-success or --clr-after token */
 }
 
 .transformation-before p,
 .transformation-after p {
     font-size: 8px;
     line-height: 1.6;
-    color: #8b949e;
+    color: var(--clr-text-muted);
 }
 
 .transformation-data {
     font-size: 8px;
-    color: #c29734;
+    color: var(--clr-accent);
     font-weight: 400;
     padding-top: 12px;
-    border-top: 1px solid #21262d;
+    border-top: 1px solid var(--clr-border);
 }
 
 .service-projects-section {
     padding: 60px 0;
-    background: #161b22;
+    background: var(--clr-bg-secondary);
 }
 
 .service-projects-intro {
-    color: #8b949e;
+    color: var(--clr-text-muted);
     font-size: 0.85rem;
     text-align: center;
     line-height: 1.7;
@@ -234,21 +234,21 @@
 }
 
 .service-project-card {
-    background: #0d1117;
-    border: 1px solid #21262d;
+    background: var(--clr-bg-primary);
+    border: 1px solid var(--clr-border);
     border-radius: 8px;
     padding: 1rem;
 }
 
 .service-project-card h3 {
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
     font-weight: 400;
 }
 
 .service-project-card p {
-    color: #8b949e;
+    color: var(--clr-text-muted);
     font-size: 0.55rem;
     line-height: 1.65;
     margin-bottom: 0.7rem;
@@ -261,7 +261,7 @@
 }
 
 .service-project-card li {
-    color: #b1bac4;
+    color: var(--clr-text-body);
     font-size: 0.52rem;
     line-height: 1.6;
     margin-bottom: 0.35rem;
@@ -271,7 +271,7 @@
 
 .service-project-card li::before {
     content: '•';
-    color: #c29734;
+    color: var(--clr-accent);
     position: absolute;
     left: 0;
 }
@@ -284,7 +284,7 @@
 
 .video-section {
     padding: 60px 0;
-    background: #161b22;
+    background: var(--clr-bg-secondary);
 }
 
 .video-section .container {
@@ -298,12 +298,12 @@
     font-weight: 400;
     margin-bottom: 1rem;
     text-align: center;
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
 }
 
 .video-description {
     font-size: 0.9rem;
-    color: #8b949e;
+    color: var(--clr-text-muted);
     text-align: center;
     line-height: 1.6;
     max-width: 700px;
@@ -318,18 +318,18 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    background: #0d1117;
+    background: var(--clr-bg-primary);
 }
 
 .case-study-video {
     width: 100%;
     height: auto;
     display: block;
-    border: 1px solid #21262d;
+    border: 1px solid var(--clr-border);
     cursor: pointer;
 }
 
-/* Completely hide all overlay elements */
+/* !important required: overriding WebKit shadow-DOM media-control styles */
 .case-study-video::-webkit-media-controls-overlay-enclosure {
     display: none !important;
 }
@@ -340,7 +340,7 @@
     visibility: hidden !important;
 }
 
-/* Hide the entire overlay enclosure */
+/* !important required: overriding WebKit shadow-DOM media-control styles */
 .case-study-video::-webkit-media-controls-enclosure {
     background-color: transparent !important;
     border-radius: 0;
@@ -349,7 +349,6 @@
 
 /* When playing, video has no controls attribute, so no overlay possible */
 .case-study-video.playing {
-    /* No controls = no overlay */
 }
 
 /* Only show controls when paused */
@@ -364,10 +363,10 @@
 .case-study-video::-webkit-media-controls-timeline,
 .case-study-video::-webkit-media-controls-current-time-display,
 .case-study-video::-webkit-media-controls-time-remaining-display {
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
 }
 
-/* Hide fullscreen button overlay */
+/* !important required: overriding WebKit shadow-DOM media-control styles */
 .case-study-video::-webkit-media-controls-fullscreen-button {
     display: none !important;
 }
@@ -412,7 +411,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #23272f;
+    color: var(--clr-bg-tertiary); /* #23272f — needs dedicated --clr-btn-text-dark token */
     font-size: 24px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     transition: transform 0.2s ease, background 0.2s ease;
@@ -501,8 +500,8 @@
     height: 50px;
     border-radius: 50%;
     background: transparent;
-    border: 2px solid #c29734;
-    color: #c29734;
+    border: 2px solid var(--clr-accent);
+    color: var(--clr-accent);
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -515,8 +514,8 @@
 .replay-btn:hover {
     background: rgba(194, 151, 52, 0.2);
     transform: scale(1.1);
-    border-color: #d4a842;
-    color: #d4a842;
+    border-color: var(--clr-accent-light);
+    color: var(--clr-accent-light);
 }
 
 .replay-btn span {
@@ -551,13 +550,14 @@
     pointer-events: auto;
 }
 
+/* !important required: overriding WebKit shadow-DOM media-control styles */
 .case-study-video.playing::-webkit-media-controls {
     display: none !important;
 }
 
 .trust-section {
     padding: 60px 0;
-    background: #161b22;
+    background: var(--clr-bg-secondary);
     text-align: center;
 }
 
@@ -569,7 +569,7 @@
 
 .trust-section p {
     font-size: 0.9rem;
-    color: #8b949e;
+    color: var(--clr-text-muted);
     line-height: 1.8;
     max-width: 700px;
     margin: 0 auto 2rem;
@@ -577,7 +577,7 @@
 
 .cta-section {
     padding: 60px 0;
-    background: #0d1117;
+    background: var(--clr-bg-primary);
     text-align: center;
 }
 
@@ -591,24 +591,25 @@
     font-size: 1.4rem;
     font-weight: 400;
     margin-bottom: 1rem;
-    color: #f0f6fc;
+    color: var(--clr-text-primary);
 }
 
 .cta-section p {
     font-size: 9px;
-    color: #8b949e;
+    color: var(--clr-text-muted);
     margin-bottom: 2rem;
 }
 
-.btn-gold {
-    background: #C29734 !important;
-    color: #23272f !important;
-    border: 1px solid #C29734 !important;
+/* Doubled selector for specificity boost over base .btn styles */
+.btn-gold.btn-gold {
+    background: var(--clr-accent);
+    color: var(--clr-bg-tertiary); /* #23272f — needs dedicated --clr-btn-text-dark token */
+    border: 1px solid var(--clr-accent);
 }
 
-.btn-gold:hover {
-    background: #d4a842 !important;
-    border-color: #d4a842 !important;
+.btn-gold.btn-gold:hover {
+    background: var(--clr-accent-light);
+    border-color: var(--clr-accent-light);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(194, 151, 52, 0.3);
 }
@@ -667,4 +668,3 @@
         gap: 16px;
     }
 }
-
