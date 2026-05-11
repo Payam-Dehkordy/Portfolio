@@ -396,25 +396,21 @@ function animateTerminal(terminal) {
     
     function typeLine() {
         if (currentLineIndex >= lines.length) {
-            // Remove cursor when done
-            const cursor = terminal.querySelector('.terminal-cursor');
-            if (cursor) cursor.remove();
             return;
         }
         
         const line = lines[currentLineIndex];
         
         if (currentCharIndex === 0) {
-            // Start new line - remove cursor
             const cursor = terminal.querySelector('.terminal-cursor');
             if (cursor) cursor.remove();
+            const promptLine = terminal.querySelector('.terminal-prompt-line');
+            if (promptLine) promptLine.remove();
             
-            // Add line break if not first line
             if (currentLineIndex > 0) {
                 terminal.innerHTML += '<br>';
             }
             
-            // Add line container
             if (line.type === 'command') {
                 terminal.innerHTML += '<span class="terminal-line"></span>';
             } else {
@@ -442,16 +438,22 @@ function animateTerminal(terminal) {
                 // Continue typing command (doubled speed: 150ms -> 75ms)
                 setTimeout(typeLine, 75);
             } else {
-                // Show output instantly
                 lineElement.textContent = line.text;
                 currentCharIndex = line.text.length;
                 
-                // Remove old cursor and add new one after output
                 const oldCursor = terminal.querySelector('.terminal-cursor');
                 if (oldCursor) oldCursor.remove();
-                lineElement.insertAdjacentHTML('afterend', '<span class="terminal-cursor">█</span>');
+
+                const nextLine = lines[currentLineIndex + 1];
+                const nextIsCommand = nextLine && nextLine.type === 'command';
+                const isLast = !nextLine;
+
+                if (nextIsCommand || isLast) {
+                    terminal.innerHTML += '<span class="terminal-prompt-line"><br><span class="terminal-prompt">$ </span><span class="terminal-cursor">█</span></span>';
+                } else {
+                    lineElement.insertAdjacentHTML('afterend', '<span class="terminal-cursor">█</span>');
+                }
                 
-                // Move to next line after delay
                 setTimeout(() => {
                     currentCharIndex = 0;
                     currentLineIndex++;

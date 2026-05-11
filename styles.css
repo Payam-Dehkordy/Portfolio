@@ -1867,7 +1867,9 @@ section {
     text-align: left;
 }
 
-.terminal-line {
+.terminal-line,
+.terminal-prompt,
+.terminal-prompt-line {
     color: var(--clr-btn-primary);
 }
 
