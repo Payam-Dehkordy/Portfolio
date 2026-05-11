@@ -6,6 +6,12 @@
 #   SSH_TARGET_DIR  MUST be /var/www/portfolio (document root only).
 # Optional: SSH_PORT (default 22)
 #
+# Cloudflare cache purge (optional but recommended):
+#   CLOUDFLARE_ZONE_ID   — zone id from Cloudflare dashboard → Overview
+#   CLOUDFLARE_API_TOKEN  — API token with Zone:Cache Purge:Edit permission
+#   When both secrets are set the deploy purges edge cache so visitors see
+#   fresh content immediately. Without them the step is skipped gracefully.
+#
 # Deploy user needs passwordless sudo — install deploy/sudoers-portfolio-deploy.example
 # on the droplet (mkdir/chown under /var/www/portfolio + /opt/portfolio-mail + nginx + portfolio-mail systemd).
 
@@ -177,6 +183,24 @@ jobs:
             || sudo -n /bin/systemctl reload nginx
           REMOTE_INSTALL
 
+      - name: Purge Cloudflare edge cache
+        if: ${{ secrets.CLOUDFLARE_ZONE_ID != '' && secrets.CLOUDFLARE_API_TOKEN != '' }}
+        shell: bash
+        env:
+          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          HTTP_CODE=$(curl -sS -o /tmp/cf_purge.json -w "%{http_code}" \
+            -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "Cloudflare purge response: HTTP $HTTP_CODE"
+          cat /tmp/cf_purge.json
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "::warning::Cloudflare cache purge returned HTTP $HTTP_CODE — site may serve stale content"
+          fi
+
       - name: Remote diagnostics (HTTPS → job log)
         shell: bash
         env:
@@ -186,19 +210,25 @@ jobs:
           SSH_TARGET_DIR: ${{ secrets.SSH_TARGET_DIR }}
         run: |
           PORT="${SSH_PORT:-22}"
+          COMMIT_SHORT=$(git rev-parse --short HEAD)
           ssh -p "$PORT" -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519 \
-            "$SSH_USER@$SSH_HOST" bash -s <<'REMOTE_SCRIPT'
+            "$SSH_USER@$SSH_HOST" bash -s <<REMOTE_SCRIPT
           set +e
           echo "::group::HTTPS checks on loopback (Host: www.payam-dehkordy.com)"
-          code=$(curl -sS -o /dev/null -w "%{http_code}" -k --resolve www.payam-dehkordy.com:443:127.0.0.1 "https://www.payam-dehkordy.com/" 2>/dev/null || echo "fail")
-          echo "GET https://www.payam-dehkordy.com/ → HTTP ${code}"
-          code_services=$(curl -sS -o /dev/null -w "%{http_code}" -k --resolve www.payam-dehkordy.com:443:127.0.0.1 "https://www.payam-dehkordy.com/services/qa-retainer.html" 2>/dev/null || echo "fail")
-          echo "GET /services/qa-retainer.html → HTTP ${code_services}"
-          code_health=$(curl -sS -o /dev/null -w "%{http_code}" "http://127.0.0.1:8791/health" 2>/dev/null || echo "fail")
-          echo "GET http://127.0.0.1:8791/health (portfolio-mail) → HTTP ${code_health}"
+          code=\$(curl -sS -o /dev/null -w "%{http_code}" -k --resolve www.payam-dehkordy.com:443:127.0.0.1 "https://www.payam-dehkordy.com/" 2>/dev/null || echo "fail")
+          echo "GET https://www.payam-dehkordy.com/ → HTTP \${code}"
+          code_services=\$(curl -sS -o /dev/null -w "%{http_code}" -k --resolve www.payam-dehkordy.com:443:127.0.0.1 "https://www.payam-dehkordy.com/services/qa-retainer.html" 2>/dev/null || echo "fail")
+          echo "GET /services/qa-retainer.html → HTTP \${code_services}"
+          code_health=\$(curl -sS -o /dev/null -w "%{http_code}" "http://127.0.0.1:8791/health" 2>/dev/null || echo "fail")
+          echo "GET http://127.0.0.1:8791/health (portfolio-mail) → HTTP \${code_health}"
           echo "::endgroup::"
           echo "::group::document root"
           ls -la /var/www/portfolio 2>/dev/null | head -20 || echo "missing /var/www/portfolio"
           test -f /var/www/portfolio/index.html && wc -c /var/www/portfolio/index.html || echo "no index.html"
+          echo "::endgroup::"
+          echo "::group::content freshness"
+          echo "Expected commit: $COMMIT_SHORT"
+          echo "Cache buster in deployed index.html:"
+          grep -oP '(styles|script)\.(css|js)\?v=[^"]+' /var/www/portfolio/index.html 2>/dev/null || echo "(no cache busters found)"
           echo "::endgroup::"
           REMOTE_SCRIPT
