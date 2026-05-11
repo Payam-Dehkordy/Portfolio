@@ -15,7 +15,7 @@
 # Deploy user needs passwordless sudo — install deploy/sudoers-portfolio-deploy.example
 # on the droplet (mkdir/chown under /var/www/portfolio + /opt/portfolio-mail + nginx + portfolio-mail systemd).
 
-name: Deploy Portfolio (static)
+name: Deploy Portfolio to droplet
 
 on:
   push:
