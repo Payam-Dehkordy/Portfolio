@@ -383,10 +383,10 @@ function animateTerminal(terminal) {
         { type: 'command', text: '$ which company', delay: 500 },
         { type: 'output', text: 'Synopsys', delay: 600 },
         { type: 'command', text: '$ skills --list', delay: 500 },
-        { type: 'output', text: ' - QA Automation', delay: 600 },
-        { type: 'output', text: ' - Full-Stack Development', delay: 600 },
-        { type: 'output', text: ' - EDA Quality', delay: 600 },
-        { type: 'output', text: ' - AI Agent & Workflow Automation', delay: 600 }
+        { type: 'output', text: 'QA Automation', delay: 600 },
+        { type: 'output', text: 'Full-Stack Development', delay: 600 },
+        { type: 'output', text: 'EDA Quality', delay: 600 },
+        { type: 'output', text: 'AI Agent & Workflow Automation', delay: 600 }
     ];
     
     terminal.innerHTML = '<span class="terminal-cursor">█</span>';
