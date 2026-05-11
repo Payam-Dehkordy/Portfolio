@@ -1253,16 +1253,17 @@ section {
     align-self: center;
 }
 
-/* Compact shell — control sizes match .contact-form inputs / .btn */
+/* Panel outer height matches .social-link (36px) */
 .referral-form-panel {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    padding: 6px 12px;
+    height: 36px;
+    padding: 0 8px;
     background: #161b22;
     border: 1px solid #21262d;
-    border-radius: 8px;
+    border-radius: 6px;
     max-width: min(100%, 26rem);
 }
 
@@ -1273,13 +1274,14 @@ section {
     min-width: 0;
 }
 
-/* Same metrics as .form-group input */
+/* Compact to fit inside the 36px-tall panel */
 .referral-email-input {
     box-sizing: border-box;
-    padding: 5px 10px;
+    padding: 3px 8px;
+    height: 28px;
     border: 1px solid #30363d;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;
+    font-size: 12px;
     font-family: inherit;
     background: #0d1117;
     color: #e6e6e6;
@@ -1302,7 +1304,7 @@ section {
     color: #6e7681;
 }
 
-/* Uses .btn / .btn-primary — only layout tweaks */
+/* Same height as .btn (Send Message) — inherits .btn padding/font */
 .referral-submit-btn {
     flex: 0 0 auto;
     white-space: nowrap;
@@ -1336,6 +1338,7 @@ section {
     border: 1px solid #21262d;
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 100%;
     min-height: 0;
     box-sizing: border-box;
@@ -1343,6 +1346,7 @@ section {
 
 .form-group {
     margin-bottom: 0.75rem;
+    width: 100%;
 }
 
 .contact-form .form-group-message {
@@ -1555,6 +1559,41 @@ section {
 
     .contact-container {
         padding: 60px 15px;
+    }
+
+    /* Stack download group + referral; match widths */
+    .contact-cv-section-bar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-cv-download-group,
+    .referral-form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .referral-form-panel {
+        height: auto;
+        padding: 2.5rem 2.25rem;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .referral-form .referral-form-actions {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .referral-form .referral-email-input {
+        flex: 1 1 100%;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        padding: 5px 10px;
+        font-size: 13px;
+        border-radius: 6px;
     }
 
     .portfolio-filter {
