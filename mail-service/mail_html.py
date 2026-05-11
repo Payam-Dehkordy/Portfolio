@@ -256,7 +256,7 @@ def referral_outbound_bodies() -> tuple[str, str]:
         title="",
         inner_rows_html=inner,
         footer_note=_REFERRAL_FOOTER_NOTE,
-        header_logo_url=_HEADER_LOGO_URL,
+        header_logo_url=HEADER_LOGO_URL,
         html_document_title="Introduction — Payam Dehkordy",
     )
     return plain, html_out
