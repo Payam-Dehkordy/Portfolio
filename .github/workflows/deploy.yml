@@ -172,7 +172,7 @@ jobs:
           TMP=/tmp/portfolio-nginx.conf
           _sudo cp "$TMP" /etc/nginx/sites-available/portfolio.conf
           _sudo ln -sf /etc/nginx/sites-available/portfolio.conf /etc/nginx/sites-enabled/portfolio.conf
-          if ! _sudo nginx -t; then
+          if ! sudo -n /usr/sbin/nginx -t; then
             echo "::error::nginx -t failed. Issue TLS with Certbot (see Droplet docs)."
             exit 1
           fi
