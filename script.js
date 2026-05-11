@@ -1384,73 +1384,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
   var referralForm = document.getElementById('referral-form');
   if (referralForm) {
+    var referralStatusEl = document.getElementById('referral-form-status');
+    var referralSubmitBtn = document.getElementById('referral-submit-btn');
+    var referralBtnLabel = referralSubmitBtn ? referralSubmitBtn.textContent : 'Refer me';
+
+    function setReferralStatus(msg, color) {
+      if (!referralStatusEl) return;
+      referralStatusEl.textContent = msg;
+      referralStatusEl.style.color = color || '';
+    }
+
+    function resetReferralBtn() {
+      if (!referralSubmitBtn) return;
+      referralSubmitBtn.disabled = false;
+      referralSubmitBtn.textContent = referralBtnLabel;
+    }
+
     referralForm.addEventListener('submit', async function(event) {
       event.preventDefault();
       var recipientInput = document.getElementById('referral-recipient');
+      if (!recipientInput || !recipientInput.value.trim()) return;
+
       var hp = referralForm.querySelector('[name="website"]');
-      var statusEl = document.getElementById('referral-form-status');
-      var submitBtn = document.getElementById('referral-submit-btn');
-      var originalBtnText = submitBtn ? submitBtn.textContent : '';
-      if (!recipientInput || !recipientInput.value.trim()) {
-        return;
-      }
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending…';
-      }
-      if (statusEl) {
-        statusEl.textContent = '';
-        statusEl.style.color = '';
-      }
+
+      referralSubmitBtn.disabled = true;
+      referralSubmitBtn.textContent = 'Sending\u2026';
+      setReferralStatus('', '');
+
       try {
         var res = await fetch('/api/mail', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
             kind: 'referral',
             recipient_email: recipientInput.value.trim(),
             website: hp ? hp.value : ''
           })
         });
-        var errBody = null;
-        try {
-          errBody = await res.json();
-        } catch (_) {}
+
         if (res.ok) {
-          if (statusEl) {
-            statusEl.textContent = 'Introduction sent.';
-            statusEl.style.color = '#C29734';
-          }
+          setReferralStatus('Introduction sent \u2714', '#C29734');
           referralForm.reset();
-          if (submitBtn) {
-            submitBtn.textContent = 'Sent';
-            setTimeout(function() {
-              submitBtn.textContent = originalBtnText;
-              submitBtn.disabled = false;
-            }, 2500);
-          }
-        } else {
-          if (statusEl) {
-            statusEl.innerHTML = portfolioMailErrorMessage(errBody);
-            statusEl.style.color = 'red';
-          }
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalBtnText;
-          }
+          referralSubmitBtn.textContent = 'Sent \u2714';
+          setTimeout(resetReferralBtn, 3000);
+          return;
         }
+
+        var errBody = null;
+        try { errBody = await res.json(); } catch (_) {}
+        setReferralStatus(portfolioMailErrorMessage(errBody), '#f85149');
+        resetReferralBtn();
       } catch (_) {
-        if (statusEl) {
-          statusEl.textContent = 'Could not send — try again later.';
-          statusEl.style.color = 'red';
-        }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalBtnText;
-        }
+        setReferralStatus('Could not send \u2014 try again later.', '#f85149');
+        resetReferralBtn();
       }
     });
   }

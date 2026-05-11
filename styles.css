@@ -1241,7 +1241,7 @@ section {
     margin-bottom: 0.45rem;
 }
 
-/* Shell: status moved outside .contact-cv-section-bar so bar aligns panel with download chips */
+/* Referral form sits inside .contact-cv-section-bar next to download chips */
 .referral-form {
     margin: 0;
     padding: 0;
@@ -1311,15 +1311,16 @@ section {
 }
 
 .referral-form-status {
-    margin: 0.5rem 0 0;
-    font-size: 9px;
-    line-height: 1.45;
-    min-height: 1.25em;
-    text-align: center;
-}
-
-.contact-cv-section > .referral-form-status {
+    margin: 0;
+    padding: 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    min-height: 0;
+    text-align: left;
     width: 100%;
+}
+.referral-form-status:not(:empty) {
+    margin-top: 0.4rem;
 }
 
 /* Honeypot — hidden from visual layout; bots often fill it */
