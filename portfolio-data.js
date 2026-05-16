@@ -106,6 +106,25 @@ var portfolioDetails = {
         ],
         liveUrl: 'https://chikoja.payam-dehkordy.com',
     },
+    clienthunter: {
+        title: 'ClientHunter — Qualification & Review Platform',
+        subtitle: 'Local-first automation pipeline with rule-based scoring, SQLite persistence, and a live operational dashboard',
+        platforms: 'Stack: Python 3.12+ (stdlib HTTP / HTML / XML), SQLite, argparse CLI, vanilla JavaScript, threaded local HTTP server, certifi',
+        technologies: 'Project: Sitemap-driven ingestion, multi-stage qualification gates, evidence storage, CSV export, and browser-based review UI · Repo: github.com/Payam-Dehkordy/ClientHunter',
+        responsibilities: [
+            'Designed a modular Python application (domain, network, persistence, services, CLI) for repeatable batch runs with polite request pacing and explicit failure handling.',
+            'Built discovery and structured page parsing to extract signals, normalize records, and persist full audit evidence in SQLite.',
+            'Implemented rule-based qualification layers (tier detection, recency windows, health checks) so only high-confidence rows surface in the primary dataset.',
+            'Delivered a local live report: Python-served static UI, JSON API over SQLite, auto-refresh during runs, and user decision flags that survive re-processing.',
+            'Shipped developer ergonomics: exclusive process locking, stale-lock recovery, log tailing, environment-based configuration, and unit tests for qualification logic.',
+        ],
+        examples: [
+            { title: 'Pipeline architecture:', description: 'Separated transport, parsing, classification, and storage so rules evolve without rewriting fetch logic — the same layered style used across other automation projects.' },
+            { title: 'Operational dashboard:', description: 'Browser report with filters, freshness controls, qualified-only views, and hide/show decisions — SQLite remains the single source of truth with no generated snapshot drift.' },
+            { title: 'Reliability controls:', description: 'Cross-process locks, heartbeat updates during long runs, TLS verification, and graceful shutdown that keeps the review server available after batch completion until the operator exits.' },
+        ],
+        image: 'assets/images/ClientHunter-logo.svg',
+    },
     'maggy-beauty': {
         title: 'Maggy Beauty – E-Commerce Platform',
         subtitle: 'QA Engineer – Maggy Beauty (Startup) - E-commerce Platform (Web & Mobile)',
