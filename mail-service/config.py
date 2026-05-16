@@ -19,7 +19,7 @@ LINKEDIN_URL = "https://www.linkedin.com/in/payam-dehkordy"
 GITHUB_URL = "https://github.com/Payam-Dehkordy"
 CV_FILENAME = "Payam-Dehkordy-Staff-Software-Engineer-CV.pdf"
 CV_ATS_FILENAME = "Payam-Dehkordy-Staff-Software-Engineer-CV-ATS.pdf"
-HEADER_LOGO_PATH = "assets/Logo/logo-full.svg"
+HEADER_LOGO_PATH = "assets/logo/logo-full-white.svg"
 
 CV_PDF_URL = f"{SITE_URL}/assets/documents/{CV_FILENAME}"
 CV_ATS_URL = f"{SITE_URL}/assets/documents/{CV_ATS_FILENAME}"

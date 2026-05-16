@@ -39,7 +39,8 @@ This portfolio features:
 /assets/
   /images/         # Project, branding, and logo images
   /documents/      # CV/Resume and other docs
-  /Logo/           # Brand/company SVGs and icons
+  /logo/           # Payam brand logos, favicon, OG thumbnail
+  /companies/      # Employer logos (experience timeline)
 deploy/            # nginx vhost, sudoers — canonical copies for the droplet (not rsync’d to web root)
 mail-service/      # FastAPI app → POST /api/mail (Gmail API); deployed to /opt/portfolio-mail on VPS
   portfolio-mail.env.example   # mirror → server /etc/portfolio-mail.env (see Droplet docs)
