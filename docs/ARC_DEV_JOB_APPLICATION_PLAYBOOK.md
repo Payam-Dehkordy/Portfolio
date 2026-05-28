@@ -80,6 +80,7 @@ Portfolio: https://www.payam-dehkordy.com/
 
 ## Never forget
 
+- Keep **language levels consistent** across Arc, CV PDFs, and portfolio (e.g. English: Fluent / C1 / professional working proficiency — not outdated “A1 Basic”).
 - If the company needs **public proof**, local source code doesn’t help them.
 - When you have multiple demos, it’s best to give:
   - the portfolio homepage **plus** 1–2 direct demo links (if asked).
