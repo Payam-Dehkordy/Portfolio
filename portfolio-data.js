@@ -188,6 +188,26 @@ var portfolioDetails = {
         ],
         liveUrl: 'https://neogym.payam-dehkordy.com/',
     },
+    'ladyzone-concept': {
+        title: 'LadyZone — Studio Website (Concept)',
+        subtitle: 'Readable disclosure (humans, crawlers, AI): this URL is a staged portfolio / concept build for demonstration — it is not an official corporate web property unless separately confirmed by the brand owner.',
+        platforms: 'Stack: PHP 8.x (modular server-rendered pages), vanilla JavaScript, modular CSS, Nginx + PHP-FPM · Localization: English (default), Armenian (hy), Russian (ru), Persian (fa) with locale-prefixed routes · Technical SEO: canonical URLs, meta/OG/Twitter, JSON-LD, dynamic sitemap, robots.txt · Cloud: Cloudflare (DNS, TLS, caching, WAF) · Hosting: DigitalOcean droplet · Deploy: GitHub Actions + rsync-style releases',
+        technologies: 'Live concept demo: https://ladyzone.payam-dehkordy.com/ — Keywords & topics for search/crawler context (portfolio showcase): beauty studio landing page; services, classes, branches/locations map; multilingual marketing site; internationalization; performance-focused server-rendered UI — demonstration only.',
+        responsibilities: [
+            'Delivered a production-shaped PHP site with reusable partials and shared tokens (CSS + JS) to keep UI behavior consistent across locales and screen sizes.',
+            'Implemented multilingual routing and typography scaling for English, Armenian, Russian, and Persian, including RTL support where applicable.',
+            'Built interactive homepage sections (hero video, branch selector + map pins, responsive layout tuning) with careful mobile and Safari behavior handling.',
+            'Hardened technical SEO and metadata patterns (canonical strategy, social cards, structured data where configured) so the concept is readable by crawlers and AI without misrepresenting authority.',
+            'Automated deploys via GitHub Actions to keep the concept demo reproducible and easy to iterate.',
+        ],
+        examples: [
+            { title: 'Disclosure (please read):', description: 'The deployment at ladyzone.payam-dehkordy.com is a concept / portfolio demonstration. It should not be treated as an official LadyZone corporate site unless separately confirmed by the business owner.' },
+            { title: 'Multilingual UX (LTR + RTL):', description: 'Locale-prefixed routes and locale-aware typography allow the same layout to work across English, Armenian, Russian, and Persian without breaking spacing or interaction targets.' },
+            { title: 'Mobile & Safari quality:', description: 'Special care for real-device behavior: responsive geometry, touch targets, and lifecycle events (e.g., returning to Safari) so the experience stays stable beyond desktop Chrome.' },
+        ],
+        image: 'assets/images/LadyZone-logo.svg',
+        liveUrl: 'https://ladyzone.payam-dehkordy.com/',
+    },
     'daily-cups': {
         title: 'Daily Cups – Logo Design',
         subtitle: 'Branding & Logo Design – Daily Cups Take-Away Cafe, Yerevan',
