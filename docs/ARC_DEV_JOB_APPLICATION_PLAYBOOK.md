@@ -78,6 +78,13 @@ Portfolio: https://www.payam-dehkordy.com/
 - Human-in-the-loop review for high-stakes outputs
 - “Production” practices: logging/tracing, prompt/versioning, eval checks
 
+## Private docs (local only, gitignored)
+
+- Gap analysis: `docs/private/CAREER_GAP_ANALYSIS.md`
+- Job platforms notes: `docs/private/JOB_SEARCH_PLATFORMS.md`
+
+These files stay on your machine only (see `.gitignore` → `docs/private/`).
+
 ## Never forget
 
 - Keep **language levels consistent** across Arc, CV PDFs, and portfolio (e.g. English: Fluent / C1 / professional working proficiency — not outdated “A1 Basic”).

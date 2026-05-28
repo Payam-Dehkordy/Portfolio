@@ -70,3 +70,6 @@ Adobe Premiere Pro Audio Previews/
 *.bak
 *.backup
 
+# Private career notes (local only — not for public repo)
+docs/private/
+
