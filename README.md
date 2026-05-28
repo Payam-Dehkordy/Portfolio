@@ -113,6 +113,12 @@ Production mail uses this repo’s **`mail-service`** (Gmail API over HTTPS): **
 
 ---
 
+## 🧭 Arc.dev job applications
+
+- **Playbook (internal)**: `docs/ARC_DEV_JOB_APPLICATION_PLAYBOOK.md` (fit/chance rubric + copy/paste templates)
+
+---
+
 ## 📱 Responsive UI
 
 - Breakpoints for Desktop, Tablet, and Mobile
