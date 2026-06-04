@@ -165,7 +165,8 @@ var portfolioDetails = {
             { title: 'SEO System Redesign:', description: 'Implemented a full SEO framework including per-page metadata, structured data coverage, social previews, dynamic sitemap support, and indexation controls aligned with search best practices.' },
             { title: 'Business Impact:', description: 'Delivered a faster, more discoverable, and easier-to-manage legal services platform with improved content clarity, stronger technical SEO, and better readiness for continued growth.' }
         ],
-        image: 'assets/images/Sahakyan-Law-Office.png',
+        image: 'assets/images/Sahakyan-Law-Office.webp',
+        previewImage: 'assets/images/previews/sahakyan-law-hero.webp',
         liveUrl: 'https://sahakyanlaw.com'
     },
     'neogym-concept': {
@@ -186,6 +187,7 @@ var portfolioDetails = {
             { title: 'Localization & URL strategy:', description: 'Beyond translation strings, the site uses locale-aware routing (e.g. /hy/, /ru/, /fa/ prefixes for non-default languages) so Armenian-, Russian-, and Persian-speaking visitors land in-context — important for real gyms in Yerevan serving multilingual members. This also helps crawlers map equivalent pages across languages.' },
             { title: 'Discoverability for robots & AI assistants:', description: 'Human-visible headings and body copy are complemented by machine-readable cues: semantic HTML landmarks, JSON-LD where implemented, Open Graph/Twitter cards for previews, sitemap/robots alignment, and keyword-rich but honest text around fitness club themes (classes, memberships, training, branches in Yerevan) so search engines and AI retrieval can categorize the demo accurately while the disclosure above prevents confusion about authority.' },
         ],
+        previewImage: 'assets/images/previews/neogym-hero.webp',
         liveUrl: 'https://neogym.payam-dehkordy.com/',
     },
     'ladyzone-concept': {
@@ -206,7 +208,29 @@ var portfolioDetails = {
             { title: 'Mobile & Safari quality:', description: 'Special care for real-device behavior: responsive geometry, touch targets, and lifecycle events (e.g., returning to Safari) so the experience stays stable beyond desktop Chrome.' },
         ],
         image: 'assets/images/LadyZone-logo.svg',
+        previewImage: 'assets/images/previews/ladyzone-hero.webp',
         liveUrl: 'https://ladyzone.payam-dehkordy.com/',
+    },
+    'byuregh-concept': {
+        title: 'Byuregh Sport Complex — Fitness Club Website (Concept)',
+        subtitle: 'Readable disclosure (humans, crawlers, AI): this URL is a staged portfolio / concept build for demonstration — it is not the official Byuregh Sport Complex commercial website.',
+        platforms: 'Stack: PHP 8.x (modular server-rendered pages), vanilla JavaScript, modular CSS, Nginx + PHP-FPM · Localization: English (default), Armenian (hy), Russian (ru), Persian (fa) with locale-prefixed routes · Technical SEO: canonical URLs, meta/OG/Twitter, JSON-LD, dynamic sitemap, robots.txt · Cloud: Cloudflare (DNS, TLS, caching, WAF) · Hosting: DigitalOcean droplet · Deploy: GitHub Actions + rsync-style releases',
+        technologies: 'Live concept demo: https://byuregh.payam-dehkordy.com/ — Keywords & topics for search/crawler context (portfolio showcase): sport and fitness club presentation; Byuregh Armenia; memberships, group training schedules, facility zones; multilingual marketing site; internationalization; performance-focused server-rendered UI — demonstration only.',
+        responsibilities: [
+            'Built a production-shaped PHP marketing site for a sport & fitness club — long-scroll homepage with zones, memberships, group training schedule, partners, and secure contact patterns.',
+            'Implemented multilingual routing and copy for English, Armenian, Russian, and Persian with locale-prefixed URLs and brand-aligned typography (client palette, slogan *Greatness fits you*).',
+            'Delivered interactive sections (group training schedule table, facility zones, membership bands) with responsive layout and Core Web Vitals-minded loading.',
+            'Applied technical SEO and metadata patterns (canonical strategy, social cards, structured data where configured) so the concept is readable by crawlers and AI without misrepresenting authority.',
+            'Automated deploys via GitHub Actions to a portfolio subdomain for client review before any client-domain cutover.',
+        ],
+        examples: [
+            { title: 'Disclosure (please read):', description: 'The deployment at byuregh.payam-dehkordy.com is a concept / portfolio demonstration. It should not be treated as the official Byuregh Sport Complex website unless separately confirmed by the business owner.' },
+            { title: 'Sport-club content model:', description: 'Single-page marketing flow covering facility zones, membership offers, group training schedules, and contact — the same pattern local gyms and sport complexes need when upgrading from template sites.' },
+            { title: 'Multilingual & deploy discipline:', description: 'Locale-prefixed routes (e.g. /hy/, /ru/, /fa/) plus Cloudflare → Nginx → PHP-FPM on DigitalOcean mirror the NeoGym/LadyZone portfolio demos — reproducible releases, staging subdomain, documented domain cutover path.' },
+        ],
+        image: 'assets/images/ByureghSportComplex-logo.svg',
+        previewImage: 'assets/images/previews/byuregh-hero.webp',
+        liveUrl: 'https://byuregh.payam-dehkordy.com/',
     },
     'daily-cups': {
         title: 'Daily Cups – Logo Design',
@@ -238,42 +262,6 @@ var portfolioDetails = {
         ],
         image: 'assets/images/GoldenArms.svg'
     },
-    'robs-furniture': {
-        title: "Rob's Furniture & Mattresses – Shopify E-Commerce",
-        subtitle: "Web Developer / Designer – Rob's Furniture & Mattresses (Canada)",
-        platforms: "Platform: Shopify – Custom Theme, UI/UX, Payment Integration",
-        technologies: "Project: RobsFurniture.ca – Complete Online Store Setup",
-        responsibilities: [
-            "Led end-to-end Shopify store build: store setup, theme customization, catalog structure, checkout, and launch.",
-            "Designed a modern, conversion-driven UI/UX tailored to showcase furniture, promotions, and brand partners.",
-            "Imported product data, defined navigation menus & categories, integrated payment, shipping, and tax settings.",
-            "Developed promotions & financing banners, featuring 'WE OFFER FINANCING!' integration with Fairstone Financial.",
-            "Optimized responsive experience—seamless on desktop, tablet, and mobile with intuitive calls to action.",
-            "Configured Shopify domain/hosting, facilitated successful go-live, and monitored key e-commerce KPIs."
-        ],
-        examples: [
-            { title: "Creative Approach:", description: "Married modern e-commerce functionality with the brand's comfort-focused ethos—the homepage greets visitors with 'Discover the Art of Comfort.' Imagery and sectioning prioritize both aesthetics and easy furniture discovery." },
-            { title: "Store Structure & Payments:", description: "Built product and collection structure to surface categories like sofas, mattresses, and promotions. Integrated payment/checkout flows tailored to furniture delivery and fulfillment." },
-            { title: "Results & Impact:", description: "Launched a stable, scalable Shopify experience. Storefront highlights financing, partner brands, and offers—communicating value to shoppers. Built on a flexible Shopify foundation for future marketing and growth." }
-        ]
-    },
-    'robs-rebrand': {
-        title: "Rob's Furniture – Rebrand",
-        subtitle: "Branding & Visual Identity Refresh for Canadian Retailer",
-        platforms: "Tool: Adobe Illustrator",
-        technologies: "Project: Visual Identity System, Logo, and Brand Guide",
-        responsibilities: [
-            "Spearheaded a comprehensive rebranding for Rob's Furniture, including logo, palette, typography, and branded assets.",
-            "Developed a friendlier, modernized look while retaining the brand's warmth and reputation for comfort.",
-            "Created assets for multi-channel use (print, web, signage) supporting the brand's next phase of marketing."
-        ],
-        examples: [
-            { title: "Logo Evolution:", description: "The redesigned logo introduces smoother curves and bold type, evoking both approachability and long-lasting comfort. Palette and typographic refresh tie into the store's message: Discover the Art of Comfort." },
-            { title: "Visual Elements:", description: "Brand graphics incorporate patterns inspired by furniture textures—softened lines, earth tones, and accent colors. Versioning and lockups support digital and signage applications." },
-            { title: "Impact:", description: "Rebrand delivers consistent, relatable visuals that resonate in-store and online. Customers now connect with an updated, contemporary identity without losing the legacy feel of Rob's." }
-        ],
-        image: "assets/images/Rob's-detail.svg"
-    },
     'parsa-world-rebrand': {
         title: 'Parsa World Agency – Rebrand',
         subtitle: 'Visual Identity Refresh for Digital & Social Platforms',
@@ -289,6 +277,6 @@ var portfolioDetails = {
             { title: 'Strategic Adaptation:', description: 'A circular mark integrates more naturally into today\u2019s round-cornered or circular UI environments. The update ensures the brand looks cohesive across platforms.' },
             { title: 'Brand Consistency:', description: 'By carefully modernizing the form while honoring brand history, the identity remains credible and instantly recognizable, but feels current on every platform.' }
         ],
-        image: 'assets/images/Parsa-detail.png'
+        image: 'assets/images/Parsa-detail.webp'
     }
 };

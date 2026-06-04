@@ -454,7 +454,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../assets/video/last_frame.jpg');
+    background-image: url('../assets/video/last_frame.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -464,7 +464,7 @@
 
 /* Only change background when hovering over the Get Started button area */
 .video-end-overlay.button-hover::before {
-    background-image: url('../assets/video/last_frame_hover.jpg');
+    background-image: url('../assets/video/last_frame_hover.webp');
 }
 
 .video-end-overlay.visible {

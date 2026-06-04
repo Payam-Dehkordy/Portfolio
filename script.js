@@ -108,27 +108,107 @@ function initializePortfolioNavigation() {
     });
 }
 
+function isWebAgencyPage() {
+    return document.body.classList.contains('page-web-agency');
+}
+
+function resolvePortfolioAssetPath(assetPath) {
+    if (!assetPath) return '';
+    if (/^https?:\/\//.test(assetPath)) return assetPath;
+    const inServices = window.location.pathname.includes('/services/');
+    return (inServices ? '../' : '') + assetPath;
+}
+
+function getPortfolioPosterSrc(portfolioId, details) {
+    if (details.previewImage) return resolvePortfolioAssetPath(details.previewImage);
+    if (details.image) return resolvePortfolioAssetPath(details.image);
+    const cardImg = document.querySelector(`.portfolio-item[data-portfolio-id="${portfolioId}"] .portfolio-image img`);
+    if (cardImg && cardImg.getAttribute('src')) return cardImg.getAttribute('src');
+    return '';
+}
+
+function buildPortfolioLivePreview(details, portfolioId) {
+    if (!details.liveUrl) return '';
+
+    const liveUrl = details.liveUrl;
+    const hostname = getLivePreviewHostname(liveUrl);
+    const posterSrc = getPortfolioPosterSrc(portfolioId, details);
+    const safeTitle = details.title.replace(/"/g, '&quot;');
+    const isHeroShot = Boolean(details.previewImage);
+
+    let html = '<div class="portfolio-live-preview">';
+    html += '<div class="portfolio-live-preview__chrome" aria-hidden="true">';
+    html += '<span class="portfolio-live-preview__dots"><i></i><i></i><i></i></span>';
+    html += `<span class="portfolio-live-preview__url">${hostname}</span>`;
+    html += `<a class="portfolio-live-preview__open" href="${liveUrl}" target="_blank" rel="noopener">Open live site <i class="fas fa-arrow-up-right-from-square"></i></a>`;
+    html += '</div>';
+
+    html += '<div class="portfolio-live-preview__stage">';
+
+    if (posterSrc) {
+        const posterClass = isHeroShot
+            ? 'portfolio-live-preview__poster portfolio-live-preview__poster--hero'
+            : 'portfolio-live-preview__poster portfolio-live-preview__poster--contain';
+        html += `<img class="${posterClass}" src="${posterSrc}" alt="Site preview — ${safeTitle}" loading="lazy">`;
+    } else {
+        html += '<div class="portfolio-live-preview__placeholder" aria-hidden="true">';
+        html += '<i class="fas fa-globe"></i>';
+        html += '<span>Preview opens on the live site</span>';
+        html += '</div>';
+    }
+
+    html += `<a class="portfolio-live-preview__overlay" href="${liveUrl}" target="_blank" rel="noopener" aria-label="Open live preview of ${safeTitle}">`;
+    html += '<span class="portfolio-live-preview__cta"><i class="fas fa-external-link-alt"></i> Open live site</span>';
+    html += '</a>';
+    html += '</div>';
+    html += '</div>';
+
+    return html;
+}
+
+function getLivePreviewHostname(liveUrl) {
+    try {
+        return new URL(liveUrl).hostname.replace(/^www\./, '');
+    } catch (error) {
+        return liveUrl;
+    }
+}
+
 function showPortfolioDetails(portfolioId) {
     const details = portfolioDetails[portfolioId];
     if (!details) return;
 
-    // Find current index
     currentPortfolioIndex = portfolioIds.indexOf(portfolioId);
 
     const detailsSection = document.getElementById('portfolio-details-section');
     const detailsContent = document.getElementById('portfolio-details-content');
+    const grid = document.querySelector(`.portfolio-item[data-portfolio-id="${portfolioId}"]`);
+    const agencyCompact = isWebAgencyPage();
 
     let html = `<div class="portfolio-details-title-row">`;
     html += `<h2>${details.title}</h2>`;
-    if (details.liveUrl) {
+    if (details.liveUrl && !agencyCompact) {
         html += `<a href="${details.liveUrl}" target="_blank" rel="noopener" class="portfolio-details-live-btn">Visit Live Project</a>`;
     }
     html += `</div>`;
 
-    // Use two-column layout if category is 'branding'. Otherwise simple single column.
+    if (details.liveUrl) {
+        html += buildPortfolioLivePreview(details, portfolioId);
+    }
+
+    const cardBlurb = grid?.querySelector('.portfolio-content p')?.textContent?.trim();
+    if (agencyCompact && cardBlurb) {
+        html += `<p class="portfolio-details-blurb">${cardBlurb}</p>`;
+    }
+
     let isBranding = false;
-    const grid = document.querySelector(`.portfolio-item[data-portfolio-id="${portfolioId}"]`);
     if (grid && grid.getAttribute('data-category') === 'branding') isBranding = true;
+
+    if (agencyCompact) {
+        html += '<details class="portfolio-details-more">';
+        html += '<summary>Full project notes</summary>';
+        html += '<div class="portfolio-details-more__body">';
+    }
 
     if (isBranding) {
         html += `<div class="portfolio-details-grid">`;
@@ -154,24 +234,25 @@ function showPortfolioDetails(portfolioId) {
     });
 
     if (isBranding) {
-        html += `</div>`; // end left
+        html += `</div>`;
         html += `<div class="portfolio-details-right">`;
         if (details.image) {
             html += `<div class="portfolio-detail-image-container">`;
-            html += `<img src="${details.image}" alt="${details.title}" class="portfolio-detail-image">`;
+            html += `<img src="${resolvePortfolioAssetPath(details.image)}" alt="${details.title}" class="portfolio-detail-image">`;
             html += `</div>`;
         }
-        html += `</div>`; // end right
-        html += `</div>`; // end grid
+        html += `</div>`;
+        html += `</div>`;
+    }
+
+    if (agencyCompact) {
+        html += '</div></details>';
     }
 
     detailsContent.innerHTML = html;
     detailsSection.classList.add('active');
 
-    // Update navigation buttons
     updateNavigationButtons();
-
-    // Scroll to details section smoothly
     detailsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 

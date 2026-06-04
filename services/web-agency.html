@@ -13,16 +13,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Agency Packages - Custom Native Websites for Business | Payam Dehkordy</title>
 
-    <meta name="description" content="Get a custom business website for US and Canada markets with monthly support. Simple Website Package $100/month, Professional Website Package $200/month. No prepayment.">
+    <meta name="description" content="Get a custom business website for US and Canada markets with monthly support. Simple Website Package $150/month, Professional Website Package $250/month. No prepayment.">
     <!-- partial:head-common -->
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://www.payam-dehkordy.com/assets/logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
-    <meta property="og:image:secure_url" content="https://www.payam-dehkordy.com/assets/logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
-    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image" content="https://www.payam-dehkordy.com/assets/logo/Payam-Dehkordy-LinkedIn-Thumbnail.webp">
+    <meta property="og:image:secure_url" content="https://www.payam-dehkordy.com/assets/logo/Payam-Dehkordy-LinkedIn-Thumbnail.webp">
+    <meta property="og:image:type" content="image/webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="627">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:image" content="https://www.payam-dehkordy.com/assets/logo/Payam-Dehkordy-LinkedIn-Thumbnail.jpg">
+    <meta property="twitter:image" content="https://www.payam-dehkordy.com/assets/logo/Payam-Dehkordy-LinkedIn-Thumbnail.webp">
     <meta name="author" content="Payam Dehkordy">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta property="og:site_name" content="Payam Dehkordy Portfolio">
@@ -38,12 +38,12 @@
     <link rel="canonical" href="https://www.payam-dehkordy.com/services/web-agency.html">
 
     <link rel="icon" type="image/svg+xml" href="../assets/logo/logo.svg">
-    <link rel="stylesheet" href="../styles.css?v=4">
-    <link rel="stylesheet" href="web-agency.css?v=4">
+    <link rel="stylesheet" href="../styles.css?v=5">
+    <link rel="stylesheet" href="web-agency.css?v=6">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="page-web-agency">
     <!-- partial:nav -->
     <header>
     <nav class="navbar">
@@ -106,7 +106,7 @@
             <div class="packages-grid">
                 <article class="package-card">
                     <h3>Simple Website Package</h3>
-                    <p class="price">$100 / month</p>
+                    <p class="price">$150 / month</p>
                     <p class="package-desc">Best for personal brands, small businesses, and brochure-style websites.</p>
                     <ul>
                         <li>Up to 5-7 key pages (Home, About, Services, Contact, etc.)</li>
@@ -119,7 +119,7 @@
 
                 <article class="package-card featured">
                     <h3>Professional Website Package</h3>
-                    <p class="price">$200 / month</p>
+                    <p class="price">$250 / month</p>
                     <p class="package-desc">Best for advanced business sites requiring dynamic functionality and integrations.</p>
                     <ul>
                         <li>Everything in Simple Package, plus dynamic features</li>
@@ -150,41 +150,80 @@
         </div>
     </section>
 
-    <section class="agency-projects-section">
-        <div class="container">
-            <h2 class="section-title">Selected Website Projects</h2>
-            <p class="agency-projects-intro">Recent website work delivered with custom design, native code architecture, and technical SEO foundations for long-term growth.</p>
-            <div class="agency-projects-grid">
-                <article class="agency-project-card">
-                    <h3>Sahakyan Law Office - Redesign & Redevelopment</h3>
-                    <p>Rebuilt from a legacy WordPress setup into a native PHP stack with improved content architecture, page performance, and search visibility.</p>
-                    <ul>
-                        <li>Custom UI and native code architecture</li>
-                        <li>SEO-first implementation (metadata, JSON-LD, sitemap, robots)</li>
-                    </ul>
-                    <a href="https://sahakyanlaw.com" target="_blank" rel="noopener" class="portfolio-link">Visit Live Website</a>
-                </article>
-                <article class="agency-project-card">
-                    <h3>Rob's Furniture - E-commerce Experience</h3>
-                    <p>Conversion-focused storefront design and implementation with strong UX for product discovery, financing communication, and online sales flow.</p>
-                    <ul>
-                        <li>Business-first structure for categories and offers</li>
-                        <li>Cross-device shopping UX and visual consistency</li>
-                    </ul>
-                    <a href="https://robsfurniture.ca" target="_blank" rel="noopener" class="portfolio-link">Visit Live Website</a>
-                </article>
-                <article class="agency-project-card">
-                    <h3>Payam Dehkordy Portfolio - Service Website</h3>
-                    <p>Designed and developed a conversion-focused service website with structured content, service funnels, and SEO-ready architecture for QA and web agency offers.</p>
-                    <ul>
-                        <li>Custom native front-end architecture and responsive UX</li>
-                        <li>Service-page funnel design with technical SEO foundations</li>
-                    </ul>
-                    <a href="https://www.payam-dehkordy.com" target="_blank" rel="noopener" class="portfolio-link">Visit Live Website</a>
-                </article>
+    <section class="agency-projects-section" id="portfolio">
+        <div class="container agency-projects-container">
+            <h2 class="section-title">Website Project Catalog</h2>
+            <p class="agency-projects-intro">Production client sites and concept demos — custom native code, multilingual where needed, and SEO-ready deploys on Cloudflare and DigitalOcean.</p>
+            <div class="portfolio-grid agency-portfolio-grid">
+                <div class="portfolio-item" data-category="fullstack" data-portfolio-id="sahakyan-law">
+                    <div class="portfolio-image">
+                        <img src="../assets/images/Sahakyan-Law-Office.webp" alt="Sahakyan Law Office website redesign">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Sahakyan Law Office — Redesign &amp; Redevelopment</h3>
+                        <p>Live client site — WordPress to native PHP, multilingual legal services, technical SEO</p>
+                        <div class="portfolio-links">
+                            <button type="button" class="portfolio-view-btn" data-portfolio-id="sahakyan-law">View Details</button>
+                            <a class="portfolio-view-btn" href="https://sahakyanlaw.com" target="_blank" rel="noopener">Visit Live</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="fullstack" data-portfolio-id="byuregh-concept">
+                    <div class="portfolio-image">
+                        <img src="../assets/images/ByureghSportComplex-logo.svg" alt="Byuregh Sport Complex website concept" class="portfolio-img-fit-contain">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Byuregh Sport Complex — Fitness Club (Concept)</h3>
+                        <p>Sport &amp; fitness club demo — memberships, group training, i18n (EN / HY / RU / FA)</p>
+                        <div class="portfolio-links">
+                            <button type="button" class="portfolio-view-btn" data-portfolio-id="byuregh-concept">View Details</button>
+                            <a class="portfolio-view-btn" href="https://byuregh.payam-dehkordy.com/" target="_blank" rel="noopener">Visit Live</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="fullstack" data-portfolio-id="neogym-concept">
+                    <div class="portfolio-image">
+                        <img src="../assets/images/NeoGym-logo.svg" alt="NeoGym fitness club website concept" class="portfolio-img-fit-contain">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>NeoGym — Fitness Club (Concept)</h3>
+                        <p>Gym marketing demo — multilingual, memberships &amp; classes, portfolio subdomain</p>
+                        <div class="portfolio-links">
+                            <button type="button" class="portfolio-view-btn" data-portfolio-id="neogym-concept">View Details</button>
+                            <a class="portfolio-view-btn" href="https://neogym.payam-dehkordy.com/" target="_blank" rel="noopener">Visit Live</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="fullstack" data-portfolio-id="ladyzone-concept">
+                    <div class="portfolio-image">
+                        <img src="../assets/images/LadyZone-logo.svg" alt="LadyZone studio website concept" class="portfolio-img-fit-contain">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>LadyZone — Beauty Studio (Concept)</h3>
+                        <p>Studio landing demo — services, branches map, i18n including RTL Persian</p>
+                        <div class="portfolio-links">
+                            <button type="button" class="portfolio-view-btn" data-portfolio-id="ladyzone-concept">View Details</button>
+                            <a class="portfolio-view-btn" href="https://ladyzone.payam-dehkordy.com/" target="_blank" rel="noopener">Visit Live</a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div id="portfolio-details-section" class="portfolio-details-section">
+                <div class="portfolio-details-nav">
+                    <button type="button" class="portfolio-nav-btn portfolio-nav-prev" id="portfolio-prev-btn" onclick="navigatePortfolio('prev')">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button type="button" class="portfolio-nav-btn portfolio-nav-next" id="portfolio-next-btn" onclick="navigatePortfolio('next')">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button type="button" class="portfolio-details-close" onclick="hidePortfolioDetails()" aria-label="Close details">&times;</button>
+                </div>
+                <div id="portfolio-details-content"></div>
+            </div>
+
             <div class="agency-projects-cta">
-                <a href="../index.html?portfolioFilter=fullstack#portfolio" class="btn btn-secondary">View Full Web Portfolio</a>
+                <a href="../index.html?portfolioFilter=fullstack#portfolio" class="btn btn-secondary">View Full Portfolio</a>
             </div>
         </div>
     </section>
@@ -244,7 +283,8 @@
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <!-- /partial:calendly -->
-    <script src="../script.js?v=3"></script>
+    <script src="../portfolio-data.js?v=8"></script>
+    <script src="../script.js?v=5"></script>
 
     <script type="application/ld+json">
     {
@@ -269,14 +309,14 @@
           "@type": "Offer",
           "name": "Simple Website Package",
           "priceCurrency": "USD",
-          "price": "100",
+          "price": "150",
           "url": "https://www.payam-dehkordy.com/services/web-agency.html"
         },
         {
           "@type": "Offer",
           "name": "Professional Website Package",
           "priceCurrency": "USD",
-          "price": "200",
+          "price": "250",
           "url": "https://www.payam-dehkordy.com/services/web-agency.html"
         }
       ]
