@@ -250,7 +250,7 @@ var portfolioDetails = {
             { title: 'Multilingual & deploy discipline:', description: 'Locale-prefixed routes (e.g. /hy/, /ru/) plus Cloudflare → Nginx → PHP-FPM on DigitalOcean mirror sibling portfolio demos — reproducible releases, staging subdomain, documented domain cutover path.' },
         ],
         image: 'assets/images/RootsAgency-logo.svg',
-        previewImage: 'assets/images/previews/roots-agency-hero.jpg',
+        previewImage: 'assets/images/previews/roots-agency-hero.webp',
         liveUrl: 'https://roots-agency.payam-dehkordy.com/',
     },
     'daily-cups': {

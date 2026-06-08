@@ -119,7 +119,7 @@ function resolvePortfolioAssetPath(assetPath) {
     return (inServices ? '../' : '') + assetPath;
 }
 
-const PREVIEW_ASSET_VERSION = '2';
+const PREVIEW_ASSET_VERSION = '3';
 
 function getPortfolioPosterSrc(portfolioId, details) {
     if (details.previewImage) {
