@@ -119,8 +119,15 @@ function resolvePortfolioAssetPath(assetPath) {
     return (inServices ? '../' : '') + assetPath;
 }
 
+const PREVIEW_ASSET_VERSION = '2';
+
 function getPortfolioPosterSrc(portfolioId, details) {
-    if (details.previewImage) return resolvePortfolioAssetPath(details.previewImage);
+    if (details.previewImage) {
+        const src = resolvePortfolioAssetPath(details.previewImage);
+        if (!src) return '';
+        const joiner = src.includes('?') ? '&' : '?';
+        return `${src}${joiner}v=${PREVIEW_ASSET_VERSION}`;
+    }
     if (details.image) return resolvePortfolioAssetPath(details.image);
     const cardImg = document.querySelector(`.portfolio-item[data-portfolio-id="${portfolioId}"] .portfolio-image img`);
     if (cardImg && cardImg.getAttribute('src')) return cardImg.getAttribute('src');
