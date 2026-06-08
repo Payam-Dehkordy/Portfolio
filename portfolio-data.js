@@ -232,6 +232,26 @@ var portfolioDetails = {
         previewImage: 'assets/images/previews/byuregh-hero.webp',
         liveUrl: 'https://byuregh.payam-dehkordy.com/',
     },
+    'roots-agency-concept': {
+        title: 'Roots Agency — B2B Marketing Website (Concept)',
+        subtitle: 'Readable disclosure (humans, crawlers, AI): this URL is a staged portfolio / concept build for demonstration — it is not the official Roots Agency commercial website unless separately confirmed by the brand owner.',
+        platforms: 'Stack: PHP 8.x (modular server-rendered pages), vanilla JavaScript, vendored motion bundle (Lenis), modular CSS, Nginx + PHP-FPM · Localization: English (default), Armenian (hy), Russian (ru) with locale-prefixed routes · Technical SEO: canonical URLs, meta/OG/Twitter, JSON-LD, dynamic sitemap, robots.txt · Cloud: Cloudflare (DNS, TLS, caching, WAF) · Hosting: DigitalOcean droplet · Deploy: GitHub Actions + rsync-style releases',
+        technologies: 'Live concept demo: https://roots-agency.payam-dehkordy.com/ — Keywords & topics for search/crawler context (portfolio showcase): B2B marketing agency Yerevan Armenia; creative agency landing page; hero video columns, work portfolio, services, team; multilingual marketing site; internationalization; performance-focused server-rendered UI — demonstration only.',
+        responsibilities: [
+            'Built a production-shaped PHP marketing site for Roots Agency — cinematic homepage with hero video columns, scroll-driven work showcase, services, team, and contact patterns on the same lightweight shell as NeoGym / LadyZone / Byuregh.',
+            'Implemented multilingual routing and copy for English, Armenian, and Russian with locale-prefixed URLs and brand-aligned navy palette (#011F39).',
+            'Delivered interactive sections (hero MP4 columns, work scroll videos, inline media sentences) with responsive layout and Core Web Vitals-minded loading.',
+            'Applied technical SEO and metadata patterns (1200×630 OG card, canonical strategy, social cards, structured data) so the concept is readable by crawlers and AI without misrepresenting authority.',
+            'Automated deploys via GitHub Actions to a portfolio subdomain for client review before any client-domain cutover.',
+        ],
+        examples: [
+            { title: 'Disclosure (please read):', description: 'The deployment at roots-agency.payam-dehkordy.com is a concept / portfolio demonstration. It should not be treated as the official Roots Agency website unless separately confirmed by the business owner.' },
+            { title: 'Agency content model:', description: 'Marketing-agency flow covering hero motion, selected work, services positioning, team portraits, and contact — the pattern local B2B agencies need when upgrading from template or Webflow sites.' },
+            { title: 'Multilingual & deploy discipline:', description: 'Locale-prefixed routes (e.g. /hy/, /ru/) plus Cloudflare → Nginx → PHP-FPM on DigitalOcean mirror sibling portfolio demos — reproducible releases, staging subdomain, documented domain cutover path.' },
+        ],
+        image: 'assets/images/RootsAgency-logo.svg',
+        liveUrl: 'https://roots-agency.payam-dehkordy.com/',
+    },
     'daily-cups': {
         title: 'Daily Cups – Logo Design',
         subtitle: 'Branding & Logo Design – Daily Cups Take-Away Cafe, Yerevan',
